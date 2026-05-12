@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Files - Scholarly Architect</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/app-layout.css">
+    <link rel="stylesheet" href="../css/files.css">
+</head>
+<body class="app-body">
+    <aside class="sidebar files-sidebar">
+        <div class="files-sidebar-title">
+            <h2>Research Lab</h2>
+            <p>Academic Management</p>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard-pm.html">
+                <span>▦</span>
+                Dashboard
+            </a>
+            <a href="project-list.html">
+                <span>⌘</span>
+                Projects
+            </a>
+            <a href="task-board.html">
+                <span>▤</span>
+                Tasks
+            </a>
+            <a href="manage-team.html">
+                <span>☷</span>
+                Team
+            </a>
+            <a href="files.html" class="active">
+                <span>▱</span>
+                Files
+            </a>
+            <a href="reports-dashboard.html">
+                <span>▥</span>
+                Reports
+            </a>
+            <a href="profile-settings.html">
+                <span>⚙</span>
+                Settings
+            </a>
+        </nav>
+
+        <div class="sidebar-user-card">
+            <div class="sidebar-user-avatar">AT</div>
+            <div>
+                <h3>Dr. Aris Thorne</h3>
+                <p>Principal Investigator</p>
+            </div>
+        </div>
+    </aside>
+
+    <main class="app-main">
+        <header class="app-topbar files-topbar">
+            <div class="search-box files-search-box">
+                <span>⌕</span>
+                <input type="text" placeholder="Search research documents..." data-file-search>
+            </div>
+
+            <div class="topbar-actions files-topbar-actions">
+                <button type="button" class="icon-btn" aria-label="Notifications">
+                    ♧
+                </button>
+
+                <div class="files-brand">Scholarly Architect</div>
+
+                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
+                    ◎
+                </button>
+            </div>
+        </header>
+
+        <section class="dashboard-content files-content">
+            <div class="page-heading files-heading">
+                <h1>Files</h1>
+                <p>
+                    Manage your research dataset, academic publications, and collaborative documents
+                    within the central laboratory repository.
+                </p>
+            </div>
+
+            <section class="upload-dropzone" data-dropzone>
+                <input
+                    type="file"
+                    id="fileUpload"
+                    name="files[]"
+                    multiple
+                    accept=".pdf,.csv,.doc,.docx,.xls,.xlsx,.tex"
+                    hidden
+                    data-file-input
+                >
+
+                <button type="button" class="upload-icon" data-upload-trigger>
+                    ⬆
+                </button>
+
+                <h2>Upload Research Files</h2>
+                <p>Drag and drop files here, or click to browse your local repository</p>
+
+                <div class="file-type-chips">
+                    <span>PDF</span>
+                    <span>CSV</span>
+                    <span>LATEX</span>
+                </div>
+            </section>
+
+            <section class="shared-files-card">
+                <div class="shared-files-header">
+                    <h2>Shared Files</h2>
+
+                    <div class="shared-file-actions">
+                        <button type="button" aria-label="Filter files">≡</button>
+                        <button type="button" aria-label="Change view">≡</button>
+                    </div>
+                </div>
+
+                <div class="files-table">
+                    <div class="files-table-head">
+                        <span>File Name</span>
+                        <span>Uploaded By</span>
+                        <span>Date</span>
+                        <span>Size</span>
+                        <span>Actions</span>
+                    </div>
+
+                    <article class="file-row" data-file-row>
+                        <div class="file-name-cell">
+                            <span class="document-icon pdf">PDF</span>
+                            <div>
+                                <h3>quantum_computing_v3.pdf</h3>
+                                <span class="file-status draft">Final Draft</span>
+                            </div>
+                        </div>
+
+                        <div class="uploader-cell">
+                            <span class="uploader-avatar dark">S</span>
+                            <p>Dr. Sarah Chen</p>
+                        </div>
+
+                        <span class="file-date">Oct 12, 2023</span>
+                        <span class="file-size">4.2 MB</span>
+
+                        <div class="file-action-cell">
+                            <button type="button" aria-label="Download file">↓</button>
+                            <button type="button" class="delete-file-btn" aria-label="Delete file">♲</button>
+                        </div>
+                    </article>
+
+                    <article class="file-row" data-file-row>
+                        <div class="file-name-cell">
+                            <span class="document-icon doc">DOC</span>
+                            <div>
+                                <h3>lab_notes_sensor_calibration.docx</h3>
+                                <span class="file-status archive">Archive</span>
+                            </div>
+                        </div>
+
+                        <div class="uploader-cell">
+                            <span class="uploader-avatar dark">M</span>
+                            <p>Marc Jamieson</p>
+                        </div>
+
+                        <span class="file-date">Oct 08, 2023</span>
+                        <span class="file-size">1.8 MB</span>
+
+                        <div class="file-action-cell">
+                            <button type="button" aria-label="Download file">↓</button>
+                            <button type="button" class="delete-file-btn" aria-label="Delete file">♲</button>
+                        </div>
+                    </article>
+
+                    <article class="file-row" data-file-row>
+                        <div class="file-name-cell">
+                            <span class="document-icon csv">CSV</span>
+                            <div>
+                                <h3>dataset_2023_photonics.csv</h3>
+                                <span class="file-status processing">Processing</span>
+                            </div>
+                        </div>
+
+                        <div class="uploader-cell">
+                            <span class="uploader-avatar green">E</span>
+                            <p>Elena Rossi</p>
+                        </div>
+
+                        <span class="file-date">Oct 05, 2023</span>
+                        <span class="file-size">12.5 MB</span>
+
+                        <div class="file-action-cell">
+                            <button type="button" aria-label="Download file">↓</button>
+                            <button type="button" class="delete-file-btn" aria-label="Delete file">♲</button>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="files-table-footer">
+                    <p>Displaying 3 of 48 academic resources</p>
+
+                    <div class="file-pagination">
+                        <button type="button">Previous</button>
+                        <button type="button" class="active">Next</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="files-bottom-grid">
+                <article class="storage-card">
+                    <div class="storage-header">
+                        <div>
+                            <h2>Repository Storage</h2>
+                            <p>Current institutional allocation</p>
+                        </div>
+
+                        <strong>72% Used</strong>
+                    </div>
+
+                    <div class="storage-progress">
+                        <span></span>
+                    </div>
+
+                    <div class="storage-stats">
+                        <div>
+                            <span>Documents</span>
+                            <strong>14.2 GB</strong>
+                        </div>
+
+                        <div>
+                            <span>Raw Data</span>
+                            <strong>45.8 GB</strong>
+                        </div>
+
+                        <div>
+                            <span>Visuals</span>
+                            <strong>8.1 GB</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="encryption-card">
+                    <span class="encryption-icon">♢</span>
+                    <h2>Institutional Encryption Active</h2>
+                    <p>
+                        All research files are protected with AES-256 end-to-end encryption.
+                        Sharing links automatically expire after 7 days.
+                    </p>
+
+                    <button type="button">Security Audit</button>
+                </article>
+            </section>
+        </section>
+    </main>
+
+    <script src="../js/files.js"></script>
+</body>
+</html>

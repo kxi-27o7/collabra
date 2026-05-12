@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail - Scholarly Architect</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/app-layout.css">
+    <link rel="stylesheet" href="../css/project-detail.css">
+</head>
+<body class="app-body">
+    <aside class="sidebar">
+        <div class="sidebar-brand">Scholarly Architect</div>
+
+        <div class="workspace-title settings-workspace">
+            <span class="workspace-icon">RL</span>
+            <div>
+                <h2>Research Lab</h2>
+                <p>Academic Management</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard-pm.html">
+                <span>▦</span>
+                Dashboard
+            </a>
+            <a href="project-list.html" class="active">
+                <span>⌘</span>
+                Projects
+            </a>
+            <a href="task-board.html">
+                <span>▤</span>
+                Tasks
+            </a>
+            <a href="manage-team.html">
+                <span>☷</span>
+                Team
+            </a>
+            <a href="files.html">
+                <span>▱</span>
+                Files
+            </a>
+            <a href="reports-dashboard.html">
+                <span>▥</span>
+                Reports
+            </a>
+            <a href="profile-settings.html">
+                <span>⚙</span>
+                Settings
+            </a>
+        </nav>
+    </aside>
+
+    <main class="app-main">
+        <header class="app-topbar project-detail-topbar">
+            <nav class="project-top-nav">
+                <a href="project-list.html" class="active">Projects</a>
+                <a href="#">Library</a>
+                <a href="#">Archive</a>
+            </nav>
+
+            <div class="topbar-actions">
+                <div class="search-box detail-search-box">
+                    <span>⌕</span>
+                    <input type="text" placeholder="Search research..." data-detail-search>
+                </div>
+
+                <button type="button" class="icon-btn" aria-label="Notifications">
+                    ♧
+                </button>
+
+                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
+                    ◎
+                </button>
+            </div>
+        </header>
+
+        <section class="dashboard-content project-detail-content">
+            <section class="project-detail-hero">
+                <div>
+                    <h1>Neural-Architecture Mapping: Cognitive Spatial Analysis</h1>
+                    <p>
+                        Investigating the intersection of structural design patterns and human cognitive
+                        response through non-invasive EEG monitoring and virtual environments.
+                    </p>
+                </div>
+
+                <div class="project-detail-actions">
+                    <button type="button" class="btn btn-soft">
+                        ⌯ Share
+                    </button>
+                    <a href="create-project.html" class="btn btn-primary">
+                        ✎ Edit Project
+                    </a>
+                </div>
+            </section>
+
+            <nav class="detail-tabs" data-detail-tabs>
+                <button type="button" class="active" data-tab="overview">Overview</button>
+                <button type="button" data-tab="tasks">Tasks</button>
+                <button type="button" data-tab="team">Team</button>
+                <button type="button" data-tab="files">Files</button>
+                <button type="button" data-tab="activity">Activity</button>
+                <button type="button" data-tab="reports">Reports</button>
+            </nav>
+
+            <section class="detail-tab-panel active" data-tab-panel="overview">
+                <div class="detail-grid">
+                    <div class="detail-left">
+                        <section class="detail-stats-grid">
+                            <article class="detail-stat-card">
+                                <div class="detail-stat-top">
+                                    <span class="detail-stat-icon">▥</span>
+                                    <strong class="green-text">+12%</strong>
+                                </div>
+                                <p>Completion</p>
+                                <h2>68.4%</h2>
+                            </article>
+
+                            <article class="detail-stat-card">
+                                <div class="detail-stat-top">
+                                    <span class="detail-stat-icon">◷</span>
+                                    <strong class="orange-text">8 days</strong>
+                                </div>
+                                <p>Next Milestone</p>
+                                <h2>Phase II</h2>
+                            </article>
+
+                            <article class="detail-stat-card">
+                                <div class="detail-stat-top">
+                                    <span class="detail-stat-icon">▣</span>
+                                    <strong>42% used</strong>
+                                </div>
+                                <p>Budget Allocation</p>
+                                <h2>$142.5k</h2>
+                            </article>
+                        </section>
+
+                        <section class="timeline-card">
+                            <div class="timeline-header">
+                                <h2>▣ Project Timeline & Milestones</h2>
+                                <span>Project Start: Jan 2024</span>
+                            </div>
+
+                            <div class="timeline-line">
+                                <article class="timeline-step completed">
+                                    <span>✓</span>
+                                    <h3>Protocol Design</h3>
+                                    <p>Completed • Feb 12</p>
+                                </article>
+
+                                <article class="timeline-step completed">
+                                    <span>✓</span>
+                                    <h3>IRB Approval</h3>
+                                    <p>Completed • Mar 05</p>
+                                </article>
+
+                                <article class="timeline-step active">
+                                    <span>◎</span>
+                                    <h3>Data Collection</h3>
+                                    <p>In Progress</p>
+                                </article>
+
+                                <article class="timeline-step">
+                                    <span></span>
+                                    <h3>Peer Review</h3>
+                                    <p>Expected Oct 2024</p>
+                                </article>
+                            </div>
+                        </section>
+                    </div>
+
+                    <aside class="detail-right">
+                        <section class="research-team-card">
+                            <div class="side-card-header">
+                                <h2>Research Team</h2>
+                                <a href="#">View All</a>
+                            </div>
+
+                            <div class="research-member-list">
+                                <article class="research-member">
+                                    <span class="research-avatar image-avatar">A</span>
+                                    <div>
+                                        <h3>Dr. Alistair Vance</h3>
+                                        <p>Principal Investigator</p>
+                                    </div>
+                                </article>
+
+                                <article class="research-member">
+                                    <span class="research-avatar image-avatar red">S</span>
+                                    <div>
+                                        <h3>Sarah Chen</h3>
+                                        <p>Lead Data Scientist</p>
+                                    </div>
+                                </article>
+
+                                <article class="research-member">
+                                    <span class="research-avatar initials-avatar">OM</span>
+                                    <div>
+                                        <h3>Oulian Mark</h3>
+                                        <p>UI Architect</p>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <button type="button" class="invite-member-btn">
+                                ☷ Invite Member
+                            </button>
+                        </section>
+
+                        <section class="featured-files-card">
+                            <h2>Featured Files</h2>
+
+                            <div class="file-list">
+                                <article class="file-item">
+                                    <span class="file-icon red">▤</span>
+                                    <div>
+                                        <h3>Full_Protocol_v3.pdf</h3>
+                                        <p>2.4 MB • Updated yesterday</p>
+                                    </div>
+                                </article>
+
+                                <article class="file-item">
+                                    <span class="file-icon blue">▦</span>
+                                    <div>
+                                        <h3>Subject_Data_Raw.xlsx</h3>
+                                        <p>14.8 MB • Updated 3h ago</p>
+                                    </div>
+                                </article>
+                            </div>
+                        </section>
+
+                        <section class="project-insight-card">
+                            <h3>Project Insight</h3>
+                            <p>
+                                Your current citation index for related papers is in the top 5% for this quarter.
+                            </p>
+                            <a href="#">View Analytics →</a>
+                        </section>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="detail-tab-panel" data-tab-panel="tasks">
+                <div class="placeholder-panel">
+                    <h2>Tasks</h2>
+                    <p>Task list for this project will be displayed here.</p>
+                </div>
+            </section>
+
+            <section class="detail-tab-panel" data-tab-panel="team">
+                <div class="placeholder-panel">
+                    <h2>Team</h2>
+                    <p>Research team members and roles will be displayed here.</p>
+                </div>
+            </section>
+
+            <section class="detail-tab-panel" data-tab-panel="files">
+                <div class="placeholder-panel">
+                    <h2>Files</h2>
+                    <p>Project documents and datasets will be displayed here.</p>
+                </div>
+            </section>
+
+            <section class="detail-tab-panel" data-tab-panel="activity">
+                <div class="placeholder-panel">
+                    <h2>Activity</h2>
+                    <p>Recent project activity will be displayed here.</p>
+                </div>
+            </section>
+
+            <section class="detail-tab-panel" data-tab-panel="reports">
+                <div class="placeholder-panel">
+                    <h2>Reports</h2>
+                    <p>Project analytics and reports will be displayed here.</p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="../js/project-detail.js"></script>
+</body>
+</html>

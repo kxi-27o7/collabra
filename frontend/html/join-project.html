@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Project - Scholarly Architect</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/join-project.css">
+</head>
+<body class="join-body">
+    <header class="join-topbar">
+        <a href="index.html" class="join-brand">Scholarly Architect</a>
+
+        <div class="join-topbar-actions">
+            <button type="button" class="join-icon-btn" aria-label="Notifications">♧</button>
+            <button type="button" class="join-icon-btn" aria-label="Profile">◎</button>
+        </div>
+    </header>
+
+    <main class="join-main">
+        <section class="join-card">
+            <h1>Join a New Project</h1>
+            <p>Enter your credentials to access the research workspace</p>
+
+            <form action="#" method="POST" data-join-project-form>
+                <div class="form-group">
+                    <label for="invitationCode">Project Invitation Code</label>
+
+                    <div class="join-code-field">
+                        <span>⚿</span>
+                        <input
+                            type="text"
+                            id="invitationCode"
+                            name="invitation_code"
+                            placeholder="SA-XXXX-XXXX"
+                            maxlength="12"
+                            required
+                            data-invitation-code
+                        >
+                    </div>
+
+                    <small class="error-message"></small>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full join-submit-btn">
+                    Join Project
+                    <span>→</span>
+                </button>
+            </form>
+
+            <div class="join-divider">
+                <span></span>
+                <p>OR</p>
+                <span></span>
+            </div>
+
+            <a href="project-list.html" class="browse-public-link">
+                ⊙ Browse Public Projects
+            </a>
+        </section>
+
+        <footer class="join-footer">
+            <div class="join-footer-links">
+                <a href="#">♡ Secure Access</a>
+                <a href="#">▣ Get Support</a>
+            </div>
+
+            <p>SYSTEM_NODE: 402.JOIN</p>
+        </footer>
+    </main>
+
+    <script src="../js/join-project.js"></script>
+</body>
+</html>

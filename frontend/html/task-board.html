@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Board - Scholarly Architect</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/app-layout.css">
+    <link rel="stylesheet" href="../css/task-board.css">
+</head>
+<body class="app-body">
+    <aside class="sidebar">
+        <div class="sidebar-brand">Scholarly Architect</div>
+
+        <div class="board-workspace-card">
+            <h2>Research Lab</h2>
+            <p>Academic Management</p>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard-pm.html">
+                <span>▦</span>
+                Dashboard
+            </a>
+            <a href="project-list.html">
+                <span>⌘</span>
+                Projects
+            </a>
+            <a href="task-board.html" class="active">
+                <span>▤</span>
+                Tasks
+            </a>
+            <a href="manage-team.html">
+                <span>☷</span>
+                Team
+            </a>
+            <a href="files.html">
+                <span>▱</span>
+                Files
+            </a>
+            <a href="reports-dashboard.html">
+                <span>▥</span>
+                Reports
+            </a>
+            <a href="profile-settings.html">
+                <span>⚙</span>
+                Settings
+            </a>
+        </nav>
+    </aside>
+
+    <main class="app-main">
+        <header class="app-topbar board-topbar">
+            <nav class="board-top-nav">
+                <a href="#" class="active">Workspace</a>
+                <a href="#">Library</a>
+                <a href="#">Analytics</a>
+            </nav>
+
+            <div class="topbar-actions">
+                <button type="button" class="icon-btn board-bell-btn" aria-label="Notifications">
+                    ♧
+                    <span class="notification-dot"></span>
+                </button>
+
+                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
+                    ◎
+                </button>
+            </div>
+        </header>
+
+        <section class="dashboard-content task-content">
+            <section class="task-hero">
+                <div>
+                    <h1>Project Delta Sprint</h1>
+
+                    <div class="task-meta-row">
+                        <span class="cycle-badge">Active Cycle</span>
+                        <span class="task-date-range">▣ Oct 24 - Nov 08, 2023</span>
+                    </div>
+                </div>
+
+                <div class="task-hero-actions">
+                    <button type="button" class="btn btn-soft filter-task-btn">
+                        <span>☰</span>
+                        Filter
+                    </button>
+
+                    <button type="button" class="btn btn-primary" data-open-task-modal>
+                        <span>＋</span>
+                        New Task
+                    </button>
+                </div>
+            </section>
+
+            <section class="task-create-panel" data-task-modal>
+                <div class="task-create-card">
+                    <div class="task-create-header">
+                        <div>
+                            <h2>Create Task</h2>
+                            <p>Define objectives and allocate institutional resources.</p>
+                        </div>
+
+                        <button type="button" class="task-modal-close" data-close-task-modal aria-label="Close popup">
+                            ×
+                        </button>
+                    </div>
+
+                    <form data-task-form>
+                        <div class="form-group">
+                            <label for="taskTitle">Task Title</label>
+                            <input
+                                type="text"
+                                id="taskTitle"
+                                name="task_title"
+                                placeholder="e.g., Empirical Analysis of Quantum Entanglement"
+                                required
+                            >
+                            <small class="error-message"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="taskDescription">Description</label>
+
+                            <div class="task-editor-box">
+                                <div class="task-editor-toolbar">
+                                    <button type="button">B</button>
+                                    <button type="button">I</button>
+                                    <button type="button">≡</button>
+                                    <button type="button">↔</button>
+                                </div>
+
+                                <textarea
+                                    id="taskDescription"
+                                    name="task_description"
+                                    placeholder="Detailed research parameters and expected outcomes..."
+                                    required
+                                ></textarea>
+                            </div>
+
+                            <small class="error-message"></small>
+                        </div>
+
+                        <div class="task-form-grid">
+                            <div class="form-group">
+                                <label for="taskAssignee">Assignee</label>
+                                <select id="taskAssignee" name="task_assignee" required>
+                                    <option value="Dr. Aris Thorne">Dr. Aris Thorne</option>
+                                    <option value="Elena Rodriguez">Elena Rodriguez</option>
+                                    <option value="Marcus Chen">Marcus Chen</option>
+                                    <option value="Sarah Al-Farsi">Sarah Al-Farsi</option>
+                                </select>
+                                <small class="error-message"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taskDueDate">Due Date</label>
+                                <input type="date" id="taskDueDate" name="task_due_date" required>
+                                <small class="error-message"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Priority</label>
+
+                                <div class="task-priority-picker">
+                                    <label>
+                                        <input type="radio" name="task_priority" value="high">
+                                        <span>High</span>
+                                    </label>
+
+                                    <label class="active">
+                                        <input type="radio" name="task_priority" value="medium" checked>
+                                        <span>Med</span>
+                                    </label>
+
+                                    <label>
+                                        <input type="radio" name="task_priority" value="low">
+                                        <span>Low</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="relatedProject">Related Project</label>
+                                <select id="relatedProject" name="related_project" required>
+                                    <option value="Astro-Biology Initiative">Astro-Biology Initiative</option>
+                                    <option value="Neural-Architecture Mapping">Neural-Architecture Mapping</option>
+                                    <option value="Ethics Review Sprint">Ethics Review Sprint</option>
+                                </select>
+                                <small class="error-message"></small>
+                            </div>
+                        </div>
+
+                        <div class="task-form-actions">
+                            <button type="button" class="task-cancel-btn" data-close-task-modal>
+                                Cancel
+                            </button>
+
+                            <button type="submit" class="btn btn-primary task-submit-btn">
+                                Create Task
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="task-create-footer">
+                        <span><i></i> Workspace: Academic-HQ-Prime</span>
+                        <span>ID: SCH-2024-TASK-X</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="task-board-grid">
+                <article class="task-column">
+                    <div class="task-column-header">
+                        <div class="task-column-title">
+                            <h2>To Do</h2>
+                            <span>4</span>
+                        </div>
+
+                        <button type="button" class="column-plus-btn" data-open-task-modal>＋</button>
+                    </div>
+
+                    <div class="task-column-body" data-task-column="todo">
+                        <article class="task-card" data-task-card>
+                            <div class="task-card-top">
+                                <span class="priority-chip medium">Medium</span>
+                                <button type="button" class="task-card-menu">⋯</button>
+                            </div>
+
+                            <h3>
+                                <a href="update-task-progress.html">Finalize literature review for Q4 Neuro-Mapping</a>
+                            </h3>
+
+                            <div class="task-card-divider"></div>
+
+                            <div class="task-card-bottom">
+                                <span class="task-date">◔ Oct 28</span>
+                                <div class="task-mini-avatars">
+                                    <span>AT</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="task-card" data-task-card>
+                            <div class="task-card-top">
+                                <span class="priority-chip high">High</span>
+                            </div>
+
+                            <h3>Draft methodology section for ethical committee</h3>
+
+                            <div class="task-card-divider"></div>
+
+                            <div class="task-card-bottom">
+                                <span class="task-date red-text">▣ Tomorrow</span>
+                                <div class="task-mini-avatars">
+                                    <span>MC</span>
+                                    <span>EA</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <button type="button" class="add-task-card-btn" data-open-task-modal>
+                            ＋ Add Task
+                        </button>
+                    </div>
+                </article>
+
+                <article class="task-column">
+                    <div class="task-column-header">
+                        <div class="task-column-title">
+                            <h2>In Progress</h2>
+                            <span>2</span>
+                        </div>
+
+                        <button type="button" class="column-plus-btn" data-open-task-modal>＋</button>
+                    </div>
+
+                    <div class="task-column-body" data-task-column="progress">
+                        <article class="task-card" data-task-card>
+                            <div class="task-card-top">
+                                <span class="priority-chip low">Low</span>
+                            </div>
+
+                            <h3>Assembling sensor data for pilot tests</h3>
+
+                            <div class="task-progress">
+                                <span style="width: 68%;"></span>
+                            </div>
+
+                            <div class="task-card-bottom">
+                                <span class="task-date">◔ Oct 30</span>
+                                <div class="task-mini-avatars">
+                                    <span>SC</span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="task-card" data-task-card>
+                            <div class="task-card-top">
+                                <span class="priority-chip high">High</span>
+                            </div>
+
+                            <h3>Coordinate with Hardware Engineering team</h3>
+
+                            <div class="task-card-divider"></div>
+
+                            <div class="task-card-bottom">
+                                <span class="task-date">◔ Oct 27</span>
+                                <div class="task-mini-avatars">
+                                    <span>MC</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </article>
+
+                <article class="task-column review-column">
+                    <div class="task-column-header">
+                        <div class="task-column-title">
+                            <h2>Review</h2>
+                            <span>1</span>
+                        </div>
+                    </div>
+
+                    <div class="task-column-body" data-task-column="review">
+                        <article class="task-card" data-task-card>
+                            <div class="task-card-top">
+                                <span class="priority-chip medium">Medium</span>
+                            </div>
+
+                            <h3>Validate data cleaning script v2.4</h3>
+
+                            <div class="task-review-note">
+                                ▣ Awaiting PI Approval
+                            </div>
+
+                            <div class="task-card-bottom">
+                                <span class="task-date"></span>
+                                <div class="task-mini-avatars">
+                                    <span>AT</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </article>
+            </section>
+
+            <section class="task-bottom-grid">
+                <article class="velocity-card">
+                    <div class="velocity-text">
+                        <h2>Sprint Velocity</h2>
+                        <p>
+                            Your team is tracking 12% faster than last cycle. Maintain this pace
+                            to clear the backlog by Friday.
+                        </p>
+
+                        <div class="velocity-stats">
+                            <div class="velocity-stat-box">
+                                <strong>32</strong>
+                                <span>Story Points</span>
+                            </div>
+
+                            <div class="velocity-stat-box green">
+                                <strong>88%</strong>
+                                <span>Efficiency</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="velocity-chart">
+                        <span class="bar big"></span>
+                        <span class="bar medium"></span>
+                        <span class="bar small"></span>
+                        <span class="bar tall"></span>
+                    </div>
+                </article>
+
+                <article class="urgent-card">
+                    <h2>Urgent Deadlines</h2>
+
+                    <div class="urgent-list">
+                        <div class="urgent-item">
+                            <span class="dot red"></span>
+                            <strong>Draft Ethics Report</strong>
+                            <small>2h left</small>
+                        </div>
+
+                        <div class="urgent-item">
+                            <span class="dot beige"></span>
+                            <strong>Peer Review v4</strong>
+                            <small>Tomorrow</small>
+                        </div>
+                    </div>
+
+                    <button type="button" class="urgent-btn">
+                        View Schedule
+                    </button>
+                </article>
+            </section>
+        </section>
+    </main>
+
+    <script src="../js/task-board.js"></script>
+</body>
+</html>

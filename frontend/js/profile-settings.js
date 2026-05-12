@@ -1,0 +1,139 @@
+document.addEventListener("DOMContentLoaded", () => {
+    setupSettingsTabs();
+    setupAvatarPreview();
+    setupDiscardSettings();
+    setupSettingsFormValidation();
+});
+
+function setupSettingsTabs() {
+    const tabs = document.querySelectorAll("[data-settings-tab]");
+    const panels = document.querySelectorAll("[data-settings-panel]");
+
+    if (!tabs.length || !panels.length) return;
+
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+            const selectedTab = tab.dataset.settingsTab;
+
+            tabs.forEach((item) => item.classList.remove("active"));
+            tab.classList.add("active");
+
+            panels.forEach((panel) => {
+                const panelName = panel.dataset.settingsPanel;
+
+                if (selectedTab === "profile") {
+                    panel.style.display = "";
+                    return;
+                }
+
+                panel.style.display = panelName === selectedTab ? "" : "none";
+            });
+        });
+    });
+}
+
+function setupAvatarPreview() {
+    const avatarInput = document.getElementById("avatarUpload");
+    const avatarPreview = document.querySelector(".profile-photo-preview");
+    const removeButton = document.querySelector("[data-remove-avatar]");
+
+    if (!avatarInput || !avatarPreview) return;
+
+    avatarInput.addEventListener("change", () => {
+        const file = avatarInput.files[0];
+
+        if (!file) return;
+
+        const imageUrl = URL.createObjectURL(file);
+
+        avatarPreview.innerHTML = "";
+        avatarPreview.style.background = `url("${imageUrl}") center/cover no-repeat`;
+    });
+
+    if (removeButton) {
+        removeButton.addEventListener("click", () => {
+            avatarInput.value = "";
+            avatarPreview.innerHTML = "<span>👨‍🎓</span>";
+            avatarPreview.style.background = "";
+        });
+    }
+}
+
+function setupDiscardSettings() {
+    const discardButton = document.querySelector("[data-discard-settings]");
+    const settingsForm = document.querySelector('form[data-form="settings"]');
+
+    if (!discardButton || !settingsForm) return;
+
+    discardButton.addEventListener("click", () => {
+        settingsForm.reset();
+
+        const avatarPreview = document.querySelector(".profile-photo-preview");
+
+        if (avatarPreview) {
+            avatarPreview.innerHTML = "<span>👨‍🎓</span>";
+            avatarPreview.style.background = "";
+        }
+    });
+}
+
+function setupSettingsFormValidation() {
+    const form = document.querySelector('form[data-form="settings"]');
+
+    if (!form) return;
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        let isValid = true;
+        const requiredFields = form.querySelectorAll("input[required], textarea[required]");
+
+        requiredFields.forEach((input) => {
+            clearError(input);
+
+            if (!input.value.trim()) {
+                showError(input, "This field is required.");
+                isValid = false;
+                return;
+            }
+
+            if (input.type === "email" && !isValidEmail(input.value)) {
+                showError(input, "Please enter a valid email address.");
+                isValid = false;
+            }
+        });
+
+        if (!isValid) return;
+
+        const formData = Object.fromEntries(new FormData(form).entries());
+        console.log("Settings ready for backend:", formData);
+
+        alert("Profile settings sudah valid. Nanti bisa disambungkan ke backend.");
+    });
+}
+
+function showError(input, message) {
+    input.classList.add("error");
+
+    const formGroup = input.closest(".form-group");
+    const errorMessage = formGroup?.querySelector(".error-message");
+
+    if (errorMessage) {
+        errorMessage.textContent = message;
+    }
+}
+
+function clearError(input) {
+    input.classList.remove("error");
+
+    const formGroup = input.closest(".form-group");
+    const errorMessage = formGroup?.querySelector(".error-message");
+
+    if (errorMessage) {
+        errorMessage.textContent = "";
+    }
+}
+
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}

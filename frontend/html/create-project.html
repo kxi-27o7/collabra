@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Project - Scholarly Architect</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/create-project.css">
+</head>
+<body class="create-project-body">
+    <header class="create-topbar">
+        <div class="create-topbar-left">
+            <a href="project-list.html" class="back-link" aria-label="Back to projects">←</a>
+            <a href="project-list.html" class="create-brand">Scholarly Architect</a>
+        </div>
+
+        <div class="create-topbar-right">
+            <button type="button" class="create-icon-btn" aria-label="Notifications">♧</button>
+
+            <div class="create-user-menu">
+                <span class="user-circle">●</span>
+                <strong>Dr. Aris Thorne</strong>
+            </div>
+        </div>
+    </header>
+
+    <main class="create-project-main">
+        <section class="create-heading">
+            <h1>Initialize Research Project</h1>
+            <p>Define the architectural scope and intellectual foundation for your new study.</p>
+        </section>
+
+        <form class="create-project-layout" action="#" method="POST" data-create-project-form>
+            <div class="create-project-left">
+                <section class="create-card project-basic-card">
+                    <div class="form-group line-input-group">
+                        <label for="projectName">Project Name</label>
+                        <input
+                            type="text"
+                            id="projectName"
+                            name="project_name"
+                            placeholder="e.g. Neural Linguistic Mapping 2024"
+                            required
+                            data-project-title-source
+                        >
+                        <small class="error-message"></small>
+                    </div>
+
+                    <div class="form-group line-input-group">
+                        <label for="projectDescription">Research Abstract & Description</label>
+                        <textarea
+                            id="projectDescription"
+                            name="project_description"
+                            placeholder="Provide a detailed summary of the research objectives and methodology..."
+                            required
+                            data-project-description-source
+                        ></textarea>
+                        <small class="error-message"></small>
+                    </div>
+                </section>
+
+                <div class="create-two-columns">
+                    <section class="create-card small-create-card">
+                        <div class="form-group">
+                            <label for="projectDeadline">▧ Project Deadline</label>
+                            <input
+                                type="date"
+                                id="projectDeadline"
+                                name="project_deadline"
+                                required
+                                data-project-deadline-source
+                            >
+                            <small class="error-message"></small>
+                        </div>
+                    </section>
+
+                    <section class="create-card small-create-card">
+                        <div class="form-group">
+                            <label>⚑ Initial Status</label>
+
+                            <div class="status-picker" data-status-picker>
+                                <label>
+                                    <input type="radio" name="initial_status" value="drafting">
+                                    <span>Drafting</span>
+                                </label>
+
+                                <label class="active">
+                                    <input type="radio" name="initial_status" value="active" checked>
+                                    <span>Active</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="initial_status" value="review">
+                                    <span>Review</span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <section class="create-card team-select-card">
+                    <div class="form-group">
+                        <label for="memberSearch">☷ Select Team Members</label>
+
+                        <div class="member-search-box">
+                            <span>⌕</span>
+                            <input
+                                type="text"
+                                id="memberSearch"
+                                placeholder="Search by name or faculty ID..."
+                                data-member-search
+                            >
+                        </div>
+
+                        <div class="selected-members" data-selected-members>
+                            <span class="member-chip">
+                                <span class="member-avatar">E</span>
+                                Dr. Elias Vance
+                                <button type="button" aria-label="Remove member">×</button>
+                            </span>
+
+                            <span class="member-chip">
+                                <span class="member-avatar">L</span>
+                                Prof. Lena Meyer
+                                <button type="button" aria-label="Remove member">×</button>
+                            </span>
+
+                            <button type="button" class="add-member-chip" data-add-member>
+                                + Add Member
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="create-form-actions">
+                    <a href="project-list.html" class="cancel-link">Cancel</a>
+                    <button type="submit" class="btn btn-primary create-submit-btn">
+                        Create Project ↗
+                    </button>
+                </div>
+            </div>
+
+            <aside class="create-project-right">
+                <section class="insight-box">
+                    <h2>✣ Architect Insights</h2>
+                    <p>
+                        Projects initialized with a clear deadline and at least two peer collaborators
+                        show a <strong>45% higher completion rate</strong> in the Scholarly Architect ecosystem.
+                    </p>
+
+                    <blockquote>
+                        “Structure is not the enemy of creativity, but the vessel that preserves it.”
+                    </blockquote>
+                </section>
+
+                <section class="preview-box">
+                    <h2>Preview Visualization</h2>
+
+                    <div class="preview-visual">
+                        <span>⌘</span>
+                        <p>Live Node Preview<br>Will Generate Upon Creation</p>
+                    </div>
+
+                    <div class="preview-info">
+                        <div>
+                            <span>Storage Allocation</span>
+                            <strong>5.0 GB</strong>
+                        </div>
+
+                        <div class="preview-progress">
+                            <span></span>
+                        </div>
+
+                        <div>
+                            <span>Security Protocol</span>
+                            <strong class="restricted-text">L3 - Restricted</strong>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </form>
+    </main>
+
+    <script src="../js/create-project.js"></script>
+</body>
+</html>

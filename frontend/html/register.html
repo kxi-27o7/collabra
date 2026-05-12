@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - Collabra</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body class="auth-body">
+    <main class="auth-page">
+        <section class="auth-card register-layout">
+            <div class="auth-visual register-visual">
+                <div class="register-tagline">
+                    <h2>Structuring the future of academic rigor.</h2>
+                </div>
+            </div>
+
+            <div class="auth-form-panel">
+                <div class="auth-form-wrap register-form-wrap">
+                    <h1>Create Account</h1>
+                    <p class="auth-subtitle">Enter your academic credentials to begin.</p>
+
+                    <form id="registerForm" class="form" action="#" method="POST" data-form="register">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input
+                                type="text"
+                                id="fullName"
+                                name="full_name"
+                                placeholder="Dr. Julianne Smith"
+                                autocomplete="name"
+                                required
+                            >
+                            <small class="error-message"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerEmail">Academic Email</label>
+                            <input
+                                type="email"
+                                id="registerEmail"
+                                name="email"
+                                placeholder="j.smith@university.edu"
+                                autocomplete="email"
+                                required
+                            >
+                            <small class="error-message"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <div class="password-field">
+                                <input
+                                    type="password"
+                                    id="registerPassword"
+                                    name="password"
+                                    placeholder="••••••••••"
+                                    autocomplete="new-password"
+                                    required
+                                >
+                                <button type="button" class="password-toggle" data-toggle-password aria-label="Show password">
+                                    ◉
+                                </button>
+                            </div>
+                            <small class="error-message"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Academic Role</label>
+
+                            <div class="role-options">
+                                <label class="role-card">
+                                    <input type="radio" name="role" value="project_manager">
+                                    <span class="custom-radio"></span>
+                                    <span>
+                                        <strong>Project Manager</strong>
+                                        <small>Faculty, Lab Leads, PIs</small>
+                                    </span>
+                                </label>
+
+                                <label class="role-card active">
+                                    <input type="radio" name="role" value="team_member" checked>
+                                    <span class="custom-radio"></span>
+                                    <span>
+                                        <strong>Team Member</strong>
+                                        <small>Students, Research Staff, Collaborators</small>
+                                    </span>
+                                </label>
+                            </div>
+                            <small class="error-message"></small>
+                        </div>
+
+                        <label class="checkbox-row terms-row">
+                            <input type="checkbox" name="terms" required>
+                            <span>
+                                I agree to the
+                                <a href="#">Terms of Service</a>
+                                and
+                                <a href="#">Research Privacy Policy</a>.
+                            </span>
+                        </label>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            Create Account
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <span></span>
+                        <p>Enterprise Access</p>
+                        <span></span>
+                    </div>
+
+                    <div class="enterprise-icons">
+                        <button type="button" aria-label="Enterprise option">▰</button>
+                        <button type="button" aria-label="Enterprise option">▱</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <p class="auth-footer">
+            © 2024 Scholarly Architect. All rights reserved. Intellectual property of respective institutions.
+        </p>
+    </main>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>
