@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Collabra</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/auth.css">
+</head>
+<body class="auth-body">
+    <main class="auth-page">
+        <section class="auth-card login-layout">
+            <div class="auth-visual login-visual">
+                <div class="auth-brand">Scholarly Architect</div>
+
+                <div class="auth-quote">
+                    <p>"Structure is the essence of clarity in research."</p>
+                    <div class="auth-chip">
+                        <span>◇</span>
+                        Research Lab Management
+                    </div>
+                </div>
+            </div>
+
+            <div class="auth-form-panel">
+                <div class="auth-form-wrap">
+                    <h1>Sign In</h1>
+                    <p class="auth-subtitle">Access your research workspace and files.</p>
+
+                    <form id="loginForm" class="form" action="#" method="POST" data-form="login">
+                        <div class="form-group">
+                            <label for="loginEmail">Email Address</label>
+                            <input
+                                type="email"
+                                id="loginEmail"
+                                name="email"
+                                placeholder="dr.smith@university.edu"
+                                autocomplete="email"
+                                required
+                            >
+                            <small class="error-message"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="label-row">
+                                <label for="loginPassword">Password</label>
+                                <a href="#" class="form-link">Forgot Password?</a>
+                            </div>
+
+                            <div class="password-field">
+                                <input
+                                    type="password"
+                                    id="loginPassword"
+                                    name="password"
+                                    placeholder="••••••••"
+                                    autocomplete="current-password"
+                                    required
+                                >
+                                <button type="button" class="password-toggle" data-toggle-password aria-label="Show password">
+                                    ◉
+                                </button>
+                            </div>
+                            <small class="error-message"></small>
+                        </div>
+
+                        <label class="checkbox-row">
+                            <input type="checkbox" name="remember">
+                            <span>Remember Me</span>
+                        </label>
+
+                        <button type="submit" class="btn btn-primary btn-full">
+                            Sign In <span>↪</span>
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <span></span>
+                        <p>Institutional SSO</p>
+                        <span></span>
+                    </div>
+
+                    <button type="button" class="btn btn-sso btn-full">
+                        <span>🏛</span>
+                        University Login
+                    </button>
+
+                    <p class="auth-switch">
+                        New to Scholarly Architect?
+                        <a href="register.html">Create an Account</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <p class="auth-footer">
+            © 2024 Scholarly Architect. All rights reserved. Intellectual property of respective institutions.
+        </p>
+    </main>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>

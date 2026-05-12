@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Task Progress - Scholarly Architect</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/update-task-progress.css">
+</head>
+<body class="update-task-body">
+    <header class="update-topbar">
+        <div class="update-topbar-left">
+            <a href="task-board.html" class="close-link" aria-label="Back to task board">×</a>
+            <a href="task-board.html" class="update-brand">Scholarly Architect</a>
+        </div>
+
+        <div class="update-topbar-right">
+            <span>Update Mode</span>
+            <button type="button" class="update-profile-btn" aria-label="Profile">◎</button>
+        </div>
+    </header>
+
+    <main class="update-main">
+        <section class="update-hero">
+            <div>
+                <p class="project-label">Project: Neural Network Ethics</p>
+
+                <h1>Finalizing Peer Review Documentation for 2024 Symposium</h1>
+
+                <div class="task-badges">
+                    <span class="task-id-badge">Task ID: ARCH-442</span>
+                    <span class="due-badge">Due: Oct 24</span>
+                </div>
+            </div>
+
+            <section class="current-status-card">
+                <label for="taskStatus">Current Status</label>
+                <select id="taskStatus" name="task_status" form="updateTaskForm">
+                    <option value="todo">To Do</option>
+                    <option value="in_progress" selected>In Progress</option>
+                    <option value="review">Review</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </section>
+        </section>
+
+        <form id="updateTaskForm" action="#" method="POST" data-update-task-form>
+            <section class="update-grid">
+                <div class="update-left">
+                    <section class="progress-card">
+                        <div class="progress-card-header">
+                            <div>
+                                <h2>Project Completion</h2>
+                                <p>Update the current milestone progress</p>
+                            </div>
+
+                            <strong data-progress-value>65%</strong>
+                        </div>
+
+                        <div class="progress-range-wrap">
+                            <input
+                                type="range"
+                                id="projectCompletion"
+                                name="project_completion"
+                                min="0"
+                                max="100"
+                                value="65"
+                                data-progress-range
+                            >
+
+                            <div class="range-labels">
+                                <span>Started</span>
+                                <span>Midpoint</span>
+                                <span>Finalizing</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="checklist-card">
+                        <h2>☑ Checklist Updates</h2>
+
+                        <div class="checklist-list">
+                            <label class="checklist-item completed">
+                                <input type="checkbox" name="checklist[]" value="methodology" checked>
+                                <span class="custom-check"></span>
+                                <span>
+                                    <strong>Drafting methodology section</strong>
+                                    <small>Completed on Oct 18</small>
+                                </span>
+                            </label>
+
+                            <label class="checklist-item completed">
+                                <input type="checkbox" name="checklist[]" value="citations" checked>
+                                <span class="custom-check"></span>
+                                <span>
+                                    <strong>Validation of source citations</strong>
+                                    <small>Completed on Oct 19</small>
+                                </span>
+                            </label>
+
+                            <label class="checklist-item">
+                                <input type="checkbox" name="checklist[]" value="formatting">
+                                <span class="custom-check"></span>
+                                <span>
+                                    <strong>Formatting for submission portal</strong>
+                                    <small>Estimated: 2 hours</small>
+                                </span>
+                            </label>
+
+                            <label class="checklist-item">
+                                <input type="checkbox" name="checklist[]" value="summary">
+                                <span class="custom-check"></span>
+                                <span>
+                                    <strong>Final executive summary review</strong>
+                                    <small>Pending peer sign-off</small>
+                                </span>
+                            </label>
+                        </div>
+                    </section>
+                </div>
+
+                <aside class="update-right">
+                    <section class="progress-note-card">
+                        <h2>Add Progress Note</h2>
+
+                        <div class="form-group">
+                            <label for="progressNote" class="sr-only">Progress Note</label>
+                            <textarea
+                                id="progressNote"
+                                name="progress_note"
+                                placeholder="Detail any blockers, findings, or specific updates for the team..."
+                                required
+                            ></textarea>
+                            <small class="error-message"></small>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full update-progress-btn">
+                            🚀 Update Progress
+                        </button>
+
+                        <p>Team will be notified automatically</p>
+                    </section>
+                </aside>
+            </section>
+        </form>
+
+        <section class="update-footer-info">
+            <div>
+                <span>Assigned Team</span>
+                <div class="assigned-avatars">
+                    <span>OD</span>
+                    <span>ML</span>
+                    <span>SK</span>
+                </div>
+            </div>
+
+            <div>
+                <span>Last Active</span>
+                <p>◷ Today, 10:42 AM by Dr. Jenkins</p>
+            </div>
+
+            <div>
+                <span>Linked Resources</span>
+                <div class="linked-icons">
+                    <button type="button" aria-label="Document">▤</button>
+                    <button type="button" aria-label="Attachment">⌁</button>
+                    <a href="comment-interface.html" class="discussion-link" aria-label="Open discussion">⌯</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/update-task-progress.js"></script>
+</body>
+</html>

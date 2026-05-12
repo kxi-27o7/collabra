@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion Feed - Scholarly Architect</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/comment-interface.css">
+</head>
+<body class="comment-body">
+    <header class="comment-topbar">
+        <div class="comment-brand-area">
+            <a href="dashboard-pm.html" class="comment-brand">Scholarly Architect</a>
+
+            <nav class="comment-nav">
+                <a href="dashboard-pm.html" class="active">Dashboard</a>
+                <a href="project-list.html">Projects</a>
+                <a href="task-board.html">Tasks</a>
+            </nav>
+        </div>
+
+        <div class="comment-topbar-actions">
+            <div class="comment-search">
+                <span>⌕</span>
+                <input type="text" placeholder="Search research..." data-comment-search>
+            </div>
+
+            <button type="button" class="comment-icon-btn" aria-label="Notifications">♧</button>
+            <button type="button" class="comment-icon-btn" aria-label="Profile">◎</button>
+        </div>
+    </header>
+
+    <main class="comment-layout">
+        <aside class="task-context-panel">
+            <section class="task-context-card">
+                <p class="context-label">Task Context</p>
+
+                <h1>Refine Methodology for Neural Architecture Search</h1>
+
+                <p class="context-description">
+                    Phase 2: Hyperparameter Optimization Framework.
+                </p>
+
+                <div class="context-meta-list">
+                    <div class="context-meta-item">
+                        <span class="context-icon purple">♙</span>
+                        <div>
+                            <small>Assigned to</small>
+                            <strong>Dr. Aris Thorne</strong>
+                        </div>
+                    </div>
+
+                    <div class="context-meta-item">
+                        <span class="context-icon peach">▣</span>
+                        <div>
+                            <small>Deadline</small>
+                            <strong>Oct 24, 2024</strong>
+                        </div>
+                    </div>
+
+                    <div class="context-meta-item">
+                        <span class="context-icon blue">⚑</span>
+                        <div>
+                            <small>Priority</small>
+                            <strong>High Priority</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="related-doc-card">
+                <h2>Related Documents</h2>
+
+                <div class="related-doc-list">
+                    <a href="files.html" class="related-doc-item">
+                        <span>▤</span>
+                        <strong>Draft_v4_NAS.pdf</strong>
+                    </a>
+
+                    <a href="files.html" class="related-doc-item">
+                        <span>▦</span>
+                        <strong>Data_Params_Set_A.csv</strong>
+                    </a>
+                </div>
+            </section>
+        </aside>
+
+        <section class="discussion-panel">
+            <header class="discussion-header">
+                <div class="discussion-title">
+                    <span>▱</span>
+                    <h2>Discussion Feed</h2>
+                    <small>12 Comments</small>
+                </div>
+
+                <div class="discussion-actions">
+                    <button type="button" aria-label="Filter comments">≡</button>
+                    <button type="button" aria-label="More options">⋮</button>
+                </div>
+            </header>
+
+            <section class="comment-feed" data-comment-feed>
+                <article class="comment-thread" data-comment-item>
+                    <div class="comment-avatar image-avatar">EV</div>
+
+                    <div class="comment-content">
+                        <div class="comment-meta">
+                            <div>
+                                <strong>Prof. Elias Vance</strong>
+                                <span class="role-badge">Lead</span>
+                            </div>
+                            <time>2 hours ago</time>
+                        </div>
+
+                        <div class="comment-bubble">
+                            The current architecture seems to overlook the
+                            <a href="#">gradient sparsity</a>
+                            issues we encountered in the last sprint. I recommend we re-evaluate the activation
+                            functions for the primary layers before moving to phase 3.
+                        </div>
+
+                        <div class="reply-thread">
+                            <article class="comment-thread reply" data-comment-item>
+                                <div class="comment-avatar small-avatar">SJ</div>
+
+                                <div class="comment-content">
+                                    <div class="comment-meta">
+                                        <div>
+                                            <strong>Sarah Jenkins</strong>
+                                        </div>
+                                        <time>1 hour ago</time>
+                                    </div>
+
+                                    <div class="comment-bubble reply-bubble">
+                                        Agreed. I've uploaded a preliminary test result
+                                        <a href="#">NAS_Test_v1.2.xlsx</a>
+                                        showing the sparsity curves. It supports Elias's point.
+                                    </div>
+
+                                    <button type="button" class="reply-btn" data-reply-button>
+                                        ↩ Reply
+                                    </button>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </article>
+
+                <div class="status-divider">
+                    <span></span>
+                    <strong>Task Status Updated to In Progress</strong>
+                    <span></span>
+                </div>
+
+                <article class="comment-thread" data-comment-item>
+                    <div class="comment-avatar initials-avatar">DT</div>
+
+                    <div class="comment-content">
+                        <div class="comment-meta">
+                            <div>
+                                <strong>Dr. Thomas</strong>
+                            </div>
+                            <time>45 mins ago</time>
+                        </div>
+
+                        <div class="comment-bubble">
+                            Can we schedule a brief sync tomorrow morning to discuss the integration with the existing API?
+                            We need to ensure the metadata remains accessible during the transformation.
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="comment-composer">
+                <form data-comment-form>
+                    <div class="form-group">
+                        <label for="commentMessage" class="sr-only">Comment</label>
+                        <textarea
+                            id="commentMessage"
+                            name="comment_message"
+                            placeholder="Add a comment or reference a paper with @..."
+                            required
+                        ></textarea>
+                        <small class="error-message"></small>
+                    </div>
+
+                    <div class="composer-toolbar">
+                        <div class="composer-tools">
+                            <button type="button" aria-label="Bold">B</button>
+                            <button type="button" aria-label="Italic">I</button>
+                            <button type="button" aria-label="Insert link">⌁</button>
+                            <button type="button" aria-label="Attach file">∥</button>
+                            <button type="button" aria-label="Mention">@</button>
+                        </div>
+
+                        <div class="composer-actions">
+                            <button type="button" class="save-draft-btn" data-save-draft>
+                                Save Draft
+                            </button>
+
+                            <button type="submit" class="send-comment-btn">
+                                Send ▷
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="composer-footer">
+                    <span>♙ Encrypted Conversation</span>
+                    <span>◷ 12 revisions tracked</span>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="../js/comment-interface.js"></script>
+</body>
+</html>

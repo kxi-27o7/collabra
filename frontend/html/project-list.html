@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Scholarly Architect</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/app-layout.css">
+    <link rel="stylesheet" href="../css/project-list.css">
+</head>
+<body class="app-body">
+    <aside class="sidebar">
+        <div class="sidebar-brand">Scholarly Architect</div>
+
+        <div class="workspace-title settings-workspace">
+            <span class="workspace-icon">⌘</span>
+            <div>
+                <h2>Research Lab</h2>
+                <p>Academic Management</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard-pm.html">
+                <span>▦</span>
+                Dashboard
+            </a>
+            <a href="project-list.html" class="active">
+                <span>⌘</span>
+                Projects
+            </a>
+            <a href="task-board.html">
+                <span>▤</span>
+                Tasks
+            </a>
+            <a href="manage-team.html">
+                <span>☷</span>
+                Team
+            </a>
+            <a href="files.html">
+                <span>▱</span>
+                Files
+            </a>
+            <a href="reports-dashboard.html">
+                <span>▥</span>
+                Reports
+            </a>
+            <a href="profile-settings.html">
+                <span>⚙</span>
+                Settings
+            </a>
+        </nav>
+    </aside>
+
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="text" placeholder="Search research projects..." data-project-search>
+            </div>
+
+            <div class="topbar-actions">
+                <button type="button" class="icon-btn" aria-label="Notifications">
+                    ♧
+                </button>
+
+                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
+                    ◎
+                </button>
+            </div>
+        </header>
+
+        <section class="dashboard-content project-content">
+            <div class="project-page-header">
+                <div class="page-heading project-heading">
+                    <h1>Academic Portfolio</h1>
+                    <p>
+                        Manage active research initiatives, track peer-review cycles, and monitor
+                        grant milestone progression.
+                    </p>
+                </div>
+
+                <a href="create-project.html" class="btn btn-primary create-project-btn">
+                    <span>⊕</span>
+                    Create Project
+                </a>
+            </div>
+
+            <div class="project-toolbar">
+                <div class="project-tabs" data-project-tabs>
+                    <button type="button" class="active" data-filter="all">All Projects</button>
+                    <button type="button" data-filter="active">Active</button>
+                    <button type="button" data-filter="completed">Completed</button>
+                    <button type="button" data-filter="archived">Archived</button>
+                </div>
+
+                <div class="project-filter-actions">
+                    <button type="button">
+                        <span>≡</span>
+                        Category
+                    </button>
+                    <button type="button">
+                        <span>≡</span>
+                        Due Date
+                    </button>
+                </div>
+            </div>
+
+            <section class="project-list-grid">
+                <article class="project-card project-card-large" data-project-card data-status="active">
+                    <div class="project-card-top">
+                        <span class="project-status healthy"></span>
+                        <span class="status-text">Healthy</span>
+                        <span class="priority-badge high">High Priority</span>
+                    </div>
+
+                    <h2>
+                        <a href="project-detail.html">Neural Pathway Mapping for Cognitive Plasticity</a>
+                    </h2>
+                    <p class="project-description">
+                        Investigating the long-term effects of auditory stimulus on neuro-regeneration
+                        in adult subjects. Funded by the National Science Foundation.
+                    </p>
+
+                    <div class="project-progress-block">
+                        <div class="project-progress-label">
+                            <span>Research Progress</span>
+                            <strong>72%</strong>
+                        </div>
+                        <div class="progress-bar">
+                            <span style="width: 72%;"></span>
+                        </div>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <div class="avatar-stack">
+                            <span class="mini-avatar">A</span>
+                            <span class="mini-avatar">J</span>
+                            <span class="mini-avatar">E</span>
+                            <span class="mini-count">+4</span>
+                        </div>
+
+                        <div class="project-deadline">
+                            <span>Deadline</span>
+                            <strong>Oct 14, 2024</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card risk-card" data-project-card data-status="active">
+                    <button type="button" class="project-more-btn" aria-label="More options">⋮</button>
+
+                    <div class="project-card-top compact">
+                        <span class="project-status risk"></span>
+                        <span class="status-text">At Risk</span>
+                    </div>
+
+                    <h2>Quantum Entanglement Scalability</h2>
+                    <p class="project-category">Theoretical Physics</p>
+
+                    <div class="milestone-block">
+                        <div class="project-progress-label">
+                            <span>Milestones</span>
+                            <strong>3 / 8</strong>
+                        </div>
+                        <div class="progress-bar yellow">
+                            <span style="width: 38%;"></span>
+                        </div>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <div class="avatar-stack">
+                            <span class="mini-avatar">Q</span>
+                            <span class="mini-avatar">T</span>
+                        </div>
+
+                        <div class="project-deadline due-red">
+                            <span>Due</span>
+                            <strong>Sep 20, 2024</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-row-card" data-project-card data-status="active">
+                    <div class="project-row-title">
+                        <span class="project-status danger"></span>
+                        <div>
+                            <h2>Micro-climate Analysis</h2>
+                            <p>Ecological Systems</p>
+                        </div>
+                    </div>
+
+                    <div class="avatar-stack">
+                        <span class="mini-avatar">M</span>
+                        <span class="mini-count">+1</span>
+                    </div>
+
+                    <div class="row-progress">
+                        <div class="project-progress-label">
+                            <span>Phase 1 Completion</span>
+                            <strong>15%</strong>
+                        </div>
+                        <div class="progress-bar red">
+                            <span style="width: 15%;"></span>
+                        </div>
+                    </div>
+
+                    <div class="row-priority">
+                        <span>Priority</span>
+                        <strong>Medium</strong>
+                    </div>
+
+                    <div class="row-deadline">
+                        <span>Deadline</span>
+                        <strong>Dec 01, 2024</strong>
+                    </div>
+
+                    <button type="button" class="row-arrow" aria-label="Open project">›</button>
+                </article>
+
+                <article class="project-card small-project-card" data-project-card data-status="active">
+                    <button type="button" class="project-more-btn" aria-label="More options">⋮</button>
+
+                    <div class="project-card-top compact">
+                        <span class="project-status healthy"></span>
+                        <span class="status-text">Healthy</span>
+                    </div>
+
+                    <h2>Post-colonial Narrative Review</h2>
+                    <p class="project-category">Global Literature</p>
+
+                    <div class="milestone-block">
+                        <div class="project-progress-label">
+                            <span>Review Progress</span>
+                            <strong>92%</strong>
+                        </div>
+                        <div class="progress-bar green">
+                            <span style="width: 92%;"></span>
+                        </div>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <div class="avatar-stack">
+                            <span class="mini-avatar">P</span>
+                        </div>
+
+                        <div class="project-deadline">
+                            <span>Due</span>
+                            <strong>Next Week</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card small-project-card" data-project-card data-status="active">
+                    <button type="button" class="project-more-btn" aria-label="More options">⋮</button>
+
+                    <div class="project-card-top compact">
+                        <span class="project-status healthy"></span>
+                        <span class="status-text">Healthy</span>
+                    </div>
+
+                    <h2>Bio-Synthetic Heart Valves</h2>
+                    <p class="project-category">Biomedical Engineering</p>
+
+                    <div class="milestone-block">
+                        <div class="project-progress-label">
+                            <span>Clinical Trials</span>
+                            <strong>60%</strong>
+                        </div>
+                        <div class="progress-bar">
+                            <span style="width: 60%;"></span>
+                        </div>
+                    </div>
+
+                    <div class="project-card-footer">
+                        <div class="avatar-stack">
+                            <span class="mini-avatar">B</span>
+                            <span class="mini-avatar">H</span>
+                        </div>
+
+                        <div class="project-deadline">
+                            <span>Due</span>
+                            <strong>Nov 12, 2024</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <a href="create-project.html" class="new-project-card">
+                    <span>＋</span>
+                    <strong>Initiate New Research</strong>
+                    <small>Click to define a new project container</small>
+                </a>
+            </section>
+        </section>
+    </main>
+
+    <script src="../js/project-list.js"></script>
+</body>
+</html>

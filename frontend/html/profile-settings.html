@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings - Scholarly Architect</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/app-layout.css">
+    <link rel="stylesheet" href="../css/profile-settings.css">
+</head>
+<body class="app-body">
+    <aside class="sidebar">
+        <div class="sidebar-brand">Scholarly Architect</div>
+
+        <div class="workspace-title settings-workspace">
+            <span class="workspace-icon">✧</span>
+            <div>
+                <h2>Research Lab</h2>
+                <p>Academic Management</p>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard-pm.html">
+                <span>▦</span>
+                Dashboard
+            </a>
+            <a href="project-list.html">
+                <span>⌘</span>
+                Projects
+            </a>
+            <a href="task-board.html">
+                <span>▤</span>
+                Tasks
+            </a>
+            <a href="manage-team.html">
+                <span>☷</span>
+                Team
+            </a>
+            <a href="files.html">
+                <span>▱</span>
+                Files
+            </a>
+            <a href="reports-dashboard.html">
+                <span>▥</span>
+                Reports
+            </a>
+            <a href="profile-settings.html" class="active">
+                <span>⚙</span>
+                Settings
+            </a>
+        </nav>
+    </aside>
+
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="text" placeholder="Search research projects..." data-search-input>
+            </div>
+
+            <div class="topbar-actions">
+                <button type="button" class="icon-btn" aria-label="Notifications">
+                    ♧
+                </button>
+
+                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
+                    ◎
+                </button>
+            </div>
+        </header>
+
+        <section class="dashboard-content settings-content">
+            <div class="page-heading settings-heading">
+                <h1>User Settings</h1>
+                <p>Manage your academic profile, security protocols, and research notification preferences.</p>
+            </div>
+
+            <div class="settings-layout">
+                <aside class="settings-tabs" aria-label="Settings tabs">
+                    <button type="button" class="settings-tab active" data-settings-tab="profile">
+                        <span>♙</span>
+                        Profile Details
+                    </button>
+                    <button type="button" class="settings-tab" data-settings-tab="security">
+                        <span>♢</span>
+                        Security & Privacy
+                    </button>
+                    <button type="button" class="settings-tab" data-settings-tab="notifications">
+                        <span>♧</span>
+                        Notifications
+                    </button>
+                </aside>
+
+                <form class="settings-main" action="#" method="POST" data-form="settings">
+                    <section class="settings-card profile-photo-card" data-settings-panel="profile">
+                        <div class="profile-photo-preview">
+                            <span>👨‍🎓</span>
+                        </div>
+
+                        <div class="profile-photo-info">
+                            <h2>Your Profile Photo</h2>
+                            <p>Upload a high-resolution portrait for citation attribution.</p>
+
+                            <div class="photo-actions">
+                                <label for="avatarUpload" class="btn btn-primary">
+                                    Change Avatar
+                                </label>
+                                <input type="file" id="avatarUpload" name="avatar" accept="image/*" hidden>
+
+                                <button type="button" class="btn btn-light-outline" data-remove-avatar>
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="settings-card" data-settings-panel="profile">
+                        <div class="settings-card-header">
+                            <h2><span>♔</span> Profile Info</h2>
+                            <span class="verified-badge">Verified</span>
+                        </div>
+
+                        <div class="settings-form-grid">
+                            <div class="form-group">
+                                <label for="settingsFullName">Full Name</label>
+                                <input
+                                    type="text"
+                                    id="settingsFullName"
+                                    name="full_name"
+                                    value="Dr. Alistair Vance"
+                                    required
+                                >
+                                <small class="error-message"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="settingsEmail">Email Address</label>
+                                <input
+                                    type="email"
+                                    id="settingsEmail"
+                                    name="email"
+                                    value="a.vance@university.edu"
+                                    required
+                                >
+                                <small class="error-message"></small>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="researchBio">Research Bio</label>
+                                <textarea
+                                    id="researchBio"
+                                    name="research_bio"
+                                    rows="4"
+                                    required
+                                >Lead researcher at the Computational Linguistics Institute. Focusing on architectural neural networks and structural data integrity in academic archives.</textarea>
+                                <small class="error-message"></small>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="settings-card" data-settings-panel="security">
+                        <div class="settings-card-header">
+                            <h2><span>♙</span> Security</h2>
+                        </div>
+
+                        <div class="security-row">
+                            <div>
+                                <h3>Password Management</h3>
+                                <p>Last updated: 4 months ago</p>
+                            </div>
+
+                            <button type="button" class="btn btn-soft">
+                                Update Password
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="settings-card" data-settings-panel="notifications">
+                        <div class="settings-card-header">
+                            <h2><span>✉</span> Notification Settings</h2>
+                        </div>
+
+                        <div class="notification-settings-list">
+                            <label class="notification-setting-row">
+                                <span>
+                                    <strong>New Peer Reviews</strong>
+                                    <small>Receive alerts when a reviewer submits feedback.</small>
+                                </span>
+
+                                <input type="checkbox" name="new_peer_reviews" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+
+                            <label class="notification-setting-row">
+                                <span>
+                                    <strong>Weekly Lab Summary</strong>
+                                    <small>Consolidated report of lab activity.</small>
+                                </span>
+
+                                <input type="checkbox" name="weekly_lab_summary">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </section>
+
+                    <div class="settings-actions">
+                        <button type="button" class="discard-btn" data-discard-settings>
+                            Discard Changes
+                        </button>
+
+                        <button type="submit" class="btn btn-primary">
+                            Save Profile
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/profile-settings.js"></script>
+</body>
+</html>

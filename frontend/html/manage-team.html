@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Directory - Scholarly Architect</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/app-layout.css">
+    <link rel="stylesheet" href="../css/manage-team.css">
+</head>
+<body class="app-body">
+    <aside class="sidebar">
+        <div class="sidebar-brand">Scholarly Architect</div>
+
+        <div class="workspace-title">
+            <h2>Research Lab</h2>
+            <p>Academic Management</p>
+        </div>
+
+        <nav class="sidebar-menu">
+            <a href="dashboard-pm.html">
+                <span>▦</span>
+                Dashboard
+            </a>
+            <a href="project-list.html">
+                <span>⌘</span>
+                Projects
+            </a>
+            <a href="task-board.html">
+                <span>▤</span>
+                Tasks
+            </a>
+            <a href="manage-team.html" class="active">
+                <span>☷</span>
+                Team
+            </a>
+            <a href="files.html">
+                <span>▱</span>
+                Files
+            </a>
+            <a href="reports-dashboard.html">
+                <span>▥</span>
+                Reports
+            </a>
+            <a href="profile-settings.html">
+                <span>⚙</span>
+                Settings
+            </a>
+        </nav>
+    </aside>
+
+    <main class="app-main">
+        <header class="app-topbar">
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="text" placeholder="Search researchers..." data-team-search>
+            </div>
+
+            <div class="topbar-actions">
+                <button type="button" class="icon-btn" aria-label="Notifications">
+                    ♧
+                </button>
+
+                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
+                    ◎
+                </button>
+            </div>
+        </header>
+
+        <section class="dashboard-content team-content">
+            <div class="team-page-header">
+                <div class="page-heading team-heading">
+                    <h1>Team Directory</h1>
+                    <p>
+                        Manage scholarly contributors, define institutional roles, and monitor active
+                        research workloads.
+                    </p>
+                </div>
+
+                <button type="button" class="btn btn-primary invite-team-btn" data-open-invite-modal>
+                    ☷ Invite Team Member
+                </button>
+            </div>
+
+            <section class="team-stats-grid">
+                <article class="team-stat-card">
+                    <p>Total Members</p>
+                    <h2>24</h2>
+                    <span class="stat-chip peach">↗ +2 this month</span>
+                </article>
+
+                <article class="team-stat-card">
+                    <p>Active Projects</p>
+                    <h2>12</h2>
+                    <span class="stat-chip purple">⚗ Ongoing research</span>
+                </article>
+
+                <article class="team-stat-card">
+                    <p>Peer Reviews</p>
+                    <h2>156</h2>
+                    <span class="stat-chip peach">✉ Total submissions</span>
+                </article>
+            </section>
+
+            <section class="personnel-card">
+                <div class="personnel-header">
+                    <h2>Active Personnel</h2>
+
+                    <button type="button" class="filter-btn" aria-label="Filter team">
+                        ≡
+                    </button>
+                </div>
+
+                <div class="personnel-table">
+                    <div class="personnel-table-head">
+                        <span>Name</span>
+                        <span>Role</span>
+                        <span>Joined Date</span>
+                        <span>Workload</span>
+                        <span>Actions</span>
+                    </div>
+
+                    <article class="personnel-row" data-team-member>
+                        <div class="member-info">
+                            <span class="team-avatar dark">J</span>
+                            <div>
+                                <h3>Dr. Julian Vance</h3>
+                                <p>julian.vance@university.edu</p>
+                            </div>
+                        </div>
+
+                        <span class="role-pill">PM</span>
+
+                        <span class="joined-date">Oct 12, 2023</span>
+
+                        <div class="workload-cell">
+                            <span>14 tasks</span>
+                            <div class="workload-bar">
+                                <span style="width: 72%;"></span>
+                            </div>
+                        </div>
+
+                        <button type="button" class="delete-member-btn" aria-label="Delete member">
+                            ♲
+                        </button>
+                    </article>
+
+                    <article class="personnel-row" data-team-member>
+                        <div class="member-info">
+                            <span class="team-avatar teal">E</span>
+                            <div>
+                                <h3>Elena Rodriguez</h3>
+                                <p>e.rodriguez@lab.org</p>
+                            </div>
+                        </div>
+
+                        <span class="role-pill">Member</span>
+
+                        <span class="joined-date">Jan 05, 2024</span>
+
+                        <div class="workload-cell">
+                            <span>8 tasks</span>
+                            <div class="workload-bar">
+                                <span style="width: 38%;"></span>
+                            </div>
+                        </div>
+
+                        <button type="button" class="delete-member-btn" aria-label="Delete member">
+                            ♲
+                        </button>
+                    </article>
+
+                    <article class="personnel-row" data-team-member>
+                        <div class="member-info">
+                            <span class="team-avatar dark">M</span>
+                            <div>
+                                <h3>Marcus Chen</h3>
+                                <p>m.chen@scholarly.com</p>
+                            </div>
+                        </div>
+
+                        <span class="role-pill">Member</span>
+
+                        <span class="joined-date">Feb 18, 2024</span>
+
+                        <div class="workload-cell">
+                            <span>12 tasks</span>
+                            <div class="workload-bar">
+                                <span style="width: 58%;"></span>
+                            </div>
+                        </div>
+
+                        <button type="button" class="delete-member-btn" aria-label="Delete member">
+                            ♲
+                        </button>
+                    </article>
+
+                    <article class="personnel-row" data-team-member>
+                        <div class="member-info">
+                            <span class="team-avatar teal">S</span>
+                            <div>
+                                <h3>Sarah Al-Farsi</h3>
+                                <p>s.alfarsi@university.edu</p>
+                            </div>
+                        </div>
+
+                        <span class="role-pill">PM</span>
+
+                        <span class="joined-date">Nov 30, 2023</span>
+
+                        <div class="workload-cell">
+                            <span>5 tasks</span>
+                            <div class="workload-bar">
+                                <span style="width: 24%;"></span>
+                            </div>
+                        </div>
+
+                        <button type="button" class="delete-member-btn" aria-label="Delete member">
+                            ♲
+                        </button>
+                    </article>
+                </div>
+
+                <div class="personnel-footer">
+                    <p>Showing 4 of 24 scholarly contributors</p>
+
+                    <div class="pagination-actions">
+                        <button type="button">Previous</button>
+                        <button type="button">Next</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="team-bottom-grid">
+                <article class="permissions-info">
+                    <h2>Institutional Permissions</h2>
+                    <p>
+                        Roles within the <strong>Scholarly Architect</strong> ecosystem are governed by
+                        institutional hierarchy. Project Managers (PMs) possess administrative authority
+                        to invite collaborators, assign workload quotas, and manage team composition.
+                        Regular members maintain focus on research output and task completion without
+                        administrative overhead.
+                    </p>
+
+                    <div class="permission-links">
+                        <a href="#">♡ Peer Reviewed Access</a>
+                        <a href="#">♢ Secure DOI Handlers</a>
+                    </div>
+                </article>
+
+                <article class="external-invite-card">
+                    <h2>Invite External Scholars</h2>
+                    <p>
+                        Need a specialist for a peer review? Send a temporary access link.
+                    </p>
+
+                    <button type="button" class="btn invite-link-btn" data-generate-invite>
+                        Generate Invite Link
+                    </button>
+                </article>
+            </section>
+        </section>
+    </main>
+
+    <div class="invite-modal" data-invite-modal>
+        <div class="invite-modal-card">
+            <button type="button" class="modal-close-btn" data-close-invite-modal>×</button>
+
+            <h2>Invite Team Member</h2>
+            <p>Add a researcher to your lab workspace.</p>
+
+            <form data-invite-form>
+                <div class="form-group">
+                    <label for="inviteName">Full Name</label>
+                    <input type="text" id="inviteName" name="invite_name" placeholder="Dr. Jane Doe" required>
+                    <small class="error-message"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="inviteEmail">Email Address</label>
+                    <input type="email" id="inviteEmail" name="invite_email" placeholder="jane@university.edu" required>
+                    <small class="error-message"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="inviteRole">Role</label>
+                    <select id="inviteRole" name="invite_role" required>
+                        <option value="member">Member</option>
+                        <option value="pm">Project Manager</option>
+                    </select>
+                    <small class="error-message"></small>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-full">
+                    Send Invite
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/manage-team.js"></script>
+</body>
+</html>
