@@ -47,3 +47,44 @@ function setupProjectTabs() {
         });
     });
 }
+document.addEventListener("DOMContentLoaded", () => {
+  renderSavedProjects();
+});
+
+function renderSavedProjects() {
+  const projectGrid = document.querySelector(".project-grid, .projects-grid, [data-project-list]");
+
+  if (!projectGrid || typeof getProjects !== "function") return;
+
+  const savedProjects = getProjects();
+
+  savedProjects.forEach((project) => {
+    const role = getUserRoleInProject(project);
+    const roleClass = role === "Project Manager"
+      ? "manager"
+      : role === "Team Member"
+        ? "member"
+        : "no-role";
+
+    const card = document.createElement("article");
+    card.className = "project-card";
+
+    card.innerHTML = `
+      <div class="project-card-header">
+        <h3>${project.name}</h3>
+        <span class="project-role-badge ${roleClass}">Your role: ${role}</span>
+      </div>
+
+      <p>${project.description || "No description provided."}</p>
+
+      <div class="project-meta">
+        <span>Deadline: ${project.deadline || "Not set"}</span>
+        <span>Status: ${project.status || "Drafting"}</span>
+      </div>
+
+      <a href="project-detail.html" class="btn btn-secondary">Open Project</a>
+    `;
+
+    projectGrid.prepend(card);
+  });
+}
