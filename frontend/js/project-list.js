@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function renderSavedProjects() {
-  const projectGrid = document.querySelector(".project-grid, .projects-grid, [data-project-list]");
+  const projectGrid = document.querySelector(".project-list-grid, .project-grid, .projects-grid, [data-project-list]");
 
   if (!projectGrid) return;
 
