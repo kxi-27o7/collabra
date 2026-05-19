@@ -504,3 +504,29 @@
 .project-card h2 a:hover {
     color: var(--primary);
 }
+
+.project-role-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.project-role-badge.manager {
+  background: rgba(91, 107, 255, 0.12);
+  color: #3442c4;
+}
+
+.project-role-badge.member {
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
+}
+
+.project-role-badge.no-role {
+  background: rgba(107, 114, 128, 0.12);
+  color: #4b5563;
+}

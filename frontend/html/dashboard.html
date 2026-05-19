@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collabra | Dashboard</title>
+
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/app-layout.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-mark">⌘</div>
+        <div>
+          <h2>Research Lab</h2>
+          <p>Academic Management</p>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <a href="dashboard.html" class="active">
+          <span>▦</span>
+          Dashboard
+        </a>
+
+        <a href="project-list.html">
+          <span>⌘</span>
+          Projects
+        </a>
+
+        <a href="task-board.html">
+          <span>▤</span>
+          Tasks
+        </a>
+
+        <a href="manage-team.html">
+          <span>☷</span>
+          Team
+        </a>
+
+        <a href="files.html">
+          <span>▱</span>
+          Files
+        </a>
+
+        <a href="reports-dashboard.html">
+          <span>▥</span>
+          Reports
+        </a>
+
+        <a href="profile-settings.html">
+          <span>⚙</span>
+          Settings
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Area -->
+    <main class="main-panel">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <button class="search-button" type="button">⌕</button>
+
+        <div class="top-actions">
+          <button type="button">♧</button>
+          <button type="button">◎</button>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <section class="dashboard-content">
+        <div class="dashboard-heading">
+          <div>
+            <p class="section-kicker">Workspace Overview</p>
+            <h1>Collabra Dashboard</h1>
+            <p>
+              Monitor your active projects, assigned tasks, upcoming deadlines, and collaboration updates.
+            </p>
+          </div>
+
+          <div class="dashboard-actions">
+            <a href="join-project.html" class="btn btn-secondary">Join Project</a>
+            <a href="create-project.html" class="btn btn-primary">＋ Create Project</a>
+          </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <section class="metric-grid">
+          <article class="metric-card">
+            <div class="metric-label">
+              <span>✓</span>
+              Total Projects
+            </div>
+            <h2 id="totalProjects">4</h2>
+            <p>Across your workspace</p>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-label">
+              <span>▤</span>
+              Active Tasks
+            </div>
+            <h2 id="activeTasks">12</h2>
+            <p>Currently in progress</p>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-label warning">
+              <span>!</span>
+              Upcoming
+            </div>
+            <h2 id="upcomingDeadlines">3</h2>
+            <p>Deadlines this week</p>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-label success">
+              <span>✓</span>
+              Completed
+            </div>
+            <h2 id="completedTasks">18</h2>
+            <p>Finished this month</p>
+          </article>
+        </section>
+
+        <!-- Dashboard Grid -->
+        <section class="dashboard-grid">
+          <!-- Project Progress -->
+          <article class="dashboard-card large-card">
+            <div class="card-header">
+              <div>
+                <h2>My Projects</h2>
+                <p>Your role is assigned separately inside each project.</p>
+              </div>
+              <a href="project-list.html">View All Projects ›</a>
+            </div>
+
+            <div class="project-list">
+              <div class="project-item">
+                <div class="project-info">
+                  <div class="project-icon">N</div>
+                  <div>
+                    <h3>Neural Pathway Mapping</h3>
+                    <p>Phase 3: Quantitative Analysis</p>
+                  </div>
+                </div>
+
+                <div class="project-side">
+                  <span class="role-pill manager">Project Manager</span>
+                  <strong>74%</strong>
+                </div>
+
+                <div class="progress-bar">
+                  <span style="width: 74%;"></span>
+                </div>
+
+                <div class="project-footer">
+                  <div class="avatar-stack">
+                    <span>A</span>
+                    <span>E</span>
+                    <span>+4</span>
+                  </div>
+                  <p>Deadline: Nov 24, 2024</p>
+                </div>
+              </div>
+
+              <div class="project-item">
+                <div class="project-info">
+                  <div class="project-icon">Q</div>
+                  <div>
+                    <h3>Quantum Entanglement Scalability</h3>
+                    <p>Phase 1: Literature Review</p>
+                  </div>
+                </div>
+
+                <div class="project-side">
+                  <span class="role-pill member">Team Member</span>
+                  <strong>32%</strong>
+                </div>
+
+                <div class="progress-bar yellow">
+                  <span style="width: 32%;"></span>
+                </div>
+
+                <div class="project-footer">
+                  <div class="avatar-stack">
+                    <span>M</span>
+                    <span>S</span>
+                  </div>
+                  <p>Deadline: Dec 12, 2024</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Quick Actions -->
+          <article class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <h2>Quick Actions</h2>
+                <p>Start or continue collaboration.</p>
+              </div>
+            </div>
+
+            <div class="quick-action-grid">
+              <a href="create-project.html" class="quick-action">
+                <span>▣</span>
+                <div>
+                  <h3>Create Project</h3>
+                  <p>You become Project Manager.</p>
+                </div>
+              </a>
+
+              <a href="join-project.html" class="quick-action">
+                <span>↪</span>
+                <div>
+                  <h3>Join Project</h3>
+                  <p>Join as Team Member.</p>
+                </div>
+              </a>
+
+              <a href="task-board.html" class="quick-action">
+                <span>☑</span>
+                <div>
+                  <h3>View Tasks</h3>
+                  <p>Check assigned work.</p>
+                </div>
+              </a>
+            </div>
+          </article>
+
+          <!-- Task Snapshot -->
+          <article class="dashboard-card">
+            <div class="card-header">
+              <div>
+                <h2>Task Snapshot</h2>
+                <p>Current task distribution.</p>
+              </div>
+            </div>
+
+            <div class="task-list">
+              <div class="task-row">
+                <div>
+                  <h3>Literature Review Draft</h3>
+                  <p>Neural Pathway Mapping</p>
+                </div>
+                <span class="status-pill progress">In Progress</span>
+              </div>
+
+              <div class="task-row">
+                <div>
+                  <h3>Dataset Cleaning</h3>
+                  <p>Urban Climate Adaptation</p>
+                </div>
+                <span class="status-pill review">Review</span>
+              </div>
+
+              <div class="task-row">
+                <div>
+                  <h3>Progress Report</h3>
+                  <p>Quantum Entanglement Scalability</p>
+                </div>
+                <span class="status-pill todo">To Do</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Activity Feed -->
+          <article class="dashboard-card large-card">
+            <div class="card-header">
+              <div>
+                <h2>Activity Feed</h2>
+                <p>Latest updates from your collaborative workspace.</p>
+              </div>
+              <a href="#">Show More Activity</a>
+            </div>
+
+            <div class="activity-feed">
+              <div class="activity-item">
+                <div class="activity-icon">▧</div>
+                <div>
+                  <span>2 Hours Ago</span>
+                  <p>Elena Rodriguez uploaded “Q3 Results Data.csv” to Neural Pathway Mapping.</p>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon success">✓</div>
+                <div>
+                  <span>5 Hours Ago</span>
+                  <p>Marcus Sterling marked “Phase 2 Review” as completed.</p>
+                </div>
+              </div>
+
+              <div class="activity-item">
+                <div class="activity-icon">▱</div>
+                <div>
+                  <span>Yesterday</span>
+                  <p>New comment added in the Ethical AI Documentation discussion.</p>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Insight -->
+          <article class="dashboard-card insight-card">
+            <h2>✣ System Insight</h2>
+            <p>
+              Your workspace activity is stable this week. Review upcoming deadlines and check task progress before the next project update.
+            </p>
+            <div class="insight-score">
+              <span>Workspace Health</span>
+              <strong>8.2/10</strong>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/project-role.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>
