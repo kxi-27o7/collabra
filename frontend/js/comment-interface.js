@@ -3,7 +3,29 @@ document.addEventListener("DOMContentLoaded", () => {
     setupCommentForm();
     setupSaveDraft();
     setupReplyButtons();
+    loadComments();
 });
+
+async function loadComments() {
+    const feed = document.querySelector("[data-comment-feed]");
+    if (!feed) return;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const taskId = urlParams.get('id');
+
+    if (!taskId) return;
+
+    try {
+        const comments = await fetchAPI(`/tasks/${taskId}/comments`);
+        feed.innerHTML = ""; // clear dummy comments
+        comments.forEach(comment => {
+            // we don't have full names from this endpoint easily without expanding it in backend, so fallback to "User"
+            addNewComment(feed, comment.content, "User", new Date(comment.created_at).toLocaleString());
+        });
+    } catch (error) {
+        console.error("Failed to load comments:", error);
+    }
+}
 
 function setupCommentSearch() {
     const searchInput = document.querySelector("[data-comment-search]");
@@ -29,7 +51,7 @@ function setupCommentForm() {
 
     if (!form || !feed) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const textarea = form.querySelector("textarea");
@@ -41,29 +63,47 @@ function setupCommentForm() {
         }
 
         const commentText = textarea.value.trim();
-        addNewComment(feed, commentText);
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const taskId = urlParams.get('id');
 
-        textarea.value = "";
-        localStorage.removeItem("commentDraft");
+        if (!taskId) {
+            alert("Error: No task ID found in URL.");
+            return;
+        }
 
-        alert("Comment berhasil ditambahkan. Nanti bagian ini bisa disambungkan ke backend.");
+        try {
+            await fetchAPI(`/tasks/${taskId}/comments`, {
+                method: "POST",
+                body: { content: commentText }
+            });
+
+            addNewComment(feed, commentText, "You", "Just now");
+
+            textarea.value = "";
+            localStorage.removeItem("commentDraft");
+        } catch (error) {
+            alert(`Failed to post comment: ${error.message}`);
+        }
     });
 }
 
-function addNewComment(feed, commentText) {
+function addNewComment(feed, commentText, authorName = "User", timeStr = "Just now") {
     const article = document.createElement("article");
     article.className = "comment-thread";
     article.setAttribute("data-comment-item", "");
+    
+    const initials = authorName.substring(0, 2).toUpperCase();
 
     article.innerHTML = `
-        <div class="comment-avatar initials-avatar">AT</div>
+        <div class="comment-avatar initials-avatar">${initials}</div>
 
         <div class="comment-content">
             <div class="comment-meta">
                 <div>
-                    <strong>Dr. Aris Thorne</strong>
+                    <strong>${authorName}</strong>
                 </div>
-                <time>Just now</time>
+                <time>${timeStr}</time>
             </div>
 
             <div class="comment-bubble">

@@ -25,7 +25,7 @@ function setupFormValidation() {
   const forms = document.querySelectorAll("form[data-form]");
 
   forms.forEach((form) => {
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       const isValid = validateForm(form);
@@ -34,31 +34,50 @@ function setupFormValidation() {
       const formData = Object.fromEntries(new FormData(form).entries());
 
       if (form.dataset.form === "register") {
-        const user = {
-          id: Date.now(),
-          fullName: formData.fullName || formData.name || "New User",
-          email: formData.email,
-          password: formData.password
-        };
+        try {
+          const payload = {
+            email: formData.email,
+            password: formData.password,
+            full_name: formData.fullName || formData.name || "New User"
+          };
+          
+          await fetchAPI("/auth/register", {
+            method: "POST",
+            body: payload
+          });
 
-        localStorage.setItem("collabraCurrentUser", JSON.stringify(user));
-
-        alert("Account created successfully. Your role will be assigned inside each project.");
-        window.location.href = "project-list.html";
+          alert("Account created successfully. Please log in.");
+          window.location.href = "login.html";
+        } catch (error) {
+          alert(`Registration failed: ${error.message}`);
+        }
         return;
       }
 
       if (form.dataset.form === "login") {
-        const user = {
-          id: 1,
-          fullName: "Current User",
-          email: formData.email
-        };
+        try {
+          // OAuth2 requires form data (URLSearchParams)
+          const params = new URLSearchParams();
+          params.append("username", formData.email);
+          params.append("password", formData.password);
 
-        localStorage.setItem("collabraCurrentUser", JSON.stringify(user));
+          const data = await fetchAPI("/auth/login", {
+            method: "POST",
+            body: params
+          });
 
-        alert("Login successful.");
-        window.location.href = "project-list.html";
+          if (data && data.access_token) {
+            localStorage.setItem("collabra_access_token", data.access_token);
+            
+            // Fetch user profile to store user data
+            const user = await fetchAPI("/users/me");
+            localStorage.setItem("collabraCurrentUser", JSON.stringify(user));
+
+            window.location.href = "project-list.html";
+          }
+        } catch (error) {
+          alert(`Login failed: ${error.message}`);
+        }
         return;
       }
 

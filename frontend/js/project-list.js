@@ -51,40 +51,55 @@ document.addEventListener("DOMContentLoaded", () => {
   renderSavedProjects();
 });
 
-function renderSavedProjects() {
+async function renderSavedProjects() {
   const projectGrid = document.querySelector(".project-grid, .projects-grid, [data-project-list]");
 
-  if (!projectGrid || typeof getProjects !== "function") return;
+  if (!projectGrid) return;
 
-  const savedProjects = getProjects();
+  try {
+    const projects = await fetchAPI("/projects");
+    if (!projects || projects.length === 0) {
+      projectGrid.innerHTML = "<p>No projects found. Create one to get started!</p>";
+      return;
+    }
 
-  savedProjects.forEach((project) => {
-    const role = getUserRoleInProject(project);
-    const roleClass = role === "Project Manager"
-      ? "manager"
-      : role === "Team Member"
-        ? "member"
-        : "no-role";
+    const currentUser = JSON.parse(localStorage.getItem("collabraCurrentUser") || "{}");
 
-    const card = document.createElement("article");
-    card.className = "project-card";
+    // Clear loading states or dummy HTML
+    projectGrid.innerHTML = "";
 
-    card.innerHTML = `
-      <div class="project-card-header">
-        <h3>${project.name}</h3>
-        <span class="project-role-badge ${roleClass}">Your role: ${role}</span>
-      </div>
+    projects.forEach((project) => {
+      // If the user is the owner, they are the Manager, else Team Member
+      const role = project.owner_id === currentUser.id ? "Project Manager" : "Team Member";
+      const roleClass = role === "Project Manager" ? "manager" : "member";
 
-      <p>${project.description || "No description provided."}</p>
+      const card = document.createElement("article");
+      card.className = "project-card";
+      card.dataset.projectCard = "";
+      card.dataset.status = project.status.toLowerCase();
 
-      <div class="project-meta">
-        <span>Deadline: ${project.deadline || "Not set"}</span>
-        <span>Status: ${project.status || "Drafting"}</span>
-      </div>
+      card.innerHTML = `
+        <div class="project-card-header">
+          <h3>${project.name}</h3>
+          <span class="project-role-badge ${roleClass}">Your role: ${role}</span>
+        </div>
 
-      <a href="project-detail.html" class="btn btn-secondary">Open Project</a>
-    `;
+        <p>${project.description || "No description provided."}</p>
 
-    projectGrid.prepend(card);
-  });
+        <div class="project-meta">
+          <span>Status: <strong style="text-transform: capitalize;">${project.status}</strong></span>
+        </div>
+
+        <a href="project-detail.html?id=${project.id}" class="btn btn-secondary">Open Project</a>
+      `;
+
+      projectGrid.appendChild(card);
+    });
+
+    // Re-setup search and tabs after rendering
+    setupProjectSearch();
+    setupProjectTabs();
+  } catch (error) {
+    projectGrid.innerHTML = `<p style="color: red;">Error loading projects: ${error.message}</p>`;
+  }
 }

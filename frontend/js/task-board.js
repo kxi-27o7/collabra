@@ -2,7 +2,24 @@ document.addEventListener("DOMContentLoaded", () => {
     setupTaskModal();
     setupPriorityPicker();
     setupTaskForm();
+    loadTasks();
 });
+
+async function loadTasks() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('id');
+
+    if (!projectId) return;
+
+    try {
+        const tasks = await fetchAPI(`/projects/${projectId}/tasks`);
+        tasks.forEach(task => {
+            addTaskToBoard(task);
+        });
+    } catch (error) {
+        console.error("Failed to load tasks:", error);
+    }
+}
 
 function setupTaskModal() {
     const modalPanel = document.querySelector("[data-task-modal]");
@@ -44,7 +61,7 @@ function setupTaskForm() {
 
     if (!form) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const isValid = validateTaskForm(form);
@@ -52,16 +69,38 @@ function setupTaskForm() {
 
         const formData = Object.fromEntries(new FormData(form).entries());
 
-        addTaskToBoard(formData);
-        form.reset();
-        resetPriorityPicker();
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('id');
 
-        const modalPanel = document.querySelector("[data-task-modal]");
-        if (modalPanel) {
-            modalPanel.classList.remove("show");
+        if (!projectId) {
+            alert("Error: No project ID found in URL.");
+            return;
         }
 
-        alert("Task berhasil dibuat. Nanti bisa langsung dihubungkan ke backend.");
+        const taskData = {
+            title: formData.task_title,
+            description: formData.task_description,
+            deadline: formData.task_due_date || null,
+            status: "todo"
+        };
+
+        try {
+            const newTask = await fetchAPI(`/projects/${projectId}/tasks`, {
+                method: "POST",
+                body: taskData
+            });
+
+            addTaskToBoard(newTask);
+            form.reset();
+            resetPriorityPicker();
+
+            const modalPanel = document.querySelector("[data-task-modal]");
+            if (modalPanel) {
+                modalPanel.classList.remove("show");
+            }
+        } catch (error) {
+            alert(`Failed to create task: ${error.message}`);
+        }
     });
 }
 
@@ -82,25 +121,26 @@ function validateTaskForm(form) {
 }
 
 function addTaskToBoard(taskData) {
-    const todoColumn = document.querySelector('[data-task-column="todo"]');
+    const columnStatus = taskData.status || "todo";
+    const column = document.querySelector(`[data-task-column="${columnStatus}"]`);
 
-    if (!todoColumn) return;
+    if (!column) return;
 
-    const addTaskButton = todoColumn.querySelector(".add-task-card-btn");
+    const addTaskButton = column.querySelector(".add-task-card-btn");
     const taskCard = document.createElement("article");
     taskCard.className = "task-card";
-    taskCard.setAttribute("data-task-card", "");
+    taskCard.setAttribute("data-task-card", taskData.id);
 
-    const priorityClass = getPriorityClass(taskData.task_priority);
-    const dueDateText = formatDate(taskData.task_due_date);
-    const initials = getInitials(taskData.task_assignee);
+    const priorityClass = "medium"; // Priority isn't on backend model yet, default to medium
+    const dueDateText = taskData.deadline ? formatDate(taskData.deadline) : "No deadline";
+    const initials = getInitials(taskData.assignee_id ? "Assignee" : "NA");
 
     taskCard.innerHTML = `
         <div class="task-card-top">
-            <span class="priority-chip ${priorityClass}">${capitalize(taskData.task_priority)}</span>
+            <span class="priority-chip ${priorityClass}">Medium</span>
         </div>
 
-        <h3>${escapeHtml(taskData.task_title)}</h3>
+        <h3>${escapeHtml(taskData.title)}</h3>
 
         <div class="task-card-divider"></div>
 
@@ -113,12 +153,12 @@ function addTaskToBoard(taskData) {
     `;
 
     if (addTaskButton) {
-        todoColumn.insertBefore(taskCard, addTaskButton);
+        column.insertBefore(taskCard, addTaskButton);
     } else {
-        todoColumn.appendChild(taskCard);
+        column.appendChild(taskCard);
     }
 
-    updateColumnCount("todo");
+    updateColumnCount(columnStatus);
 }
 
 function updateColumnCount(columnName) {

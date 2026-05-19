@@ -39,7 +39,7 @@ function setupUpdateTaskForm() {
 
     if (!form) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const note = form.querySelector("#progressNote");
@@ -52,17 +52,39 @@ function setupUpdateTaskForm() {
         }
 
         const formData = Object.fromEntries(new FormData(form).entries());
+        
+        // Map progress percentage to status
+        const progressVal = parseInt(formData.progress || 0);
+        let newStatus = "todo";
+        if (progressVal > 0 && progressVal < 100) newStatus = "in_progress";
+        else if (progressVal === 100) newStatus = "done";
 
-        const checkedChecklist = Array.from(
-            form.querySelectorAll('input[name="checklist[]"]:checked')
-        ).map((item) => item.value);
+        const urlParams = new URLSearchParams(window.location.search);
+        const taskId = urlParams.get('id');
 
-        console.log("Update task progress ready for backend:", {
-            ...formData,
-            checklist: checkedChecklist
-        });
+        if (!taskId) {
+            alert("Error: No task ID found in URL.");
+            return;
+        }
 
-        alert("Progress task sudah valid. Nanti bagian ini bisa disambungkan ke backend.");
+        try {
+            await fetchAPI(`/tasks/${taskId}/progress`, {
+                method: "PUT",
+                body: { status: newStatus }
+            });
+
+            // If there is a note, we can also add it as a comment!
+            await fetchAPI(`/tasks/${taskId}/comments`, {
+                method: "POST",
+                body: { content: note.value.trim() }
+            });
+
+            alert("Progress updated successfully!");
+            // Optionally redirect back to the task board or project detail
+            window.history.back();
+        } catch (error) {
+            alert(`Failed to update progress: ${error.message}`);
+        }
     });
 }
 

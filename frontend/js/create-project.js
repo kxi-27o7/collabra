@@ -65,7 +65,7 @@ function setupCreateProjectForm() {
 
   if (!form) return;
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const isValid = validateCreateProjectForm(form);
@@ -76,27 +76,38 @@ function setupCreateProjectForm() {
     const members = Array.from(document.querySelectorAll(".member-chip"))
       .map((chip) => {
         const value = chip.dataset.member || chip.textContent.replace("×", "").replace("Team Member", "").trim();
+        return value.includes("@") ? value : null; // We only want emails for the backend
+      }).filter(Boolean);
 
-        return {
-          name: value.includes("@") ? value.split("@")[0] : value,
-          email: value.includes("@") ? value : ""
-        };
+    try {
+      const projectData = {
+        name: formData.projectName || formData.name || "Untitled Project",
+        description: formData.description || formData.projectDescription || "",
+        status: formData.status || "active" // Defaulting to "active" as per backend model
+      };
+
+      // 1. Create the project
+      const newProject = await fetchAPI("/projects", {
+        method: "POST",
+        body: projectData
       });
 
-    const projectData = {
-      name: formData.projectName || formData.name || "Untitled Project",
-      description: formData.description || formData.projectDescription || "",
-      deadline: formData.deadline || formData.projectDeadline || "",
-      status: formData.status || "Drafting",
-      members
-    };
+      // 2. Invite members by email
+      for (const email of members) {
+        try {
+          await fetchAPI(`/projects/${newProject.id}/members?user_email=${encodeURIComponent(email)}`, {
+            method: "POST"
+          });
+        } catch (inviteError) {
+          console.warn(`Could not invite ${email}:`, inviteError.message);
+        }
+      }
 
-    const newProject = createProjectWithRoles(projectData);
-
-    console.log("Created project with role assignment:", newProject);
-
-    alert("Project created successfully. You are assigned as Project Manager for this project.");
-    window.location.href = "project-list.html";
+      alert("Project created successfully. You are assigned as Project Manager.");
+      window.location.href = "project-list.html";
+    } catch (error) {
+      alert(`Failed to create project: ${error.message}`);
+    }
   });
 }
 
