@@ -24,7 +24,7 @@ async function loadDashboardData() {
 
     try {
         // 1. Fetch dashboard summaries
-        const summaries = await fetchAPI("/tasks/dashboard");
+        const summaries = await fetchAPI("/dashboard");
 
         if (!summaries) {
             projectListContainer.innerHTML = "<p>Failed to load dashboard data. Please log in again.</p>";
