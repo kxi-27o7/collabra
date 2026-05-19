@@ -27,8 +27,10 @@
 
     <main class="create-project-main">
         <section class="create-heading">
-            <h1>Initialize Research Project</h1>
-            <p>Define the architectural scope and intellectual foundation for your new study.</p>
+            <h1>Create New Project</h1>
+                <p>
+                    Create a project workspace. You will automatically become the Project Manager for this project.
+                </p>
         </section>
 
         <form class="create-project-layout" action="#" method="POST" data-create-project-form>
@@ -74,6 +76,14 @@
                             <small class="error-message"></small>
                         </div>
                     </section>
+                    
+                    <div class="project-role-info">
+                        <div class="role-icon">★</div>
+                        <div>
+                            <h3>Your role in this project</h3>
+                            <p>You will be assigned as <strong>Project Manager</strong> because you are creating this project.</p>
+                        </div>
+                    </div>
 
                     <section class="create-card small-create-card">
                         <div class="form-group">
@@ -101,15 +111,16 @@
 
                 <section class="create-card team-select-card">
                     <div class="form-group">
-                        <label for="memberSearch">☷ Select Team Members</label>
+                        <label for="memberSearch">☷ Invite Team Members</label>
 
                         <div class="member-search-box">
                             <span>⌕</span>
                             <input
                                 type="text"
                                 id="memberSearch"
-                                placeholder="Search by name or faculty ID..."
                                 data-member-search
+                                placeholder="Enter member name or email to invite"
+                                
                             >
                         </div>
 
@@ -182,6 +193,7 @@
         </form>
     </main>
 
+    <script src="../js/project-role.js"></script>
     <script src="../js/create-project.js"></script>
 </body>
 </html>

@@ -1,162 +1,183 @@
 document.addEventListener("DOMContentLoaded", () => {
-    setupStatusPicker();
-    setupMemberChips();
-    setupCreateProjectForm();
-    setupLivePreview();
+  setupStatusPicker();
+  setupMemberChips();
+  setupCreateProjectForm();
+  setupLivePreview();
 });
 
 function setupStatusPicker() {
-    const statusLabels = document.querySelectorAll(".status-picker label");
+  const statusLabels = document.querySelectorAll(".status-picker label");
 
-    statusLabels.forEach((label) => {
-        label.addEventListener("click", () => {
-            statusLabels.forEach((item) => item.classList.remove("active"));
-            label.classList.add("active");
+  statusLabels.forEach((label) => {
+    label.addEventListener("click", () => {
+      statusLabels.forEach((item) => item.classList.remove("active"));
+      label.classList.add("active");
 
-            const radio = label.querySelector('input[type="radio"]');
-            if (radio) radio.checked = true;
-        });
+      const radio = label.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
     });
+  });
 }
 
 function setupMemberChips() {
-    const selectedMembers = document.querySelector("[data-selected-members]");
-    const addMemberButton = document.querySelector("[data-add-member]");
-    const memberSearch = document.querySelector("[data-member-search]");
+  const selectedMembers = document.querySelector("[data-selected-members]");
+  const addMemberButton = document.querySelector("[data-add-member]");
+  const memberSearch = document.querySelector("[data-member-search]");
 
-    if (!selectedMembers) return;
+  if (!selectedMembers) return;
 
-    selectedMembers.addEventListener("click", (event) => {
-        const removeButton = event.target.closest(".member-chip button");
+  selectedMembers.addEventListener("click", (event) => {
+    const removeButton = event.target.closest(".member-chip button");
 
-        if (!removeButton) return;
+    if (!removeButton) return;
 
-        removeButton.closest(".member-chip").remove();
+    removeButton.closest(".member-chip").remove();
+  });
+
+  if (addMemberButton && memberSearch) {
+    addMemberButton.addEventListener("click", () => {
+      const memberInput = memberSearch.value.trim();
+
+      if (!memberInput) {
+        alert("Enter a member name or email first.");
+        return;
+      }
+
+      const chip = document.createElement("span");
+      chip.className = "member-chip";
+      chip.dataset.member = memberInput;
+
+      chip.innerHTML = `
+        ${memberInput.charAt(0).toUpperCase()}
+        ${memberInput}
+        <small>Team Member</small>
+        <button type="button">×</button>
+      `;
+
+      selectedMembers.insertBefore(chip, addMemberButton);
+      memberSearch.value = "";
     });
-
-    if (addMemberButton && memberSearch) {
-        addMemberButton.addEventListener("click", () => {
-            const memberName = memberSearch.value.trim();
-
-            if (!memberName) {
-                alert("Isi nama member dulu di kolom search.");
-                return;
-            }
-
-            const chip = document.createElement("span");
-            chip.className = "member-chip";
-            chip.innerHTML = `
-                <span class="member-avatar">${memberName.charAt(0).toUpperCase()}</span>
-                ${memberName}
-                <button type="button" aria-label="Remove member">×</button>
-            `;
-
-            selectedMembers.insertBefore(chip, addMemberButton);
-            memberSearch.value = "";
-        });
-    }
+  }
 }
 
 function setupCreateProjectForm() {
-    const form = document.querySelector("[data-create-project-form]");
+  const form = document.querySelector("[data-create-project-form]");
 
-    if (!form) return;
+  if (!form) return;
 
-    form.addEventListener("submit", (event) => {
-        event.preventDefault();
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-        const isValid = validateCreateProjectForm(form);
-        if (!isValid) return;
+    const isValid = validateCreateProjectForm(form);
+    if (!isValid) return;
 
-        const formData = Object.fromEntries(new FormData(form).entries());
+    const formData = Object.fromEntries(new FormData(form).entries());
 
-        const members = Array.from(document.querySelectorAll(".member-chip"))
-            .map((chip) => chip.textContent.replace("×", "").trim());
+    const members = Array.from(document.querySelectorAll(".member-chip"))
+      .map((chip) => {
+        const value = chip.dataset.member || chip.textContent.replace("×", "").replace("Team Member", "").trim();
 
-        console.log("Create project ready for backend:", {
-            ...formData,
-            members
-        });
+        return {
+          name: value.includes("@") ? value.split("@")[0] : value,
+          email: value.includes("@") ? value : ""
+        };
+      });
 
-        alert("Project sudah valid. Nanti bagian ini bisa disambungkan ke backend.");
-    });
+    const projectData = {
+      name: formData.projectName || formData.name || "Untitled Project",
+      description: formData.description || formData.projectDescription || "",
+      deadline: formData.deadline || formData.projectDeadline || "",
+      status: formData.status || "Drafting",
+      members
+    };
+
+    const newProject = createProjectWithRoles(projectData);
+
+    console.log("Created project with role assignment:", newProject);
+
+    alert("Project created successfully. You are assigned as Project Manager for this project.");
+    window.location.href = "project-list.html";
+  });
 }
 
 function validateCreateProjectForm(form) {
-    let isValid = true;
-    const requiredFields = form.querySelectorAll("input[required], textarea[required]");
+  let isValid = true;
+  const requiredFields = form.querySelectorAll("input[required], textarea[required], select[required]");
 
-    requiredFields.forEach((field) => {
-        clearError(field);
+  requiredFields.forEach((field) => {
+    clearError(field);
 
-        if (!field.value.trim()) {
-            showError(field, "This field is required.");
-            isValid = false;
-        }
-    });
+    if (!field.value.trim()) {
+      showError(field, "This field is required.");
+      isValid = false;
+    }
+  });
 
-    return isValid;
+  return isValid;
 }
 
 function setupLivePreview() {
-    const titleInput = document.querySelector("[data-project-title-source]");
-    const descriptionInput = document.querySelector("[data-project-description-source]");
-    const deadlineInput = document.querySelector("[data-project-deadline-source]");
-    const previewText = document.querySelector(".preview-visual p");
+  const titleInput = document.querySelector("[data-project-title-source]");
+  const descriptionInput = document.querySelector("[data-project-description-source]");
+  const deadlineInput = document.querySelector("[data-project-deadline-source]");
+  const previewText = document.querySelector(".preview-visual p");
 
-    if (!titleInput || !descriptionInput || !deadlineInput || !previewText) return;
+  if (!titleInput || !descriptionInput || !deadlineInput || !previewText) return;
 
-    const updatePreview = () => {
-        const title = titleInput.value.trim();
-        const description = descriptionInput.value.trim();
-        const deadline = deadlineInput.value;
+  const updatePreview = () => {
+    const title = titleInput.value.trim();
+    const deadline = deadlineInput.value;
 
-        if (!title && !description && !deadline) {
-            previewText.innerHTML = "Live Node Preview<br>Will Generate Upon Creation";
-            return;
-        }
+    if (!title && !deadline) {
+      previewText.innerHTML = `
+        Live Project Preview<br>
+        Will Generate Upon Creation
+      `;
+      return;
+    }
 
-        previewText.innerHTML = `
-            ${title || "Untitled Project"}<br>
-            ${deadline ? `Deadline: ${formatDate(deadline)}` : "Deadline not set"}
-        `;
-    };
+    previewText.innerHTML = `
+      ${title || "Untitled Project"}<br>
+      ${deadline ? `Deadline: ${formatDate(deadline)}` : "Deadline not set"}<br>
+      Your role: Project Manager
+    `;
+  };
 
-    titleInput.addEventListener("input", updatePreview);
-    descriptionInput.addEventListener("input", updatePreview);
-    deadlineInput.addEventListener("change", updatePreview);
+  titleInput.addEventListener("input", updatePreview);
+  descriptionInput.addEventListener("input", updatePreview);
+  deadlineInput.addEventListener("change", updatePreview);
 }
 
 function showError(input, message) {
-    input.classList.add("error");
+  input.classList.add("error");
 
-    const formGroup = input.closest(".form-group");
-    const errorMessage = formGroup?.querySelector(".error-message");
+  const formGroup = input.closest(".form-group");
+  const errorMessage = formGroup?.querySelector(".error-message");
 
-    if (errorMessage) {
-        errorMessage.textContent = message;
-    }
+  if (errorMessage) {
+    errorMessage.textContent = message;
+  }
 }
 
 function clearError(input) {
-    input.classList.remove("error");
+  input.classList.remove("error");
 
-    const formGroup = input.closest(".form-group");
-    const errorMessage = formGroup?.querySelector(".error-message");
+  const formGroup = input.closest(".form-group");
+  const errorMessage = formGroup?.querySelector(".error-message");
 
-    if (errorMessage) {
-        errorMessage.textContent = "";
-    }
+  if (errorMessage) {
+    errorMessage.textContent = "";
+  }
 }
 
 function formatDate(dateString) {
-    const date = new Date(dateString);
+  const date = new Date(dateString);
 
-    if (Number.isNaN(date.getTime())) return dateString;
+  if (Number.isNaN(date.getTime())) return dateString;
 
-    return date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric"
-    });
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric"
+  });
 }

@@ -95,3 +95,33 @@ function clearError(input) {
         errorMessage.textContent = "";
     }
 }
+
+function joinProjectAsTeamMember(projectId) {
+  const currentUser = getCurrentUser();
+  const projects = getProjects();
+
+  const project = projects.find((item) => String(item.id) === String(projectId));
+
+  if (!project) {
+    alert("Project not found.");
+    return;
+  }
+
+  const alreadyJoined = project.teamMembers.some((member) => {
+    return member.email === currentUser.email;
+  });
+
+  if (!alreadyJoined) {
+    project.teamMembers.push({
+      id: currentUser.id,
+      name: currentUser.fullName,
+      email: currentUser.email,
+      role: "Team Member"
+    });
+  }
+
+  saveProjects(projects);
+
+  alert("You have joined this project as a Team Member.");
+  window.location.href = "project-list.html";
+}
