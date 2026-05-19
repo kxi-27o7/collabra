@@ -14,15 +14,29 @@ async function loadDashboardData() {
 
     if (!projectListContainer || !taskListContainer) return;
 
+    // Immediately clear all static mock/garbage elements and set numbers to loading state
+    projectListContainer.innerHTML = "<p>Loading projects...</p>";
+    taskListContainer.innerHTML = "<p>Loading tasks...</p>";
+    if (totalProjectsEl) totalProjectsEl.textContent = "...";
+    if (activeTasksEl) activeTasksEl.textContent = "...";
+    if (completedTasksEl) completedTasksEl.textContent = "...";
+    if (upcomingDeadlinesEl) upcomingDeadlinesEl.textContent = "...";
+
     try {
         // 1. Fetch dashboard summaries
         const summaries = await fetchAPI("/tasks/dashboard");
+
+        if (!summaries) {
+            projectListContainer.innerHTML = "<p>Failed to load dashboard data. Please log in again.</p>";
+            taskListContainer.innerHTML = "";
+            return;
+        }
 
         let totalProjects = summaries.length;
         let totalActive = 0;
         let totalCompleted = 0;
 
-        projectListContainer.innerHTML = ""; // Clear mock items
+        projectListContainer.innerHTML = ""; // Clear loading state
 
         if (totalProjects === 0) {
             projectListContainer.innerHTML = "<p>No projects found. Create one to get started!</p>";

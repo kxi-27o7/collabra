@@ -56,6 +56,8 @@ async function renderSavedProjects() {
 
   if (!projectGrid) return;
 
+  projectGrid.innerHTML = "<p>Loading projects...</p>";
+
   try {
     const projects = await fetchAPI("/projects");
     if (!projects || projects.length === 0) {

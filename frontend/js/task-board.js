@@ -11,10 +11,25 @@ async function loadTasks() {
 
     if (!projectId) return;
 
+    // Clear all static mock task cards in columns before loading dynamic tasks
+    const columns = document.querySelectorAll("[data-task-column]");
+    columns.forEach(col => {
+        const addBtn = col.querySelector(".add-task-card-btn");
+        col.innerHTML = "";
+        if (addBtn) {
+            col.appendChild(addBtn);
+        }
+    });
+
     try {
         const tasks = await fetchAPI(`/projects/${projectId}/tasks`);
         tasks.forEach(task => {
             addTaskToBoard(task);
+        });
+
+        // Initialize header counts
+        ["todo", "progress", "review"].forEach(status => {
+            updateColumnCount(status);
         });
     } catch (error) {
         console.error("Failed to load tasks:", error);
@@ -121,7 +136,12 @@ function validateTaskForm(form) {
 }
 
 function addTaskToBoard(taskData) {
-    const columnStatus = taskData.status || "todo";
+    let columnStatus = taskData.status || "todo";
+    if (columnStatus === "in_progress") {
+        columnStatus = "progress";
+    } else if (columnStatus === "done") {
+        columnStatus = "review";
+    }
     const column = document.querySelector(`[data-task-column="${columnStatus}"]`);
 
     if (!column) return;
@@ -130,6 +150,10 @@ function addTaskToBoard(taskData) {
     const taskCard = document.createElement("article");
     taskCard.className = "task-card";
     taskCard.setAttribute("data-task-card", taskData.id);
+    taskCard.style.cursor = "pointer";
+    taskCard.addEventListener("click", () => {
+        window.location.href = `update-task-progress.html?task_id=${taskData.id}`;
+    });
 
     const priorityClass = "medium"; // Priority isn't on backend model yet, default to medium
     const dueDateText = taskData.deadline ? formatDate(taskData.deadline) : "No deadline";
