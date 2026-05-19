@@ -81,9 +81,9 @@ function setupCreateProjectForm() {
 
     try {
       const projectData = {
-        name: formData.projectName || formData.name || "Untitled Project",
-        description: formData.description || formData.projectDescription || "",
-        status: formData.status || "active" // Defaulting to "active" as per backend model
+        name: formData.project_name || formData.projectName || formData.name || "Untitled Project",
+        description: formData.project_description || formData.description || formData.projectDescription || "",
+        status: formData.initial_status || formData.status || "active"
       };
 
       // 1. Create the project
