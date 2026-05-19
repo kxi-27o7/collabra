@@ -80,19 +80,19 @@
         <section class="dashboard-content project-detail-content">
             <section class="project-detail-hero">
                 <div>
-                    <h1>Neural-Architecture Mapping: Cognitive Spatial Analysis</h1>
-                    <p>
+                    <h1 id="projectDetailName">Neural-Architecture Mapping: Cognitive Spatial Analysis</h1>
+                    <p id="projectDetailDesc">
                         Investigating the intersection of structural design patterns and human cognitive
                         response through non-invasive EEG monitoring and virtual environments.
                     </p>
                 </div>
 
                 <div class="project-detail-actions">
-                    <button type="button" class="btn btn-soft">
-                        ⌯ Share
-                    </button>
-                    <a href="create-project.html" class="btn btn-primary">
-                        ✎ Edit Project
+                    <a id="projectDetailTasksBtn" href="task-board.html" class="btn btn-soft">
+                        ☑ View Kanban Board
+                    </a>
+                    <a id="projectDetailTeamBtn" href="manage-team.html" class="btn btn-primary">
+                        ☷ Invite Member
                     </a>
                 </div>
             </section>
@@ -113,61 +113,39 @@
                             <article class="detail-stat-card">
                                 <div class="detail-stat-top">
                                     <span class="detail-stat-icon">▥</span>
-                                    <strong class="green-text">+12%</strong>
+                                    <strong class="green-text" id="detailCompletedCount">0 / 0</strong>
                                 </div>
                                 <p>Completion</p>
-                                <h2>68.4%</h2>
+                                <h2 id="detailCompletionRate">0%</h2>
                             </article>
 
                             <article class="detail-stat-card">
                                 <div class="detail-stat-top">
                                     <span class="detail-stat-icon">◷</span>
-                                    <strong class="orange-text">8 days</strong>
+                                    <strong class="orange-text" id="detailActiveLabel">Active</strong>
                                 </div>
-                                <p>Next Milestone</p>
-                                <h2>Phase II</h2>
+                                <p>Active Tasks</p>
+                                <h2 id="detailActiveTasks">0</h2>
                             </article>
 
                             <article class="detail-stat-card">
                                 <div class="detail-stat-top">
                                     <span class="detail-stat-icon">▣</span>
-                                    <strong>42% used</strong>
+                                    <strong id="detailTotalTasksLabel">Total</strong>
                                 </div>
-                                <p>Budget Allocation</p>
-                                <h2>$142.5k</h2>
+                                <p>Total Tasks</p>
+                                <h2 id="detailTotalTasks">0</h2>
                             </article>
                         </section>
 
                         <section class="timeline-card">
                             <div class="timeline-header">
-                                <h2>▣ Project Timeline & Milestones</h2>
-                                <span>Project Start: Jan 2024</span>
+                                <h2>▣ Project Tasks Progress Timeline</h2>
+                                <span id="detailProjectStatus">Status: Active</span>
                             </div>
 
-                            <div class="timeline-line">
-                                <article class="timeline-step completed">
-                                    <span>✓</span>
-                                    <h3>Protocol Design</h3>
-                                    <p>Completed • Feb 12</p>
-                                </article>
-
-                                <article class="timeline-step completed">
-                                    <span>✓</span>
-                                    <h3>IRB Approval</h3>
-                                    <p>Completed • Mar 05</p>
-                                </article>
-
-                                <article class="timeline-step active">
-                                    <span>◎</span>
-                                    <h3>Data Collection</h3>
-                                    <p>In Progress</p>
-                                </article>
-
-                                <article class="timeline-step">
-                                    <span></span>
-                                    <h3>Peer Review</h3>
-                                    <p>Expected Oct 2024</p>
-                                </article>
+                            <div class="timeline-line" id="detailTimelineLine">
+                                <p>No tasks created yet.</p>
                             </div>
                         </section>
                     </div>
@@ -280,6 +258,7 @@
         </section>
     </main>
 
+    <script src="../js/api.js"></script>
     <script src="../js/project-detail.js"></script>
 </body>
 </html>
