@@ -11,7 +11,7 @@ async function loadComments() {
     if (!feed) return;
 
     const urlParams = new URLSearchParams(window.location.search);
-    const taskId = urlParams.get('id');
+    const taskId = urlParams.get('task_id');
 
     if (!taskId) return;
 
@@ -65,7 +65,7 @@ function setupCommentForm() {
         const commentText = textarea.value.trim();
         
         const urlParams = new URLSearchParams(window.location.search);
-        const taskId = urlParams.get('id');
+        const taskId = urlParams.get('task_id');
 
         if (!taskId) {
             alert("Error: No task ID found in URL.");
