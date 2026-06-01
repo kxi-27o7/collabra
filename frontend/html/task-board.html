@@ -11,12 +11,7 @@
 </head>
 <body class="app-body">
     <aside class="sidebar">
-        <div class="sidebar-brand">Scholarly Architect</div>
-
-        <div class="board-workspace-card">
-            <h2>Research Lab</h2>
-            <p>Academic Management</p>
-        </div>
+        <div class="sidebar-brand">Collabra</div>
 
         <nav class="sidebar-menu">
             <a href="dashboard.html">
@@ -51,17 +46,15 @@
     </aside>
 
     <main class="app-main">
-        <header class="app-topbar board-topbar">
-            <nav class="board-top-nav">
-                <a href="#" class="active">Workspace</a>
-                <a href="#">Library</a>
-                <a href="#">Analytics</a>
-            </nav>
+        <header class="app-topbar files-topbar">
+            <div class="search-box files-search-box">
+                <span>⌕</span>
+                <input type="text" placeholder="Search research documents..." data-file-search>
+            </div>
 
-            <div class="topbar-actions">
-                <button type="button" class="icon-btn board-bell-btn" aria-label="Notifications">
+            <div class="topbar-actions files-topbar-actions">
+                <button type="button" class="icon-btn" aria-label="Notifications">
                     ♧
-                    <span class="notification-dot"></span>
                 </button>
 
                 <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
