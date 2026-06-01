@@ -11,11 +11,14 @@
 </head>
 <body class="app-body">
     <aside class="sidebar">
-        <div class="sidebar-brand">Scholarly Architect</div>
+        <div class="sidebar-brand">Collabra</div>
 
-        <div class="board-workspace-card">
-            <h2>Research Lab</h2>
-            <p>Academic Management</p>
+        <div class="workspace-title settings-workspace">
+            <span class="workspace-icon">⌘</span>
+            <div>
+                <h2>Research Lab</h2>
+                <p>Academic Management</p>
+            </div>
         </div>
 
         <nav class="sidebar-menu">
@@ -146,10 +149,7 @@
                             <div class="form-group">
                                 <label for="taskAssignee">Assignee</label>
                                 <select id="taskAssignee" name="task_assignee" required>
-                                    <option value="Dr. Aris Thorne">Dr. Aris Thorne</option>
-                                    <option value="Elena Rodriguez">Elena Rodriguez</option>
-                                    <option value="Marcus Chen">Marcus Chen</option>
-                                    <option value="Sarah Al-Farsi">Sarah Al-Farsi</option>
+                                    <option value="" disabled selected>Select Assignee...</option>
                                 </select>
                                 <small class="error-message"></small>
                             </div>
@@ -184,9 +184,7 @@
                             <div class="form-group">
                                 <label for="relatedProject">Related Project</label>
                                 <select id="relatedProject" name="related_project" required>
-                                    <option value="Astro-Biology Initiative">Astro-Biology Initiative</option>
-                                    <option value="Neural-Architecture Mapping">Neural-Architecture Mapping</option>
-                                    <option value="Ethics Review Sprint">Ethics Review Sprint</option>
+                                    <option value="" disabled selected>Select Project...</option>
                                 </select>
                                 <small class="error-message"></small>
                             </div>
@@ -401,6 +399,7 @@
         </section>
     </main>
 
+    <script src="../js/api.js"></script>
     <script src="../js/task-board.js"></script>
 </body>
 </html>

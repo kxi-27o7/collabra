@@ -72,22 +72,41 @@ function setupInviteForm() {
 
     if (!form) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const isValid = validateInviteForm(form);
         if (!isValid) return;
 
         const formData = Object.fromEntries(new FormData(form).entries());
+        const email = formData.email;
+        const role = formData.role;
 
-        console.log("Invite member ready for backend:", formData);
+        // Get project ID from URL (e.g. manage-team.html?id=1)
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('id');
 
-        alert("Invite sudah valid. Nanti bagian ini bisa disambungkan ke backend.");
+        if (!projectId) {
+            alert("Error: No project ID found in URL.");
+            return;
+        }
 
-        form.reset();
+        try {
+            await fetchAPI(`/projects/${projectId}/members?user_email=${encodeURIComponent(email)}`, {
+                method: "POST"
+            });
 
-        const modal = document.querySelector("[data-invite-modal]");
-        if (modal) modal.classList.remove("show");
+            alert(`${email} has been successfully invited!`);
+            
+            form.reset();
+            const modal = document.querySelector("[data-invite-modal]");
+            if (modal) modal.classList.remove("show");
+            
+            // Reload page to show new member in the list
+            window.location.reload();
+        } catch (error) {
+            alert(`Failed to invite member: ${error.message}`);
+        }
     });
 }
 

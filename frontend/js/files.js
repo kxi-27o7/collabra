@@ -109,7 +109,7 @@ function handleSelectedFiles(files) {
         table.appendChild(fileRow);
     });
 
-    alert("File berhasil ditambahkan ke tampilan. Nanti bagian upload ini bisa disambungkan ke backend.");
+    alert("File successfully added to the preview grid. This upload feature will be integrated with the backend shortly.");
 }
 
 function setupFileDelete() {
