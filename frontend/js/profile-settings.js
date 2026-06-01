@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   setupDiscardSettings();
   setupSettingsFormValidation();
   setupLogout();
-
 });
 
 async function loadProfile() {
