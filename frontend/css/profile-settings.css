@@ -809,3 +809,19 @@
         width: 100%;
     }
 }
+
+.logout-row {
+  margin-top: 16px;
+}
+
+.btn-danger-outline {
+  background: #ffffff;
+  color: #d64545;
+  border: 1px solid #f0b8b8;
+}
+
+.btn-danger-outline:hover {
+  background: #d64545;
+  color: #ffffff;
+  border-color: #d64545;
+}

@@ -1530,3 +1530,12 @@
     flex-direction: column;
   }
 }
+
+.sidebar-brand {
+  color: var(--primary);
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 44px;
+}

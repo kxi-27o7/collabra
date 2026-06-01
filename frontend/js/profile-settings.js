@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    setupSettingsTabs();
-    setupAvatarPreview();
-    setupDiscardSettings();
-    setupSettingsFormValidation();
-    loadProfile();
+  setupSettingsTabs();
+  setupAvatarPreview();
+  setupDiscardSettings();
+  setupSettingsFormValidation();
+  setupLogout();
+
 });
 
 async function loadProfile() {
@@ -166,4 +167,24 @@ function clearError(input) {
 
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function setupLogout() {
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (!logoutBtn) return;
+
+  logoutBtn.addEventListener("click", () => {
+    const confirmLogout = confirm("Are you sure you want to log out?");
+
+    if (!confirmLogout) return;
+
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    sessionStorage.clear();
+
+    window.location.href = "login.html";
+  });
 }

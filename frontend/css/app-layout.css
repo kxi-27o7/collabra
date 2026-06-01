@@ -27,42 +27,6 @@
     margin-bottom: 44px;
 }
 
-.workspace-title {
-    margin-bottom: 28px;
-    padding-left: 10px;
-}
-
-.workspace-title h2 {
-    color: var(--primary);
-    font-size: 22px;
-    line-height: 1.1;
-}
-
-.workspace-title p {
-    color: #546073;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-size: 13px;
-}
-
-.settings-workspace {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-left: 0;
-}
-
-.workspace-icon {
-    width: 32px;
-    height: 32px;
-    display: grid;
-    place-items: center;
-    border-radius: 8px;
-    background: var(--primary);
-    color: #ffffff;
-    flex-shrink: 0;
-}
-
 /* Sidebar Menu */
 
 .sidebar-menu {
@@ -342,4 +306,13 @@
     .sidebar-menu {
         grid-template-columns: 1fr;
     }
+}
+
+.sidebar-brand {
+  color: var(--primary);
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 44px;
 }
