@@ -177,6 +177,10 @@ def delete_task(
     for c in session.exec(select(TaskComment).where(TaskComment.task_id == task_id)).all():
         session.delete(c)
     for a in session.exec(select(TaskAttachment).where(TaskAttachment.task_id == task_id)).all():
+        # Delete the physical file first
+        if os.path.exists(a.file_url):
+            os.remove(a.file_url)
+        # Then delete the DB record
         session.delete(a)
 
     session.delete(task)
