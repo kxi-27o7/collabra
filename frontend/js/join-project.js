@@ -34,7 +34,7 @@ function setupJoinProjectForm() {
 
     if (!form) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const codeInput = form.querySelector("[data-invitation-code]");
@@ -52,11 +52,21 @@ function setupJoinProjectForm() {
             return;
         }
 
-        const formData = Object.fromEntries(new FormData(form).entries());
+        // We can extract a project ID from the digits of the invitation code
+        // e.g. SA-0002-3456 -> digits "00023456" -> project ID 2 (parsed int)
+        const digits = codeValue.replace(/[^0-9]/g, "");
+        const projectId = parseInt(digits, 10) || 1; // Fallback to 1 if no digits
 
-        console.log("Join project ready for backend:", formData);
+        try {
+            await fetchAPI(`/projects/${projectId}/join`, {
+                method: "POST"
+            });
 
-        alert("Invitation code sudah valid. Nanti bagian ini bisa disambungkan ke backend.");
+            alert("Successfully joined the project!");
+            window.location.href = "project-list.html";
+        } catch (error) {
+            alert(`Failed to join project: ${error.message}`);
+        }
     });
 }
 

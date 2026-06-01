@@ -12,7 +12,7 @@
     <header class="update-topbar">
         <div class="update-topbar-left">
             <a href="task-board.html" class="close-link" aria-label="Back to task board">×</a>
-            <a href="task-board.html" class="update-brand">Scholarly Architect</a>
+            <a href="dashboard.html" class="update-brand">Collabra</a>
         </div>
 
         <div class="update-topbar-right">
@@ -24,13 +24,13 @@
     <main class="update-main">
         <section class="update-hero">
             <div>
-                <p class="project-label">Project: Neural Network Ethics</p>
+                <p class="project-label" data-project-label>Loading project...</p>
 
-                <h1>Finalizing Peer Review Documentation for 2024 Symposium</h1>
+                <h1 data-task-title>Loading task...</h1>
 
                 <div class="task-badges">
-                    <span class="task-id-badge">Task ID: ARCH-442</span>
-                    <span class="due-badge">Due: Oct 24</span>
+                    <span class="task-id-badge" data-task-id-badge>Task ID: —</span>
+                    <span class="due-badge" data-due-badge>Due: —</span>
                 </div>
             </div>
 
@@ -62,10 +62,10 @@
                             <input
                                 type="range"
                                 id="projectCompletion"
-                                name="project_completion"
+                                name="progress"
                                 min="0"
                                 max="100"
-                                value="65"
+                                value="0"
                                 data-progress-range
                             >
 
@@ -165,12 +165,13 @@
                 <div class="linked-icons">
                     <button type="button" aria-label="Document">▤</button>
                     <button type="button" aria-label="Attachment">⌁</button>
-                    <a href="comment-interface.html" class="discussion-link" aria-label="Open discussion">⌯</a>
+                    <a href="comment-interface.html" class="discussion-link discussion-link-dynamic" aria-label="Open discussion">⌯</a>
                 </div>
             </div>
         </section>
     </main>
 
+    <script src="../js/api.js"></script>
     <script src="../js/update-task-progress.js"></script>
 </body>
 </html>

@@ -4,7 +4,23 @@ document.addEventListener("DOMContentLoaded", () => {
   setupDiscardSettings();
   setupSettingsFormValidation();
   setupLogout();
+
 });
+
+async function loadProfile() {
+    const fullNameInput = document.getElementById("settingsFullName");
+    const emailInput = document.getElementById("settingsEmail");
+
+    if (!fullNameInput || !emailInput) return;
+
+    try {
+        const user = await fetchAPI("/users/me");
+        fullNameInput.value = user.full_name || "";
+        emailInput.value = user.email || "";
+    } catch (error) {
+        console.error("Failed to load profile details:", error);
+    }
+}
 
 function setupSettingsTabs() {
     const tabs = document.querySelectorAll("[data-settings-tab]");
@@ -83,7 +99,7 @@ function setupSettingsFormValidation() {
 
     if (!form) return;
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         let isValid = true;
@@ -106,10 +122,24 @@ function setupSettingsFormValidation() {
 
         if (!isValid) return;
 
-        const formData = Object.fromEntries(new FormData(form).entries());
-        console.log("Settings ready for backend:", formData);
+        const fullName = document.getElementById("settingsFullName").value.trim();
+        const email = document.getElementById("settingsEmail").value.trim();
 
-        alert("Profile settings sudah valid. Nanti bisa disambungkan ke backend.");
+        try {
+            const updatedUser = await fetchAPI("/users/me", {
+                method: "PUT",
+                body: {
+                    full_name: fullName,
+                    email: email
+                }
+            });
+
+            // Update current user cache
+            localStorage.setItem("collabraCurrentUser", JSON.stringify(updatedUser));
+            alert("Profile settings have been saved successfully!");
+        } catch (error) {
+            alert(`Failed to save settings: ${error.message}`);
+        }
     });
 }
 
