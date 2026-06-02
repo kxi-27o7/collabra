@@ -31,6 +31,27 @@
     background: #151b2e;
     box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
+
+/* Left visual panel — swap blue gradient for dark navy so image shows through */
+[data-theme="dark"] .login-visual {
+    background:
+        linear-gradient(160deg, rgba(10, 13, 26, 0.55) 0%, rgba(10, 13, 26, 0.78) 100%),
+        url("../assets/images/auth-login-bg.jpg") center/cover no-repeat;
+}
+[data-theme="dark"] .register-visual {
+    background:
+        linear-gradient(160deg, rgba(10, 13, 26, 0.45) 0%, rgba(10, 13, 26, 0.72) 100%),
+        url("../assets/images/auth-register-bg.jpg") center/cover no-repeat;
+}
+
+/* Fix text — var(--white) becomes dark in dark mode, override explicitly */
+[data-theme="dark"] .auth-visual { color: #ffffff; }
+[data-theme="dark"] .auth-brand { color: #ffffff; }
+[data-theme="dark"] .auth-quote p { color: rgba(255, 255, 255, 0.88); }
+[data-theme="dark"] .auth-quote { border-left-color: rgba(255, 255, 255, 0.3); }
+[data-theme="dark"] .auth-chip { color: rgba(255, 255, 255, 0.9); }
+[data-theme="dark"] .auth-chip span { background: rgba(255, 255, 255, 0.12); }
+[data-theme="dark"] .register-tagline h2 { color: #ffffff; }
 [data-theme="dark"] .auth-form-wrap h1 { color: var(--text); }
 [data-theme="dark"] .auth-subtitle { color: #9ba8c0; }
 [data-theme="dark"] .form-group label,
@@ -54,7 +75,7 @@
 [data-theme="dark"] .checkbox-row { color: #b8c4d8; }
 [data-theme="dark"] .auth-switch { color: #9ba8c0; }
 [data-theme="dark"] .auth-footer { color: #5a6a82; }
-[data-theme="dark"] .theme-toggle-btn { background: #1e2647; color: #f4c430; }
+[data-theme="dark"] .theme-toggle-btn { background: #1e2647; color: #ffffff; }
 
 .auth-body {
     background:

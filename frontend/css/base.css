@@ -63,7 +63,7 @@
 /* Theme toggle & avatar */
 [data-theme="dark"] .theme-toggle-btn {
     background: #1e2647;
-    color: #f4c430;
+    color: #ffffff;
 }
 [data-theme="dark"] .topbar-avatar { background: var(--primary); }
 
