@@ -13,7 +13,7 @@ def get_me(current_user: User = Depends(get_current_user)):
     return current_user
 
 
-@router.patch("/me", response_model=UserOut)
+@router.put("/me", response_model=UserOut)
 def update_me(
     updates: UserBase,
     current_user: User = Depends(get_current_user),
