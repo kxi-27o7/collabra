@@ -463,6 +463,13 @@
 
 /* ── Landing Dark Mode ───────────────────────────────────────────── */
 
+[data-theme="dark"] .logo-strip {
+    background: #151b2e;
+    color: #4e5a72;
+    border-top: 1px solid #1e2438;
+    border-bottom: 1px solid #1e2438;
+}
+
 [data-theme="dark"] body { background: var(--bg); color: var(--text); }
 
 [data-theme="dark"] .navbar {
@@ -473,7 +480,7 @@
 [data-theme="dark"] .nav-login { color: #b8c4d8; }
 [data-theme="dark"] .nav-links a:hover,
 [data-theme="dark"] .nav-login:hover { color: var(--primary); }
-[data-theme="dark"] .theme-toggle-btn { background: #1e2647; color: #f4c430; }
+[data-theme="dark"] .theme-toggle-btn { background: #1e2647; color: #ffffff; }
 
 /* Hero */
 [data-theme="dark"] .hero-content h1 { color: var(--primary); }
