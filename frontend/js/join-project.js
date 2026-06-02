@@ -52,13 +52,8 @@ function setupJoinProjectForm() {
             return;
         }
 
-        // We can extract a project ID from the digits of the invitation code
-        // e.g. SA-0002-3456 -> digits "00023456" -> project ID 2 (parsed int)
-        const digits = codeValue.replace(/[^0-9]/g, "");
-        const projectId = parseInt(digits, 10) || 1; // Fallback to 1 if no digits
-
         try {
-            await fetchAPI(`/projects/${projectId}/join`, {
+            await fetchAPI(`/projects/join?invite_code=${encodeURIComponent(codeValue)}`, {
                 method: "POST"
             });
 

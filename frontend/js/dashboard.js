@@ -120,7 +120,7 @@ async function loadDashboardData() {
                 const statusMeta = statusLabels[task.status] || { text: task.status, class: "todo" };
 
                 const taskHtml = `
-                  <div class="task-row" style="cursor: pointer;" onclick="window.location.href='files.html?tab=tasks?id=${task.project_id}'">
+                  <div class="task-row" style="cursor: pointer;" onclick="window.location.href='files.html?tab=tasks&id=${task.project_id}'">
                     <div>
                       <h3>${task.title}</h3>
                       <p>${task.projectName}</p>

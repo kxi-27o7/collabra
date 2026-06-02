@@ -4,24 +4,126 @@ document.addEventListener("DOMContentLoaded", () => {
     setupInviteModal();
     setupInviteForm();
     setupGenerateInviteLink();
+    loadProjectMembers();
 });
 
 function setupTeamSearch() {
     const searchInput = document.querySelector("[data-team-search]");
-    const members = document.querySelectorAll("[data-team-member]");
-
-    if (!searchInput || !members.length) return;
+    if (!searchInput) return;
 
     searchInput.addEventListener("input", () => {
         const keyword = searchInput.value.toLowerCase().trim();
+        const members = document.querySelectorAll("[data-team-member]");
 
         members.forEach((member) => {
             const text = member.textContent.toLowerCase();
             const isMatch = text.includes(keyword);
-
             member.style.display = isMatch || keyword === "" ? "" : "none";
         });
     });
+}
+
+async function loadProjectMembers() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get("id");
+    if (!projectId) return;
+
+    try {
+        const [project, members, tasks, userProjects] = await Promise.all([
+            fetchAPI(`/projects/${projectId}`),
+            fetchAPI(`/projects/${projectId}/members`),
+            fetchAPI(`/projects/${projectId}/tasks`),
+            fetchAPI("/projects"),
+        ]);
+
+        renderProjectMemberRows(project, members);
+        renderTeamStats(members, tasks, userProjects);
+    } catch (error) {
+        console.error("Failed to load team members:", error.message);
+    }
+}
+
+function renderTeamStats(members, tasks, userProjects) {
+    const totalMembersEl = document.getElementById("statTotalMembers");
+    const activeProjectsEl = document.getElementById("statActiveProjects");
+    const peerReviewsEl = document.getElementById("statPeerReviews");
+
+    if (totalMembersEl) {
+        totalMembersEl.textContent = String(members.length);
+    }
+
+    if (activeProjectsEl) {
+        const activeProjectsCount = Array.isArray(userProjects)
+            ? userProjects.filter((project) => project.status === "active").length
+            : 0;
+        activeProjectsEl.textContent = String(activeProjectsCount);
+    }
+
+    if (peerReviewsEl) {
+        const peerReviewCount = Array.isArray(tasks)
+            ? tasks.filter((task) => task.status === "done").length
+            : 0;
+        peerReviewsEl.textContent = String(peerReviewCount);
+    }
+}
+
+function renderProjectMemberRows(project, members) {
+    const table = document.querySelector(".personnel-table");
+    if (!table) return;
+
+    const headerHtml = `
+        <div class="personnel-table-head">
+            <span>Name</span>
+            <span>Role</span>
+            <span>Joined Date</span>
+            <span>Workload</span>
+            <span>Actions</span>
+        </div>
+    `;
+
+    if (!members.length) {
+        table.innerHTML = `${headerHtml}<div class="empty-note" style="padding:24px;">No team members found for this project.</div>`;
+    } else {
+        const rowsHtml = members.map(member => {
+            const name = member.full_name || member.email || "Unknown";
+            const email = member.email || "No email";
+            const initials = getInitials(name);
+            const role = member.id === project.owner_id ? "PM" : "Member";
+            return `
+                <article class="personnel-row" data-team-member>
+                    <div class="member-info">
+                        <span class="team-avatar dark">${initials}</span>
+                        <div>
+                            <h3>${escapeHtml(name)}</h3>
+                            <p>${escapeHtml(email)}</p>
+                        </div>
+                    </div>
+
+                    <span class="role-pill">${role}</span>
+
+                    <span class="joined-date">Recent</span>
+
+                    <div class="workload-cell">
+                        <span>—</span>
+                        <div class="workload-bar">
+                            <span style="width: 0%;"></span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="delete-member-btn" aria-label="Delete member">
+                        ♲
+                    </button>
+                </article>
+            `;
+        }).join("");
+
+        table.innerHTML = headerHtml + rowsHtml;
+    }
+
+    const footerCount = document.querySelector(".personnel-footer p");
+    if (footerCount) {
+        footerCount.textContent = `Showing ${members.length} of ${members.length} team members`;
+    }
 }
 
 function setupDeleteMember() {
@@ -79,7 +181,7 @@ function setupInviteForm() {
         if (!isValid) return;
 
         const formData = Object.fromEntries(new FormData(form).entries());
-        const email = formData.email;
+        const email = formData.invite_email || formData.email;
         const role = formData.role;
 
         // Get project ID from URL (e.g. manage-team.html?id=1)
@@ -116,13 +218,31 @@ function setupGenerateInviteLink() {
     if (!button) return;
 
     button.addEventListener("click", async () => {
-        const inviteLink = "https://scholarly-architect.test/invite/research-lab-temp-access";
+        // Get project ID from URL (e.g manage-team.html?id=1)
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('id');
+
+        if (!projectId) {
+            alert("Error: No project ID found in URL.");
+            return;
+        }
 
         try {
-            await navigator.clipboard.writeText(inviteLink);
-            alert("Invite link berhasil dicopy ke clipboard.");
-        } catch {
-            alert(`Invite link: ${inviteLink}`);
+            const response = await fetchAPI(`/projects/${projectId}/invite-code`, {
+                method: "GET"
+            });
+
+            const inviteCode = response.invite_code;
+
+            // Copy to clipboard
+            try {
+                await navigator.clipboard.writeText(inviteCode);
+                alert(`Invite code copied to clipboard: ${inviteCode}`);
+            } catch {
+                alert(`Invite code: ${inviteCode}`);
+            }
+        } catch (error) {
+            alert(`Failed to get invite code: ${error.message}`);
         }
     });
 }
@@ -158,6 +278,22 @@ function showError(input, message) {
     if (errorMessage) {
         errorMessage.textContent = message;
     }
+}
+
+function getInitials(name) {
+    if (!name) return "NA";
+    return name
+        .split(" ")
+        .filter(Boolean)
+        .map((part) => part.charAt(0).toUpperCase())
+        .slice(0, 2)
+        .join("");
+}
+
+function escapeHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 function clearError(input) {

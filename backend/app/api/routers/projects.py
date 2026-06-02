@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlmodel import Session, select
 from typing import List
 
@@ -6,6 +6,7 @@ from app.models import (
     Project, ProjectCreate, ProjectOut,
     ProjectMember, User, UserOut,
     Task, TaskCreate, TaskOut,
+    _generate_invite_code,
 )
 from app.db.session import get_session
 from app.core.auth import get_current_user
@@ -144,6 +145,34 @@ def list_members(
     return users
 
 
+@router.get("/{project_id}/invite-code")
+def get_invite_code(
+    project_id: int,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Get the invite code for a project. Manager only."""
+    project = _get_project_or_404(project_id, session)
+    _require_manager(project, current_user)
+    return {"invite_code": project.invite_code}
+
+
+@router.post("/{project_id}/invite-code/regenerate")
+def regenerate_invite_code(
+    project_id: int,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Generate a new invite code for the project. Manager only."""
+    project = _get_project_or_404(project_id, session)
+    _require_manager(project, current_user)
+    project.invite_code = _generate_invite_code()
+    session.add(project)
+    session.commit()
+    session.refresh(project)
+    return {"invite_code": project.invite_code, "detail": "New invite code generated"}
+
+
 @router.post("/{project_id}/members", status_code=status.HTTP_201_CREATED)
 def invite_member(
     project_id: int,
@@ -177,11 +206,16 @@ def invite_member(
 @router.post("/{project_id}/join", status_code=status.HTTP_201_CREATED)
 def join_project(
     project_id: int,
+    invite_code: str = Query(...),
     session: Session = Depends(get_session),
     current_user: User = Depends(get_current_user),
 ):
-    """Allow a user to join a project they have been invited to."""
-    _get_project_or_404(project_id, session)
+    """Allow a user to join a project with a valid invite code."""
+    project = _get_project_or_404(project_id, session)
+    
+    # Validate invite code
+    if project.invite_code != invite_code:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid invite code")
 
     existing = session.exec(
         select(ProjectMember).where(
@@ -193,6 +227,31 @@ def join_project(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You are already a member")
 
     member = ProjectMember(project_id=project_id, user_id=current_user.id, role="member")
+    session.add(member)
+    session.commit()
+    return {"detail": "Successfully joined the project"}
+
+
+@router.post("/join", status_code=status.HTTP_201_CREATED)
+def join_project_by_code(
+    invite_code: str = Query(...),
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    project = session.exec(select(Project).where(Project.invite_code == invite_code)).first()
+    if not project:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+
+    existing = session.exec(
+        select(ProjectMember).where(
+            ProjectMember.project_id == project.id,
+            ProjectMember.user_id == current_user.id,
+        )
+    ).first()
+    if existing:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You are already a member")
+
+    member = ProjectMember(project_id=project.id, user_id=current_user.id, role="member")
     session.add(member)
     session.commit()
     return {"detail": "Successfully joined the project"}

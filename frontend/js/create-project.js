@@ -39,7 +39,12 @@ function setupMemberChips() {
       const memberInput = memberSearch.value.trim();
 
       if (!memberInput) {
-        alert("Enter a member name or email first.");
+        alert("Enter a member email first.");
+        return;
+      }
+
+      if (!isValidEmail(memberInput)) {
+        alert("Please enter a valid email address to invite.");
         return;
       }
 
@@ -74,11 +79,13 @@ function setupCreateProjectForm() {
     const formData = Object.fromEntries(new FormData(form).entries());
 
     const members = Array.from(document.querySelectorAll(".member-chip"))
-      .map((chip) => {
-        const value = chip.dataset.member || chip.textContent.replace("×", "").replace("Team Member", "").trim();
-        return value.includes("@") ? value : null; // We only want emails for the backend
-      }).filter(Boolean);
+        .map((chip) => chip.dataset.member?.trim())
+        .filter(Boolean);
 
+      if (members.some((value) => !isValidEmail(value))) {
+        alert("Please remove invalid email invites before submitting.");
+        return;
+      }
     try {
       const projectData = {
         name: formData.project_name || formData.projectName || formData.name || "Untitled Project",
@@ -179,6 +186,10 @@ function clearError(input) {
   if (errorMessage) {
     errorMessage.textContent = "";
   }
+}
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
 function formatDate(dateString) {
