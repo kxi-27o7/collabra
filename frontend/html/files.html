@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Files - Collabra</title>
+    <title>Workspace - Collabra</title>
 
+    <script src="../js/theme.js"></script>
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/app-layout.css">
     <link rel="stylesheet" href="../css/files.css">
+    <link rel="stylesheet" href="../css/task-board.css">
 </head>
 <body class="app-body">
-    <aside class="sidebar files-sidebar">
+    <aside class="sidebar">
         <div class="sidebar-brand">Collabra</div>
 
         <nav class="sidebar-menu">
@@ -22,234 +24,254 @@
                 <span>⌘</span>
                 Projects
             </a>
-            <a href="task-board.html">
-                <span>▤</span>
-                Tasks
-            </a>
-            <a href="manage-team.html">
-                <span>☷</span>
-                Team
-            </a>
-            <a href="files.html" class="active">
+            <a href="files.html" class="active" id="nav-files">
                 <span>▱</span>
                 Files
-            </a>
-            <a href="reports-dashboard.html">
-                <span>▥</span>
-                Reports
             </a>
             <a href="profile-settings.html">
                 <span>⚙</span>
                 Settings
             </a>
         </nav>
-
-        <div class="sidebar-user-card">
-            <div class="sidebar-user-avatar">AT</div>
-            <div>
-                <h3>Dr. Aris Thorne</h3>
-                <p>Principal Investigator</p>
-            </div>
-        </div>
     </aside>
 
     <main class="app-main">
-        <header class="app-topbar files-topbar">
-            <div class="search-box files-search-box">
+        <header class="app-topbar">
+            <div class="search-box">
                 <span>⌕</span>
-                <input type="text" placeholder="Search research documents..." data-file-search>
+                <input type="text" placeholder="Search..." data-workspace-search>
             </div>
 
-            <div class="topbar-actions files-topbar-actions">
-                <button type="button" class="icon-btn" aria-label="Notifications">
-                    ♧
+            <div class="topbar-actions">
+                <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">☀</span>
                 </button>
-                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
-                    ◎
-                </button>
+                <a href="profile-settings.html" class="topbar-avatar" id="topbarAvatar" aria-label="Profile settings">
+                    <span id="topbarAvatarInitials">◎</span>
+                </a>
             </div>
         </header>
 
         <section class="dashboard-content files-content">
-            <div class="page-heading files-heading">
-                <h1>Files</h1>
-                <p>
-                    Manage your research dataset, academic publications, and collaborative documents
-                    within the central laboratory repository.
-                </p>
+
+            <!-- Workspace Tab Nav -->
+            <nav class="workspace-tabs" data-workspace-tabs>
+                <button class="active" data-workspace-tab="files">
+                    <span>▱</span> Files
+                </button>
+                <button data-workspace-tab="tasks">
+                    <span>▤</span> Tasks
+                </button>
+            </nav>
+
+            <!-- ── FILES PANEL ─────────────────────────────────────────── -->
+            <div class="workspace-panel active" data-workspace-panel="files">
+
+                <div class="page-heading files-heading">
+                    <h1>Files</h1>
+                    <p>Manage and share documents and files across your projects.</p>
+                </div>
+
+                <section class="upload-dropzone" data-dropzone>
+                    <input
+                        type="file"
+                        id="fileUpload"
+                        name="files[]"
+                        multiple
+                        accept=".pdf,.csv,.doc,.docx,.xls,.xlsx,.tex"
+                        hidden
+                        data-file-input
+                    >
+
+                    <button type="button" class="upload-icon" data-upload-trigger>⬆</button>
+
+                    <h2>Upload Files</h2>
+                    <p>Drag and drop files here, or click to browse</p>
+
+                    <div class="file-type-chips">
+                        <span>PDF</span>
+                        <span>CSV</span>
+                        <span>DOC</span>
+                        <span>XLSX</span>
+                    </div>
+                </section>
+
+                <section class="shared-files-card">
+                    <div class="shared-files-header">
+                        <h2>Shared Files</h2>
+
+                        <div class="shared-file-actions">
+                            <button type="button" aria-label="Filter files">≡</button>
+                            <button type="button" aria-label="Change view">≡</button>
+                        </div>
+                    </div>
+
+                    <div class="files-table">
+                        <div class="files-table-head">
+                            <span>File Name</span>
+                            <span>Uploaded By</span>
+                            <span>Date</span>
+                            <span>Size</span>
+                            <span>Actions</span>
+                        </div>
+                    </div>
+
+                    <div class="files-table-footer">
+                        <p id="files-count">No files uploaded yet.</p>
+                    </div>
+                </section>
+
+                <section class="files-bottom-grid">
+                    <article class="encryption-card">
+                        <span class="encryption-icon">♢</span>
+                        <h2>End-to-End Encryption Active</h2>
+                        <p>
+                            All files are protected with AES-256 encryption.
+                            Sharing links automatically expire after 7 days.
+                        </p>
+                    </article>
+                </section>
             </div>
 
-            <section class="upload-dropzone" data-dropzone>
-                <input
-                    type="file"
-                    id="fileUpload"
-                    name="files[]"
-                    multiple
-                    accept=".pdf,.csv,.doc,.docx,.xls,.xlsx,.tex"
-                    hidden
-                    data-file-input
-                >
+            <!-- ── TASKS PANEL ─────────────────────────────────────────── -->
+            <div class="workspace-panel" data-workspace-panel="tasks">
 
-                <button type="button" class="upload-icon" data-upload-trigger>
-                    ⬆
-                </button>
-
-                <h2>Upload Research Files</h2>
-                <p>Drag and drop files here, or click to browse your local repository</p>
-
-                <div class="file-type-chips">
-                    <span>PDF</span>
-                    <span>CSV</span>
-                    <span>LATEX</span>
-                </div>
-            </section>
-
-            <section class="shared-files-card">
-                <div class="shared-files-header">
-                    <h2>Shared Files</h2>
-
-                    <div class="shared-file-actions">
-                        <button type="button" aria-label="Filter files">≡</button>
-                        <button type="button" aria-label="Change view">≡</button>
-                    </div>
-                </div>
-
-                <div class="files-table">
-                    <div class="files-table-head">
-                        <span>File Name</span>
-                        <span>Uploaded By</span>
-                        <span>Date</span>
-                        <span>Size</span>
-                        <span>Actions</span>
-                    </div>
-
-                    <article class="file-row" data-file-row>
-                        <div class="file-name-cell">
-                            <span class="document-icon pdf">PDF</span>
+                <!-- Shared create task modal -->
+                <section class="task-create-panel" data-task-modal>
+                    <div class="task-create-card">
+                        <div class="task-create-header">
                             <div>
-                                <h3>quantum_computing_v3.pdf</h3>
-                                <span class="file-status draft">Final Draft</span>
+                                <h2>Create Task</h2>
+                                <p id="taskModalProjectLabel">Assign to a team member.</p>
+                            </div>
+                            <button type="button" class="task-modal-close" data-close-task-modal aria-label="Close">×</button>
+                        </div>
+
+                        <form data-task-form>
+                            <div class="form-group">
+                                <label for="taskTitle">Task Title</label>
+                                <input type="text" id="taskTitle" name="task_title" placeholder="e.g., Review dataset for Q4" required>
+                                <small class="error-message"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taskDescription">Description</label>
+                                <div class="task-editor-box">
+                                    <div class="task-editor-toolbar">
+                                        <button type="button">B</button>
+                                        <button type="button">I</button>
+                                        <button type="button">≡</button>
+                                    </div>
+                                    <textarea id="taskDescription" name="task_description" placeholder="Describe the task..." required></textarea>
+                                </div>
+                                <small class="error-message"></small>
+                            </div>
+
+                            <div class="task-form-grid">
+                                <div class="form-group">
+                                    <label for="taskAssignee">Assignee</label>
+                                    <select id="taskAssignee" name="task_assignee" required>
+                                        <option value="" disabled selected>Select Assignee...</option>
+                                    </select>
+                                    <small class="error-message"></small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="taskDueDate">Due Date</label>
+                                    <input type="date" id="taskDueDate" name="task_due_date" required>
+                                    <small class="error-message"></small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Priority</label>
+                                    <div class="task-priority-picker">
+                                        <label>
+                                            <input type="radio" name="task_priority" value="high">
+                                            <span>High</span>
+                                        </label>
+                                        <label class="active">
+                                            <input type="radio" name="task_priority" value="medium" checked>
+                                            <span>Med</span>
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="task_priority" value="low">
+                                            <span>Low</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="relatedProject">Project</label>
+                                    <select id="relatedProject" name="related_project" required>
+                                        <option value="" disabled selected>Select Project...</option>
+                                    </select>
+                                    <small class="error-message"></small>
+                                </div>
+                            </div>
+
+                            <div class="task-form-actions">
+                                <button type="button" class="task-cancel-btn" data-close-task-modal>Cancel</button>
+                                <button type="submit" class="btn btn-primary task-submit-btn">Create Task</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Single-project view (used when ?id= is in URL) -->
+                <div id="singleProjectView" style="display:none;">
+                    <section class="task-hero">
+                        <div>
+                            <h1 id="taskBoardTitle">Task Board</h1>
+                            <div class="task-meta-row">
+                                <span class="cycle-badge" id="taskBoardProjectName">Loading...</span>
                             </div>
                         </div>
-
-                        <div class="uploader-cell">
-                            <span class="uploader-avatar dark">S</span>
-                            <p>Dr. Sarah Chen</p>
+                        <div class="task-hero-actions">
+                            <button type="button" class="btn btn-primary" data-open-task-modal>
+                                <span>＋</span> New Task
+                            </button>
                         </div>
+                    </section>
 
-                        <span class="file-date">Recent</span>
-                        <span class="file-size">4.2 MB</span>
-
-                        <div class="file-action-cell">
-                            <button type="button" aria-label="Download file">↓</button>
-                            <button type="button" class="delete-file-btn" aria-label="Delete file">♲</button>
-                        </div>
-                    </article>
-
-                    <article class="file-row" data-file-row>
-                        <div class="file-name-cell">
-                            <span class="document-icon doc">DOC</span>
-                            <div>
-                                <h3>lab_notes_sensor_calibration.docx</h3>
-                                <span class="file-status archive">Archive</span>
+                    <section class="task-board-grid">
+                        <article class="task-column">
+                            <div class="task-column-header">
+                                <div class="task-column-title"><h2>To Do</h2><span>0</span></div>
+                                <button type="button" class="column-plus-btn" data-open-task-modal>＋</button>
                             </div>
-                        </div>
-
-                        <div class="uploader-cell">
-                            <span class="uploader-avatar dark">M</span>
-                            <p>Marc Jamieson</p>
-                        </div>
-
-                        <span class="file-date">Recent</span>
-                        <span class="file-size">1.8 MB</span>
-
-                        <div class="file-action-cell">
-                            <button type="button" aria-label="Download file">↓</button>
-                            <button type="button" class="delete-file-btn" aria-label="Delete file">♲</button>
-                        </div>
-                    </article>
-
-                    <article class="file-row" data-file-row>
-                        <div class="file-name-cell">
-                            <span class="document-icon csv">CSV</span>
-                            <div>
-                                <h3>dataset_2023_photonics.csv</h3>
-                                <span class="file-status processing">Processing</span>
+                            <div class="task-column-body" data-task-column="todo">
+                                <button type="button" class="add-task-card-btn" data-open-task-modal>＋ Add Task</button>
                             </div>
-                        </div>
-
-                        <div class="uploader-cell">
-                            <span class="uploader-avatar green">E</span>
-                            <p>Elena Rossi</p>
-                        </div>
-
-                        <span class="file-date">Recent</span>
-                        <span class="file-size">12.5 MB</span>
-
-                        <div class="file-action-cell">
-                            <button type="button" aria-label="Download file">↓</button>
-                            <button type="button" class="delete-file-btn" aria-label="Delete file">♲</button>
-                        </div>
-                    </article>
+                        </article>
+                        <article class="task-column">
+                            <div class="task-column-header">
+                                <div class="task-column-title"><h2>In Progress</h2><span>0</span></div>
+                                <button type="button" class="column-plus-btn" data-open-task-modal>＋</button>
+                            </div>
+                            <div class="task-column-body" data-task-column="progress"></div>
+                        </article>
+                        <article class="task-column">
+                            <div class="task-column-header">
+                                <div class="task-column-title"><h2>Done</h2><span>0</span></div>
+                            </div>
+                            <div class="task-column-body" data-task-column="review"></div>
+                        </article>
+                    </section>
                 </div>
 
-                <div class="files-table-footer">
-                    <p>Displaying 3 of 48 academic resources</p>
-
-                    <div class="file-pagination">
-                        <button type="button">Previous</button>
-                        <button type="button" class="active">Next</button>
-                    </div>
+                <!-- Multi-project view (default when no ?id=) -->
+                <div id="multiProjectBoards">
+                    <p class="multi-boards-loading">Loading your projects...</p>
                 </div>
-            </section>
 
-            <section class="files-bottom-grid">
-                <article class="storage-card">
-                    <div class="storage-header">
-                        <div>
-                            <h2>Repository Storage</h2>
-                            <p>Current institutional allocation</p>
-                        </div>
+            </div>
+            <!-- end tasks panel -->
 
-                        <strong>72% Used</strong>
-                    </div>
-
-                    <div class="storage-progress">
-                        <span></span>
-                    </div>
-
-                    <div class="storage-stats">
-                        <div>
-                            <span>Documents</span>
-                            <strong>14.2 GB</strong>
-                        </div>
-
-                        <div>
-                            <span>Raw Data</span>
-                            <strong>45.8 GB</strong>
-                        </div>
-
-                        <div>
-                            <span>Visuals</span>
-                            <strong>8.1 GB</strong>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="encryption-card">
-                    <span class="encryption-icon">♢</span>
-                    <h2>Institutional Encryption Active</h2>
-                    <p>
-                        All research files are protected with AES-256 end-to-end encryption.
-                        Sharing links automatically expire after 7 days.
-                    </p>
-
-                    <button type="button">Security Audit</button>
-                </article>
-            </section>
         </section>
     </main>
 
+    <script src="../js/api.js"></script>
     <script src="../js/files.js"></script>
+    <script src="../js/task-board.js"></script>
 </body>
 </html>

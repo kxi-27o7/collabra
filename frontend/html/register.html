@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account - Collabra</title>
+    <script src="../js/theme.js"></script>
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/auth.css">
 </head>
 <body class="auth-body">
+    <button type="button" class="theme-toggle-btn floating-theme-btn" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="theme-icon">☀</span>
+    </button>
     <main class="auth-page">
         <section class="auth-card register-layout">
             <div class="auth-visual register-visual">
@@ -38,7 +42,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="registerEmail">Academic Email</label>
+                            <label for="registerEmail">Email</label>
                             <input
                                 type="email"
                                 id="registerEmail"

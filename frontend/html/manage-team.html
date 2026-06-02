@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team Directory - Collabra</title>
 
+    <script src="../js/theme.js"></script>
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/app-layout.css">
     <link rel="stylesheet" href="../css/manage-team.css">
@@ -23,21 +24,9 @@
                 <span>⌘</span>
                 Projects
             </a>
-            <a href="task-board.html">
-                <span>▤</span>
-                Tasks
-            </a>
-            <a href="manage-team.html" class="active">
-                <span>☷</span>
-                Team
-            </a>
             <a href="files.html">
                 <span>▱</span>
                 Files
-            </a>
-            <a href="reports-dashboard.html">
-                <span>▥</span>
-                Reports
             </a>
             <a href="profile-settings.html">
                 <span>⚙</span>
@@ -54,13 +43,12 @@
             </div>
 
             <div class="topbar-actions">
-                <button type="button" class="icon-btn" aria-label="Notifications">
-                    ♧
+                <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">☀</span>
                 </button>
-
-                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
-                    ◎
-                </button>
+                <a href="profile-settings.html" class="topbar-avatar" id="topbarAvatar" aria-label="Profile settings">
+                    <span id="topbarAvatarInitials">◎</span>
+                </a>
             </div>
         </header>
 

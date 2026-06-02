@@ -1,142 +1,334 @@
+// ── State ──────────────────────────────────────────────────────────────────
+let projectMembers = {};          // cache: memberId → name (single-project mode)
+let activeModalProjectId = null;  // which project the modal was opened for
+let isMultiProjectMode = false;
+
+// ── Init ───────────────────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-    setupTaskModal();
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get("id");
+
     setupPriorityPicker();
-    setupTaskForm();
-    loadTasks();
+    setupModalClose();
+
+    if (projectId) {
+        // Single-project mode (e.g. opened from project-detail)
+        isMultiProjectMode = false;
+        const singleView = document.getElementById("singleProjectView");
+        const multiView = document.getElementById("multiProjectBoards");
+        if (singleView) singleView.style.display = "";
+        if (multiView) multiView.style.display = "none";
+
+        setupSingleProjectModal(projectId);
+        setupTaskForm(projectId);
+        loadSingleProject(projectId);
+    } else {
+        // Multi-project grouped mode
+        isMultiProjectMode = true;
+        const singleView = document.getElementById("singleProjectView");
+        if (singleView) singleView.style.display = "none";
+
+        setupTaskForm(null);
+        loadAllProjectBoards();
+    }
 });
 
-let projectMembers = {};
+// ── Single-project mode ────────────────────────────────────────────────────
 
-async function loadTasks() {
-    // Clear static placeholder cards first, regardless of project ID
+function setupSingleProjectModal(projectId) {
+    const openBtns = document.querySelectorAll("[data-open-task-modal]");
+    const panel = document.querySelector("[data-task-modal]");
+    if (!panel) return;
+
+    openBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            activeModalProjectId = projectId;
+            panel.classList.add("show");
+            panel.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+    });
+}
+
+async function loadSingleProject(projectId) {
     const columns = document.querySelectorAll("[data-task-column]");
     columns.forEach(col => {
         const addBtn = col.querySelector(".add-task-card-btn");
         col.innerHTML = "";
-        if (addBtn) {
-            col.appendChild(addBtn);
-        }
+        if (addBtn) col.appendChild(addBtn);
     });
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const projectId = urlParams.get('id');
-
-    if (!projectId) {
-        // No project selected — show a helpful message in the first column
-        const todoCol = document.querySelector('[data-task-column="todo"]');
-        if (todoCol) {
-            const msg = document.createElement("p");
-            msg.style.cssText = "padding: 24px 16px; color: #596273; text-align: center; font-size: 0.95rem;";
-            msg.innerHTML = 'No project selected. <a href="project-list.html" style="color: var(--primary); text-decoration: underline;">Go to Projects</a> and open a project to view its task board.';
-            todoCol.prepend(msg);
-        }
-        return;
-    }
 
     try {
-        // Fetch project members and populate projectMembers cache
-        try {
-            const members = await fetchAPI(`/projects/${projectId}/members`);
-            members.forEach(m => {
-                projectMembers[m.id] = m.full_name || m.email;
-            });
-        } catch (memError) {
-            console.error("Failed to load project members for lookup:", memError);
-        }
+        const project = await fetchAPI(`/projects/${projectId}`);
+        const titleEl = document.getElementById("taskBoardTitle");
+        const nameEl = document.getElementById("taskBoardProjectName");
+        if (titleEl) titleEl.textContent = project.name;
+        if (nameEl) nameEl.textContent = `Status: ${project.status.toUpperCase()}`;
+
+        const members = await fetchAPI(`/projects/${projectId}/members`);
+        members.forEach(m => { projectMembers[m.id] = m.full_name || m.email; });
 
         const tasks = await fetchAPI(`/projects/${projectId}/tasks`);
-        tasks.forEach(task => {
-            addTaskToBoard(task);
-        });
+        tasks.forEach(task => addTaskToColumn(task, projectMembers));
 
-        // Initialize header counts
-        ["todo", "progress", "review"].forEach(status => {
-            updateColumnCount(status);
-        });
-    } catch (error) {
-        console.error("Failed to load tasks:", error);
+        ["todo", "progress", "review"].forEach(updateColumnCount);
+    } catch (err) {
+        console.error("Failed to load tasks:", err);
     }
 }
 
-function setupTaskModal() {
-    const modalPanel = document.querySelector("[data-task-modal]");
-    const openButtons = document.querySelectorAll("[data-open-task-modal]");
-    const closeButtons = document.querySelectorAll("[data-close-task-modal]");
+function addTaskToColumn(taskData, memberMap) {
+    let colStatus = taskData.status || "todo";
+    if (colStatus === "in_progress") colStatus = "progress";
+    else if (colStatus === "done") colStatus = "review";
 
-    if (!modalPanel) return;
+    const column = document.querySelector(`[data-task-column="${colStatus}"]`);
+    if (!column) return;
 
-    openButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            modalPanel.classList.add("show");
-            modalPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-    });
+    const addBtn = column.querySelector(".add-task-card-btn");
+    const card = buildTaskCard(taskData, memberMap);
+    if (addBtn) column.insertBefore(card, addBtn);
+    else column.appendChild(card);
 
-    closeButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            modalPanel.classList.remove("show");
-        });
-    });
+    updateColumnCount(colStatus);
 }
 
-function setupPriorityPicker() {
-    const priorityLabels = document.querySelectorAll(".task-priority-picker label");
-
-    priorityLabels.forEach((label) => {
-        label.addEventListener("click", () => {
-            priorityLabels.forEach((item) => item.classList.remove("active"));
-            label.classList.add("active");
-
-            const radio = label.querySelector('input[type="radio"]');
-            if (radio) radio.checked = true;
-        });
-    });
+function updateColumnCount(colName) {
+    const col = document.querySelector(`[data-task-column="${colName}"]`);
+    if (!col) return;
+    const count = col.querySelectorAll("[data-task-card]").length;
+    const badge = col.closest(".task-column")?.querySelector(".task-column-title span");
+    if (badge) badge.textContent = count;
 }
 
-async function setupTaskForm() {
+// ── Multi-project grouped mode ─────────────────────────────────────────────
+
+async function loadAllProjectBoards() {
+    const container = document.getElementById("multiProjectBoards");
+    if (!container) return;
+
+    container.innerHTML = '<p class="multi-boards-loading">Loading your projects...</p>';
+
+    try {
+        // Resolve current user (from cache or API)
+        let currentUser = null;
+        try {
+            const stored = localStorage.getItem("collabraCurrentUser");
+            if (stored) currentUser = JSON.parse(stored);
+        } catch (_) {}
+        if (!currentUser || !currentUser.id) {
+            currentUser = await fetchAPI("/users/me");
+            if (currentUser) localStorage.setItem("collabraCurrentUser", JSON.stringify(currentUser));
+        }
+
+        const projects = await fetchAPI("/projects");
+
+        if (!projects || projects.length === 0) {
+            container.innerHTML = `
+                <div class="multi-boards-empty">
+                    <h2>No projects yet</h2>
+                    <p>Create or join a project to see tasks here.</p>
+                    <a href="project-list.html" class="btn btn-primary" style="margin-top:20px;">Go to Projects</a>
+                </div>`;
+            return;
+        }
+
+        container.innerHTML = "";
+
+        // Load each project's board in sequence to avoid request flood
+        for (const project of projects) {
+            const isManager = project.owner_id === currentUser.id;
+
+            const [tasks, members] = await Promise.all([
+                fetchAPI(`/projects/${project.id}/tasks`),
+                fetchAPI(`/projects/${project.id}/members`)
+            ]);
+
+            const memberMap = {};
+            members.forEach(m => { memberMap[m.id] = m.full_name || m.email; });
+
+            // Filter: manager sees all, member sees only assigned
+            const visible = isManager
+                ? tasks
+                : tasks.filter(t => t.assignee_id === currentUser.id);
+
+            renderProjectKanban(project, visible, isManager, memberMap, container);
+        }
+
+        // Attach create-task button listeners after all boards are rendered
+        container.addEventListener("click", e => {
+            const btn = e.target.closest("[data-kanban-project-id]");
+            if (!btn) return;
+            const pid = btn.dataset.kanbanProjectId;
+            const pname = btn.dataset.kanbanProjectName;
+            openModalForProject(pid, pname);
+        });
+
+        // Make task cards clickable
+        container.addEventListener("click", e => {
+            const card = e.target.closest("[data-task-card]");
+            if (card && !e.target.closest("[data-kanban-project-id]")) {
+                window.location.href = `update-task-progress.html?task_id=${card.dataset.taskCard}`;
+            }
+        });
+
+    } catch (err) {
+        console.error("Failed to load boards:", err);
+        container.innerHTML = `<p style="color:var(--danger);padding:24px;">Error loading projects: ${err.message}</p>`;
+    }
+}
+
+function renderProjectKanban(project, tasks, isManager, memberMap, container) {
+    const todo       = tasks.filter(t => t.status === "todo");
+    const inProgress = tasks.filter(t => t.status === "in_progress");
+    const done       = tasks.filter(t => t.status === "done");
+
+    const section = document.createElement("section");
+    section.className = "project-kanban-section";
+    section.dataset.projectId = project.id;
+
+    section.innerHTML = `
+        <div class="project-kanban-header">
+            <div class="project-kanban-title">
+                <h2>${escapeHtml(project.name)}</h2>
+                <span class="project-kanban-role ${isManager ? "manager" : "member"}">
+                    ${isManager ? "★ Project Manager" : "◎ Team Member"}
+                </span>
+            </div>
+            <div class="project-kanban-actions">
+                ${isManager ? `
+                    <button type="button" class="btn btn-primary kanban-new-btn"
+                        data-kanban-project-id="${project.id}"
+                        data-kanban-project-name="${escapeHtml(project.name)}">
+                        <span>＋</span> New Task
+                    </button>` : ""}
+                <a href="project-detail.html?id=${project.id}" class="btn btn-soft">View Project ›</a>
+            </div>
+        </div>
+
+        <div class="project-kanban-board">
+            ${buildKanbanColumn("To Do",      todo,       project.id, isManager, memberMap)}
+            ${buildKanbanColumn("In Progress", inProgress, project.id, false,     memberMap)}
+            ${buildKanbanColumn("Done",        done,       project.id, false,     memberMap)}
+        </div>
+    `;
+
+    container.appendChild(section);
+}
+
+function buildKanbanColumn(label, tasks, projectId, showAdd, memberMap) {
+    const cards = tasks.map(t => buildTaskCard(t, memberMap).outerHTML).join("");
+    const addBtn = showAdd ? `
+        <button type="button" class="add-task-card-btn kanban-new-btn"
+            data-kanban-project-id="${projectId}"
+            data-kanban-project-name="">
+            ＋ Add Task
+        </button>` : "";
+
+    return `
+        <div class="task-column">
+            <div class="task-column-header">
+                <div class="task-column-title">
+                    <h2>${label}</h2>
+                    <span>${tasks.length}</span>
+                </div>
+            </div>
+            <div class="task-column-body">
+                ${cards}
+                ${addBtn}
+            </div>
+        </div>`;
+}
+
+// ── Shared helpers ─────────────────────────────────────────────────────────
+
+function buildTaskCard(taskData, memberMap) {
+    const card = document.createElement("article");
+    card.className = "task-card";
+    card.dataset.taskCard = taskData.id;
+
+    const dueDateText = taskData.deadline ? formatDate(taskData.deadline) : "No deadline";
+    const assigneeName = taskData.assignee_id
+        ? (memberMap[taskData.assignee_id] || "Assignee")
+        : "Unassigned";
+    const initials = getInitials(assigneeName);
+
+    card.innerHTML = `
+        <div class="task-card-top">
+            <span class="priority-chip medium">Task</span>
+        </div>
+        <h3>${escapeHtml(taskData.title)}</h3>
+        <div class="task-card-divider"></div>
+        <div class="task-card-bottom">
+            <span class="task-date">◔ ${dueDateText}</span>
+            <div class="task-mini-avatars">
+                <span title="${escapeHtml(assigneeName)}">${initials}</span>
+            </div>
+        </div>
+    `;
+
+    // Single-project mode: click navigates
+    if (!isMultiProjectMode) {
+        card.style.cursor = "pointer";
+        card.addEventListener("click", () => {
+            window.location.href = `update-task-progress.html?task_id=${taskData.id}`;
+        });
+    }
+
+    return card;
+}
+
+function openModalForProject(projectId, projectName) {
+    activeModalProjectId = projectId;
+
+    const modal = document.querySelector("[data-task-modal]");
+    const label = document.getElementById("taskModalProjectLabel");
+    const projectSelect = document.getElementById("relatedProject");
+
+    if (label) label.textContent = `Project: ${projectName || projectId}`;
+    if (projectSelect) {
+        projectSelect.value = projectId;
+        projectSelect.disabled = true;
+    }
+
+    loadAssigneesForProject(projectId);
+
+    if (modal) {
+        modal.classList.add("show");
+        modal.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
+async function loadAssigneesForProject(projectId) {
+    const assigneeSelect = document.getElementById("taskAssignee");
+    if (!assigneeSelect) return;
+
+    assigneeSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+    try {
+        let currentUser = null;
+        try { currentUser = JSON.parse(localStorage.getItem("collabraCurrentUser") || "{}"); } catch (_) {}
+
+        const members = await fetchAPI(`/projects/${projectId}/members`);
+        assigneeSelect.innerHTML = '<option value="">Unassigned</option>';
+        members.forEach(m => {
+            const opt = document.createElement("option");
+            opt.value = m.id;
+            opt.textContent = (m.full_name || m.email) + (currentUser && m.id === currentUser.id ? " (me)" : "");
+            assigneeSelect.appendChild(opt);
+        });
+    } catch (err) {
+        assigneeSelect.innerHTML = '<option value="" disabled>Failed to load members</option>';
+    }
+}
+
+// ── Form setup ─────────────────────────────────────────────────────────────
+
+async function setupTaskForm(fixedProjectId) {
     const form = document.querySelector("[data-task-form]");
     if (!form) return;
 
-    const projectSelect = form.querySelector("#relatedProject");
-    const assigneeSelect = form.querySelector("#taskAssignee");
+    const projectSelect = document.getElementById("relatedProject");
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const projectId = urlParams.get('id');
-
-    let currentUser = null;
-    try {
-        currentUser = await fetchAPI("/users/me");
-    } catch (e) {
-        console.error("Failed to load current user details:", e);
-    }
-
-    // Helper to load members for a specific project
-    async function loadMembersForProject(projId) {
-        if (!assigneeSelect) return;
-        assigneeSelect.innerHTML = '<option value="" disabled selected>Loading members...</option>';
-        try {
-            const members = await fetchAPI(`/projects/${projId}/members`);
-            assigneeSelect.innerHTML = '<option value="">Unassigned</option>';
-            members.forEach(m => {
-                projectMembers[m.id] = m.full_name || m.email;
-
-                const opt = document.createElement("option");
-                opt.value = m.id;
-                
-                let displayName = m.full_name || m.email;
-                if (currentUser && m.id === currentUser.id) {
-                    displayName += " (me)";
-                }
-                opt.textContent = displayName;
-                assigneeSelect.appendChild(opt);
-            });
-        } catch (error) {
-            console.error("Failed to load members for project:", projId, error);
-            assigneeSelect.innerHTML = '<option value="" disabled>Failed to load members</option>';
-        }
-    }
-
-    // Load projects list to populate relatedProject dropdown
+    // Populate project dropdown
     try {
         const projects = await fetchAPI("/projects");
         if (projectSelect) {
@@ -149,43 +341,26 @@ async function setupTaskForm() {
             });
         }
 
-        if (projectId) {
-            // Automatically select and lock/disable selection if created under project board
-            if (projectSelect) {
-                projectSelect.value = projectId;
-                projectSelect.disabled = true;
-            }
-            await loadMembersForProject(projectId);
-        } else {
-            // Setup dynamic change listener if opened from general view
-            if (projectSelect) {
-                projectSelect.addEventListener("change", async (e) => {
-                    const selectedProjId = e.target.value;
-                    if (selectedProjId) {
-                        await loadMembersForProject(selectedProjId);
-                    } else {
-                        assigneeSelect.innerHTML = '<option value="" disabled selected>Select Project first...</option>';
-                    }
-                });
-            }
+        if (fixedProjectId) {
+            if (projectSelect) { projectSelect.value = fixedProjectId; projectSelect.disabled = true; }
+            await loadAssigneesForProject(fixedProjectId);
+        } else if (projectSelect) {
+            projectSelect.addEventListener("change", async e => {
+                if (e.target.value) await loadAssigneesForProject(e.target.value);
+            });
         }
-    } catch (error) {
-        console.error("Failed to load projects list:", error);
+    } catch (err) {
+        console.error("Failed to load projects:", err);
     }
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const isValid = validateTaskForm(form);
-        if (!isValid) return;
+    form.addEventListener("submit", async e => {
+        e.preventDefault();
+        if (!validateTaskForm(form)) return;
 
         const formData = Object.fromEntries(new FormData(form).entries());
-        const selectedProjectId = projectId || (projectSelect ? projectSelect.value : null);
+        const selectedProjectId = fixedProjectId || activeModalProjectId || (projectSelect ? projectSelect.value : null);
 
-        if (!selectedProjectId) {
-            alert("Error: Please select a related project.");
-            return;
-        }
+        if (!selectedProjectId) { alert("Please select a project."); return; }
 
         const taskData = {
             title: formData.task_title,
@@ -196,184 +371,146 @@ async function setupTaskForm() {
         };
 
         try {
-            // Enable the select temporarily so it serializes or just use selectedProjectId
             const newTask = await fetchAPI(`/projects/${selectedProjectId}/tasks`, {
                 method: "POST",
                 body: taskData
             });
 
-            if (projectId) {
-                addTaskToBoard(newTask);
-                form.reset();
-                resetPriorityPicker();
-                
-                // Re-lock the project dropdown and reload its members
-                if (projectSelect) {
-                    projectSelect.value = projectId;
-                }
-                await loadMembersForProject(projectId);
+            form.reset();
+            resetPriorityPicker();
 
-                const modalPanel = document.querySelector("[data-task-modal]");
-                if (modalPanel) {
-                    modalPanel.classList.remove("show");
-                }
-            } else {
-                // If created from general window, redirect directly to the task board of the related project
-                window.location.href = `task-board.html?id=${selectedProjectId}`;
+            const modal = document.querySelector("[data-task-modal]");
+            if (modal) modal.classList.remove("show");
+
+            const label = document.getElementById("taskModalProjectLabel");
+            if (label) label.textContent = "Assign to a team member.";
+
+            const projectSelectEl = document.getElementById("relatedProject");
+            if (projectSelectEl && isMultiProjectMode) {
+                projectSelectEl.disabled = false;
+                projectSelectEl.value = "";
             }
-        } catch (error) {
-            alert(`Failed to create task: ${error.message}`);
+
+            if (!isMultiProjectMode) {
+                // Single-project: add card to board live
+                addTaskToColumn(newTask, projectMembers);
+            } else {
+                // Multi-project: re-render that project's board
+                const section = document.querySelector(`[data-project-id="${selectedProjectId}"]`);
+                if (section) section.remove();
+                // Reload just this project's section
+                reloadProjectSection(selectedProjectId);
+            }
+        } catch (err) {
+            alert(`Failed to create task: ${err.message}`);
         }
     });
 }
 
-function validateTaskForm(form) {
-    let isValid = true;
-    const requiredFields = form.querySelectorAll("input[required], textarea[required], select[required]");
+async function reloadProjectSection(projectId) {
+    try {
+        let currentUser = null;
+        try { currentUser = JSON.parse(localStorage.getItem("collabraCurrentUser") || "{}"); } catch (_) {}
 
-    requiredFields.forEach((field) => {
-        clearError(field);
+        const [project, tasks, members] = await Promise.all([
+            fetchAPI(`/projects/${projectId}`),
+            fetchAPI(`/projects/${projectId}/tasks`),
+            fetchAPI(`/projects/${projectId}/members`)
+        ]);
 
-        if (!field.value.trim()) {
-            showError(field, "This field is required.");
-            isValid = false;
-        }
-    });
+        const isManager = project.owner_id === currentUser.id;
+        const memberMap = {};
+        members.forEach(m => { memberMap[m.id] = m.full_name || m.email; });
 
-    return isValid;
+        const visible = isManager ? tasks : tasks.filter(t => t.assignee_id === currentUser.id);
+
+        const container = document.getElementById("multiProjectBoards");
+        if (!container) return;
+
+        renderProjectKanban(project, visible, isManager, memberMap, container);
+    } catch (err) {
+        console.error("Failed to reload project section:", err);
+    }
 }
 
-function addTaskToBoard(taskData) {
-    let columnStatus = taskData.status || "todo";
-    if (columnStatus === "in_progress") {
-        columnStatus = "progress";
-    } else if (columnStatus === "done") {
-        columnStatus = "review";
-    }
-    const column = document.querySelector(`[data-task-column="${columnStatus}"]`);
+// ── Modal close ────────────────────────────────────────────────────────────
 
-    if (!column) return;
+function setupModalClose() {
+    document.querySelectorAll("[data-close-task-modal]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const modal = document.querySelector("[data-task-modal]");
+            if (modal) modal.classList.remove("show");
 
-    const addTaskButton = column.querySelector(".add-task-card-btn");
-    const taskCard = document.createElement("article");
-    taskCard.className = "task-card";
-    taskCard.setAttribute("data-task-card", taskData.id);
-    taskCard.style.cursor = "pointer";
-    taskCard.addEventListener("click", () => {
-        window.location.href = `update-task-progress.html?task_id=${taskData.id}`;
+            const label = document.getElementById("taskModalProjectLabel");
+            if (label) label.textContent = "Assign to a team member.";
+
+            const projectSelect = document.getElementById("relatedProject");
+            if (projectSelect && isMultiProjectMode) {
+                projectSelect.disabled = false;
+                projectSelect.value = "";
+            }
+        });
     });
-
-    const priorityClass = "medium"; // Priority isn't on backend model yet, default to medium
-    const dueDateText = taskData.deadline ? formatDate(taskData.deadline) : "No deadline";
-    const assigneeName = taskData.assignee_id ? (projectMembers[taskData.assignee_id] || "Assignee") : "NA";
-    const initials = getInitials(assigneeName);
-
-    taskCard.innerHTML = `
-        <div class="task-card-top">
-            <span class="priority-chip ${priorityClass}">Medium</span>
-        </div>
-
-        <h3>${escapeHtml(taskData.title)}</h3>
-
-        <div class="task-card-divider"></div>
-
-        <div class="task-card-bottom">
-            <span class="task-date">◔ ${dueDateText}</span>
-            <div class="task-mini-avatars">
-                <span title="${escapeHtml(assigneeName)}">${initials}</span>
-            </div>
-        </div>
-    `;
-
-    if (addTaskButton) {
-        column.insertBefore(taskCard, addTaskButton);
-    } else {
-        column.appendChild(taskCard);
-    }
-
-    updateColumnCount(columnStatus);
 }
 
-function updateColumnCount(columnName) {
-    const column = document.querySelector(`[data-task-column="${columnName}"]`);
-    if (!column) return;
+// ── Priority picker ────────────────────────────────────────────────────────
 
-    const count = column.querySelectorAll("[data-task-card]").length;
-    const headerCount = column.closest(".task-column")?.querySelector(".task-column-title span");
-
-    if (headerCount) {
-        headerCount.textContent = count;
-    }
+function setupPriorityPicker() {
+    document.querySelectorAll(".task-priority-picker label").forEach(label => {
+        label.addEventListener("click", () => {
+            document.querySelectorAll(".task-priority-picker label").forEach(l => l.classList.remove("active"));
+            label.classList.add("active");
+            const radio = label.querySelector("input[type='radio']");
+            if (radio) radio.checked = true;
+        });
+    });
 }
 
 function resetPriorityPicker() {
     const labels = document.querySelectorAll(".task-priority-picker label");
-    labels.forEach((label) => label.classList.remove("active"));
+    labels.forEach(l => l.classList.remove("active"));
+    const med = document.querySelector('.task-priority-picker label input[value="medium"]')?.closest("label");
+    if (med) { med.classList.add("active"); const r = med.querySelector("input"); if (r) r.checked = true; }
+}
 
-    const defaultLabel = document.querySelector('.task-priority-picker label input[value="medium"]')?.closest("label");
-    if (defaultLabel) {
-        defaultLabel.classList.add("active");
+// ── Form validation ────────────────────────────────────────────────────────
 
-        const radio = defaultLabel.querySelector("input");
-        if (radio) radio.checked = true;
-    }
+function validateTaskForm(form) {
+    let valid = true;
+    form.querySelectorAll("input[required], textarea[required], select[required]").forEach(field => {
+        clearError(field);
+        if (!field.value.trim()) { showError(field, "This field is required."); valid = false; }
+    });
+    return valid;
 }
 
 function showError(input, message) {
     input.classList.add("error");
-
-    const formGroup = input.closest(".form-group");
-    const errorMessage = formGroup?.querySelector(".error-message");
-
-    if (errorMessage) {
-        errorMessage.textContent = message;
-    }
+    const err = input.closest(".form-group")?.querySelector(".error-message");
+    if (err) err.textContent = message;
 }
 
 function clearError(input) {
     input.classList.remove("error");
-
-    const formGroup = input.closest(".form-group");
-    const errorMessage = formGroup?.querySelector(".error-message");
-
-    if (errorMessage) {
-        errorMessage.textContent = "";
-    }
+    const err = input.closest(".form-group")?.querySelector(".error-message");
+    if (err) err.textContent = "";
 }
 
-function getPriorityClass(priority) {
-    if (priority === "high") return "high";
-    if (priority === "low") return "low";
-    return "medium";
-}
-
-function capitalize(text) {
-    if (!text) return "";
-    return text.charAt(0).toUpperCase() + text.slice(1);
-}
+// ── Utils ──────────────────────────────────────────────────────────────────
 
 function formatDate(dateString) {
-    const date = new Date(dateString);
-
-    if (Number.isNaN(date.getTime())) return dateString;
-
-    return date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "2-digit"
-    });
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return dateString;
+    return d.toLocaleDateString("en-US", { month: "short", day: "2-digit" });
 }
 
 function getInitials(name) {
     if (!name) return "NA";
-
-    return name
-        .split(" ")
-        .map((part) => part.charAt(0).toUpperCase())
-        .slice(0, 2)
-        .join("");
+    return name.split(" ").map(p => p.charAt(0).toUpperCase()).slice(0, 2).join("");
 }
 
 function escapeHtml(text) {
+    if (!text) return "";
     const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;

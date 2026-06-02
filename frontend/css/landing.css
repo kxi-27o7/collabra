@@ -445,3 +445,73 @@
     background: #dfe8fb;
     color: var(--primary);
 }
+
+/* Theme toggle button */
+.theme-toggle-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    background: #eef3fb;
+    color: var(--primary);
+    font-size: 16px;
+    display: grid;
+    place-items: center;
+    transition: background 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+}
+.theme-toggle-btn:hover { background: #dce6f8; }
+
+/* ── Landing Dark Mode ───────────────────────────────────────────── */
+
+[data-theme="dark"] body { background: var(--bg); color: var(--text); }
+
+[data-theme="dark"] .navbar {
+    background: rgba(14, 17, 23, 0.95);
+    border-bottom-color: #1e2438;
+}
+[data-theme="dark"] .nav-links a,
+[data-theme="dark"] .nav-login { color: #b8c4d8; }
+[data-theme="dark"] .nav-links a:hover,
+[data-theme="dark"] .nav-login:hover { color: var(--primary); }
+[data-theme="dark"] .theme-toggle-btn { background: #1e2647; color: #f4c430; }
+
+/* Hero */
+[data-theme="dark"] .hero-content h1 { color: var(--primary); }
+[data-theme="dark"] .hero-content p { color: #b8c4d8; }
+[data-theme="dark"] .eyebrow { background: #1e2240; color: var(--primary); }
+[data-theme="dark"] .floating-badge {
+    background: #151b2e;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+[data-theme="dark"] .floating-badge strong { color: var(--text); }
+[data-theme="dark"] .floating-badge small { color: #9ba8c0; }
+
+/* Features */
+[data-theme="dark"] .features-section { background: var(--bg); }
+[data-theme="dark"] .section-heading h2 { color: var(--text); }
+[data-theme="dark"] .section-heading p { color: #b8c4d8; }
+[data-theme="dark"] .feature-card {
+    background: #151b2e;
+    border-color: #252d42;
+}
+[data-theme="dark"] .feature-card h3 { color: var(--text); }
+[data-theme="dark"] .feature-card p { color: #9ba8c0; }
+
+/* About */
+[data-theme="dark"] .about-section { background: var(--bg); }
+[data-theme="dark"] .about-content h2 { color: var(--text); }
+[data-theme="dark"] .benefit-item h3 { color: var(--text); }
+[data-theme="dark"] .benefit-item p { color: #9ba8c0; }
+[data-theme="dark"] .quote-card {
+    background: #151b2e;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+[data-theme="dark"] .quote-card p { color: #b8c4d8; }
+[data-theme="dark"] .quote-card strong { color: var(--primary); }
+
+/* Footer */
+[data-theme="dark"] .footer { background: var(--bg); border-top-color: #1e2438; }
+[data-theme="dark"] .footer p { color: #7a8499; }
+[data-theme="dark"] .footer-links a { color: #9ba8c0; }
+[data-theme="dark"] .footer-links a:hover { color: var(--primary); }
+[data-theme="dark"] .footer-socials a { background: #1e2647; }

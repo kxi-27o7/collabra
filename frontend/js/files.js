@@ -1,8 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
+    setupWorkspaceTabs();
     setupFileSearch();
     setupFileUpload();
     setupFileDelete();
 });
+
+function setupWorkspaceTabs() {
+    const tabs = document.querySelectorAll("[data-workspace-tab]");
+    const panels = document.querySelectorAll("[data-workspace-panel]");
+
+    function activateTab(tabName) {
+        tabs.forEach(t => t.classList.toggle("active", t.dataset.workspaceTab === tabName));
+        panels.forEach(p => p.classList.toggle("active", p.dataset.workspacePanel === tabName));
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            const name = tab.dataset.workspaceTab;
+            activateTab(name);
+            const url = new URL(window.location);
+            if (name === "tasks") {
+                url.searchParams.set("tab", "tasks");
+            } else {
+                url.searchParams.delete("tab");
+            }
+            window.history.replaceState({}, "", url);
+        });
+    });
+
+    // Auto-activate from URL param
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("tab") === "tasks") {
+        activateTab("tasks");
+    }
+}
 
 function setupFileSearch() {
     const searchInput = document.querySelector("[data-file-search]");

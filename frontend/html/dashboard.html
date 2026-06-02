@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Collabra | Dashboard</title>
 
+    <script src="../js/theme.js"></script>
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/app-layout.css">
     <link rel="stylesheet" href="../css/dashboard.css">
@@ -25,25 +26,13 @@
           Projects
         </a>
 
-        <a href="task-board.html">
-          <span>▤</span>
-          Tasks
-        </a>
 
-        <a href="manage-team.html">
-          <span>☷</span>
-          Team
-        </a>
 
         <a href="files.html">
           <span>▱</span>
           Files
         </a>
 
-        <a href="reports-dashboard.html">
-          <span>▥</span>
-          Reports
-        </a>
 
         <a href="profile-settings.html">
           <span>⚙</span>
@@ -53,14 +42,21 @@
     </aside>
 
     <!-- Main Area -->
-    <main class="main-panel">
+    <main class="app-main">
       <!-- Top Bar -->
-      <header class="top-bar">
-        <button class="search-button" type="button">⌕</button>
+      <header class="app-topbar">
+        <div class="search-box">
+          <span>⌕</span>
+          <input type="text" placeholder="Search projects...">
+        </div>
 
-        <div class="top-actions">
-          <button type="button">♧</button>
-          <button type="button">◎</button>
+        <div class="topbar-actions">
+          <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+            <span class="theme-icon">☀</span>
+          </button>
+          <a href="profile-settings.html" class="topbar-avatar" id="topbarAvatar" aria-label="Profile settings">
+            <span id="topbarAvatarInitials">◎</span>
+          </a>
         </div>
       </header>
 
@@ -216,7 +212,7 @@
                 </div>
               </a>
 
-              <a href="task-board.html" class="quick-action">
+              <a href="files.html?tab=tasks" class="quick-action">
                 <span>☑</span>
                 <div>
                   <h3>View Tasks</h3>
@@ -299,21 +295,9 @@
             </div>
           </article>
 
-          <!-- Insight -->
-          <article class="dashboard-card insight-card">
-            <h2>✣ System Insight</h2>
-            <p>
-              Your workspace activity is stable this week. Review upcoming deadlines and check task progress before the next project update.
-            </p>
-            <div class="insight-score">
-              <span>Workspace Health</span>
-              <strong>8.2/10</strong>
-            </div>
-          </article>
         </section>
       </section>
     </main>
-  </div>
 
   <script src="../js/api.js"></script>
   <script src="../js/project-role.js"></script>

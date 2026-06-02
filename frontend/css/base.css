@@ -16,6 +16,284 @@
     --radius-sm: 8px;
 }
 
+/* ── Dark Mode ─────────────────────────────────────────────────────── */
+
+[data-theme="dark"] {
+    --primary: #6b71f0;
+    --primary-dark: #5a60de;
+    --primary-soft: #1e2240;
+    --text: #dde2f0;
+    --muted: #8892a8;
+    --light-muted: #6a7488;
+    --border: #252d42;
+    --bg: #0e1117;
+    --white: #151b2e;
+    --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* Layout */
+[data-theme="dark"] .sidebar {
+    background: #111520;
+    border-right-color: #1e2438;
+}
+[data-theme="dark"] .sidebar-menu a { color: #9ba3c0; }
+[data-theme="dark"] .sidebar-menu a:hover,
+[data-theme="dark"] .sidebar-menu a.active {
+    background: #1e2647;
+    color: var(--primary);
+}
+[data-theme="dark"] .sidebar-brand { color: var(--primary); }
+
+[data-theme="dark"] .app-topbar {
+    background: #111520;
+    border-bottom-color: #1e2438;
+}
+[data-theme="dark"] .search-box {
+    background: #1a2035;
+    color: #7a849c;
+}
+[data-theme="dark"] .search-box input { color: var(--text); }
+[data-theme="dark"] .search-box input::placeholder { color: #5a6278; }
+
+/* Theme toggle & avatar */
+[data-theme="dark"] .theme-toggle-btn {
+    background: #1e2647;
+    color: #f4c430;
+}
+[data-theme="dark"] .topbar-avatar { background: var(--primary); }
+
+/* Background of main areas */
+[data-theme="dark"] .app-body,
+[data-theme="dark"] .app-main { background: var(--bg); }
+
+[data-theme="dark"] .dashboard-content,
+[data-theme="dark"] .files-content,
+[data-theme="dark"] .project-content,
+[data-theme="dark"] .task-content,
+[data-theme="dark"] .settings-content { background: var(--bg); }
+
+/* Cards & panels */
+[data-theme="dark"] .metric-card,
+[data-theme="dark"] .dashboard-card,
+[data-theme="dark"] .project-card,
+[data-theme="dark"] .detail-stat-card,
+[data-theme="dark"] .timeline-card,
+[data-theme="dark"] .research-team-card,
+[data-theme="dark"] .featured-files-card,
+[data-theme="dark"] .panel-card,
+[data-theme="dark"] .shared-files-card,
+[data-theme="dark"] .storage-card,
+[data-theme="dark"] .task-column,
+[data-theme="dark"] .task-card,
+[data-theme="dark"] .placeholder-panel,
+[data-theme="dark"] .settings-card,
+[data-theme="dark"] .task-create-card {
+    background: #151b2e;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .project-item,
+[data-theme="dark"] .quick-action,
+[data-theme="dark"] .activity-item,
+[data-theme="dark"] .task-row,
+[data-theme="dark"] .file-row { background: #1a2035; border-color: #252d42; }
+
+/* ── Text readability ──────────────────────────────────────────────
+   All hardcoded dark-grey colors (#23245d, #3f4655, #4c5260, etc.)
+   are unreadable on dark backgrounds. Override every known instance.
+   Tiers:
+     #dde2f0  – bright  (headings, values, important labels)
+     #b8c4d8  – normal  (body text, descriptions)
+     #9ba8c0  – muted   (secondary info, dates, meta)
+     #7a8499  – dimmed  (very secondary, placeholders)
+   ────────────────────────────────────────────────────────────────── */
+
+/* Headings - dark navy (#23245d etc.) → bright */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3 { color: var(--text); }
+
+[data-theme="dark"] .dashboard-heading h1,
+[data-theme="dark"] .project-heading h1,
+[data-theme="dark"] .project-heading h2,
+[data-theme="dark"] .card-header h2,
+[data-theme="dark"] .metric-card h2,
+[data-theme="dark"] .project-card h2,
+[data-theme="dark"] .project-info h3,
+[data-theme="dark"] .task-row h3,
+[data-theme="dark"] .quick-action h3,
+[data-theme="dark"] .project-row-title h2,
+[data-theme="dark"] .timeline-step h3,
+[data-theme="dark"] .research-member h3,
+[data-theme="dark"] .file-item h3,
+[data-theme="dark"] .task-card h3,
+[data-theme="dark"] .project-card-header h2,
+[data-theme="dark"] .project-card-header h3 { color: var(--text); }
+
+/* Body / description text (#3f4552, #3f4655, #4c5260) → normal */
+[data-theme="dark"] .dashboard-heading p,
+[data-theme="dark"] .project-heading p,
+[data-theme="dark"] .files-heading p,
+[data-theme="dark"] .settings-heading p,
+[data-theme="dark"] .create-heading p,
+[data-theme="dark"] .project-description,
+[data-theme="dark"] .project-info p,
+[data-theme="dark"] .quick-action p,
+[data-theme="dark"] .activity-item p,
+[data-theme="dark"] .project-row-title p,
+[data-theme="dark"] .project-card-header p,
+[data-theme="dark"] .research-member p,
+[data-theme="dark"] .task-create-header p,
+[data-theme="dark"] .task-card h3 { color: #b8c4d8; }
+
+/* Meta / secondary info (#596273, #5e6677, #4d5667) → muted */
+[data-theme="dark"] .metric-card p,
+[data-theme="dark"] .card-header p,
+[data-theme="dark"] .timeline-step p,
+[data-theme="dark"] .project-footer p,
+[data-theme="dark"] .file-item p,
+[data-theme="dark"] .empty-note,
+[data-theme="dark"] .project-deadline span,
+[data-theme="dark"] .row-deadline span,
+[data-theme="dark"] .row-priority span,
+[data-theme="dark"] .timeline-header span,
+[data-theme="dark"] .status-text,
+[data-theme="dark"] .project-category,
+[data-theme="dark"] .task-date,
+[data-theme="dark"] .activity-item span,
+[data-theme="dark"] .uploader-cell p,
+[data-theme="dark"] .file-date,
+[data-theme="dark"] .file-size,
+[data-theme="dark"] .project-progress-label span { color: #9ba8c0; }
+
+/* Values / amounts that use dark text (#23245d) → bright */
+[data-theme="dark"] .project-deadline strong,
+[data-theme="dark"] .row-deadline strong,
+[data-theme="dark"] .row-priority strong,
+[data-theme="dark"] .project-side strong,
+[data-theme="dark"] .detail-stat-top strong { color: var(--text); }
+
+/* Metric label (all-caps category labels) */
+[data-theme="dark"] .metric-label { color: #9ba8c0; }
+
+/* Stat card labels (COMPLETION, ACTIVE TASKS etc.) */
+[data-theme="dark"] .detail-stat-card p,
+[data-theme="dark"] .detail-stat-card h2 { color: var(--text); }
+[data-theme="dark"] .detail-stat-top strong { color: #9ba8c0; }
+
+/* Card header link (View All ›) */
+[data-theme="dark"] .card-header a,
+[data-theme="dark"] .side-card-header a { color: var(--primary); }
+
+/* Task board meta */
+[data-theme="dark"] .task-meta-row .cycle-badge { background: #1e2647; color: #a0aecc; }
+[data-theme="dark"] .task-date-range { color: #9ba8c0; }
+[data-theme="dark"] .task-review-note { color: #9ba8c0; }
+[data-theme="dark"] .task-card-top .priority-chip { color: #dde2f0; }
+
+/* Row progress label */
+[data-theme="dark"] .row-progress .project-progress-label span { color: #9ba8c0; }
+
+/* Project list toolbar */
+[data-theme="dark"] .project-tabs button { color: #9ba8c0; }
+[data-theme="dark"] .project-more-btn { color: #3d4f68; }
+
+/* Task form */
+[data-theme="dark"] .task-create-footer { color: #7a8499; }
+
+/* Files table */
+[data-theme="dark"] .files-table-head span { color: #9ba8c0; }
+[data-theme="dark"] .file-row { color: var(--text); }
+
+/* Profile / settings */
+[data-theme="dark"] .settings-tab { color: #b8c4d8; }
+
+/* Sidebar user card (if present) */
+[data-theme="dark"] .sidebar-user-card h3 { color: var(--text); }
+[data-theme="dark"] .sidebar-user-card p { color: #9ba8c0; }
+
+/* Join / create pages */
+[data-theme="dark"] .back-dashboard-btn { color: #9ba8c0; }
+[data-theme="dark"] .join-card p,
+[data-theme="dark"] .join-footer p { color: #9ba8c0; }
+[data-theme="dark"] .join-footer a { color: #7a8499; }
+[data-theme="dark"] .join-code-field { color: #9ba8c0; }
+[data-theme="dark"] .project-role-info p { color: #b8c4d8; }
+[data-theme="dark"] .project-role-info h3 { color: var(--text); }
+[data-theme="dark"] .preview-info span { color: #9ba8c0; }
+[data-theme="dark"] .preview-info strong { color: var(--text); }
+
+/* Tab bars */
+[data-theme="dark"] .project-tabs,
+[data-theme="dark"] .workspace-tabs,
+[data-theme="dark"] .detail-tabs { background: #1a2035; border-color: #252d42; }
+
+[data-theme="dark"] .project-tabs button,
+[data-theme="dark"] .workspace-tabs button { color: var(--muted); }
+
+[data-theme="dark"] .project-tabs button.active,
+[data-theme="dark"] .project-tabs button:hover,
+[data-theme="dark"] .workspace-tabs button.active,
+[data-theme="dark"] .workspace-tabs button:hover {
+    background: #252d42;
+    color: var(--primary);
+}
+
+[data-theme="dark"] .detail-tabs button { color: var(--muted); }
+[data-theme="dark"] .detail-tabs button.active { color: var(--primary); }
+
+/* Inputs & forms */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+    background: #1a2035;
+    border-color: #252d42;
+    color: var(--text);
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder { color: #5a6278; }
+
+[data-theme="dark"] .form-group label { color: var(--muted); }
+
+/* Status pills */
+[data-theme="dark"] .status-pill.progress { background: #1e2647; color: #8b91f5; }
+[data-theme="dark"] .status-pill.todo { background: #1e2438; color: #8892a8; }
+[data-theme="dark"] .status-pill.success,
+[data-theme="dark"] .status-pill.done { background: #0d2e20; color: #2ecc90; }
+
+/* Role/priority badges */
+[data-theme="dark"] .project-role-badge.manager { background: #1e2647; color: #8b91f5; }
+[data-theme="dark"] .project-role-badge.member { background: #0d2e20; color: #2ecc90; }
+
+/* Task board */
+[data-theme="dark"] .task-column-header h2 { color: var(--text); }
+[data-theme="dark"] .task-column-title span {
+    background: #252d42;
+    color: var(--muted);
+}
+[data-theme="dark"] .add-task-card-btn { color: var(--primary); border-color: #252d42; }
+[data-theme="dark"] .task-editor-box { background: #1a2035; border-color: #252d42; }
+
+/* Files page */
+[data-theme="dark"] .upload-dropzone { border-color: #252d42; background: #111520; }
+[data-theme="dark"] .upload-dropzone p,
+[data-theme="dark"] .upload-dropzone h2 { color: var(--text); }
+[data-theme="dark"] .files-table-head { background: #1a2035; color: var(--muted); }
+[data-theme="dark"] .encryption-card { background: #1a2647; }
+
+/* Progress bars */
+[data-theme="dark"] .progress-bar { background: #252d42; }
+
+/* Insight / special cards */
+[data-theme="dark"] .insight-card { background: #1e2647; }
+
+/* ───────────────────────────────────────────────────────────────── */
+
 * {
     box-sizing: border-box;
     margin: 0;

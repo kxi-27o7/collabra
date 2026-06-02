@@ -771,3 +771,184 @@
 .task-card h3 a:hover {
     color: var(--primary);
 }
+
+/* ── Multi-project grouped board ──────────────────────────────────── */
+
+.multi-boards-loading,
+.multi-boards-empty {
+    padding: 60px 24px;
+    text-align: center;
+    color: #9ba8c0;
+}
+
+.multi-boards-empty h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.project-kanban-section {
+    margin-bottom: 52px;
+    padding-bottom: 52px;
+    border-bottom: 1px solid #e3e9f5;
+}
+
+.project-kanban-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.project-kanban-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.project-kanban-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.project-kanban-title h2 {
+    color: var(--text);
+    font-size: 26px;
+    letter-spacing: -0.03em;
+}
+
+.project-kanban-role {
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.project-kanban-role.manager {
+    background: #d8defc;
+    color: #4f5fa0;
+}
+
+.project-kanban-role.member {
+    background: #d9f7ec;
+    color: #0f7a56;
+}
+
+.project-kanban-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.project-kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .project-kanban-board { grid-template-columns: 1fr; }
+    .project-kanban-header { flex-direction: column; align-items: flex-start; }
+}
+
+/* Dark mode */
+[data-theme="dark"] .project-kanban-section { border-bottom-color: #1e2438; }
+[data-theme="dark"] .project-kanban-title h2 { color: var(--text); }
+[data-theme="dark"] .project-kanban-role.manager { background: #1e2647; color: #8b91f5; }
+[data-theme="dark"] .project-kanban-role.member  { background: #0d2e20; color: #2ecc90; }
+[data-theme="dark"] .multi-boards-loading,
+[data-theme="dark"] .multi-boards-empty { color: #7a8499; }
+
+/* ── Dark Mode ─────────────────────────────────────────────────────── */
+
+/* Column body — the big light-blue container */
+[data-theme="dark"] .task-column-body {
+    background: #0e1117;
+    border: 1px solid #1e2438;
+}
+
+/* Column header elements */
+[data-theme="dark"] .task-column-title h2 { color: var(--text); }
+[data-theme="dark"] .task-column-title span {
+    background: #1e2647;
+    color: var(--primary);
+}
+[data-theme="dark"] .column-plus-btn { color: #9ba8c0; }
+
+/* Task cards */
+[data-theme="dark"] .task-card {
+    background: #151b2e;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+[data-theme="dark"] .task-card h3 { color: var(--text); }
+[data-theme="dark"] .task-card-divider { background: #252d42; }
+[data-theme="dark"] .task-card-menu { color: #4e5a72; }
+[data-theme="dark"] .task-date { color: #9ba8c0; }
+[data-theme="dark"] .task-progress { background: #252d42; }
+
+/* Priority chips */
+[data-theme="dark"] .priority-chip.medium { background: #3b2510; color: #f0a86a; }
+[data-theme="dark"] .priority-chip.high { background: #3b1010; color: #f08080; }
+[data-theme="dark"] .priority-chip.low { background: #1e2647; color: #8b91f5; }
+
+/* Add task button */
+[data-theme="dark"] .add-task-card-btn {
+    border-color: #252d42;
+    color: #9ba8c0;
+}
+[data-theme="dark"] .add-task-card-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+/* Cycle badge */
+[data-theme="dark"] .cycle-badge { background: #1e2647; color: #a0aecc; }
+[data-theme="dark"] .task-date-range { color: #9ba8c0; }
+
+/* Create task form card */
+[data-theme="dark"] .task-create-card {
+    background: #151b2e;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.4);
+}
+[data-theme="dark"] .task-create-header p { color: #9ba8c0; }
+[data-theme="dark"] .task-modal-close { color: #4e5a72; }
+
+[data-theme="dark"] .task-create-card input,
+[data-theme="dark"] .task-create-card select,
+[data-theme="dark"] .task-create-card textarea {
+    background: #1a2035;
+    border-color: #252d42;
+    color: var(--text);
+}
+[data-theme="dark"] .task-create-card input::placeholder,
+[data-theme="dark"] .task-create-card textarea::placeholder { color: #4e5a72; }
+
+[data-theme="dark"] .task-editor-box { border-color: #252d42; }
+[data-theme="dark"] .task-editor-toolbar {
+    background: #1e2438;
+    border-bottom: 1px solid #252d42;
+}
+[data-theme="dark"] .task-editor-toolbar button { color: #9ba8c0; }
+
+[data-theme="dark"] .task-priority-picker span {
+    background: #1a2035;
+    border-color: #252d42;
+    color: #9ba8c0;
+}
+[data-theme="dark"] .task-priority-picker label.active span,
+[data-theme="dark"] .task-priority-picker input:checked + span {
+    background: #1e2647;
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+[data-theme="dark"] .task-cancel-btn { color: #9ba8c0; }
+
+[data-theme="dark"] .task-create-footer {
+    background: #111520;
+    border-top-color: #1e2438;
+    color: #5a6a82;
+}
