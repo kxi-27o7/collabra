@@ -81,7 +81,7 @@
 [data-theme="dark"] .preview-box { background: #151b2e; box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
 [data-theme="dark"] .join-card h1 { color: var(--primary); }
 [data-theme="dark"] .back-dashboard-btn:hover { color: var(--primary); }
-[data-theme="dark"] .theme-toggle-btn { background: #1e2647; color: #f4c430; }
+[data-theme="dark"] .theme-toggle-btn { background: #1e2647; color: #ffffff; }
 [data-theme="dark"] .member-search-box { background: #1a2035; border-color: #252d42; }
 [data-theme="dark"] .member-search-box input { color: var(--text); }
 [data-theme="dark"] .member-chip { background: #1e2647; color: var(--text); }
