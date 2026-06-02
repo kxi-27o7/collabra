@@ -1,6 +1,8 @@
 from typing import Optional, List
 from datetime import datetime, timezone
 from sqlmodel import SQLModel, Field, Relationship
+import secrets
+import string
 
 
 class UserBase(SQLModel):
@@ -28,9 +30,17 @@ class ProjectBase(SQLModel):
     status: str = Field(default="active")
 
 
+def _generate_invite_code() -> str:
+    """Generate a random invite code in format SA-XXXX-XXXX"""
+    chars = string.ascii_uppercase + string.digits
+    code = ''.join(secrets.choice(chars) for _ in range(8))
+    return f"SA-{code[:4]}-{code[4:]}"
+
+
 class Project(ProjectBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     owner_id: int = Field(foreign_key="user.id")
+    invite_code: str = Field(default_factory=_generate_invite_code, index=True)
 
 
 class ProjectCreate(ProjectBase):
@@ -40,6 +50,7 @@ class ProjectCreate(ProjectBase):
 class ProjectOut(ProjectBase):
     id: int
     owner_id: int
+    invite_code: str
 
 
 class ProjectMember(SQLModel, table=True):

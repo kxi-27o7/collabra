@@ -1,10 +1,34 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   setupSettingsTabs();
   setupAvatarPreview();
   setupDiscardSettings();
   setupSettingsFormValidation();
   setupLogout();
+  await renderCachedProfile();
+  await loadProfile();
 });
+
+function renderCachedProfile() {
+    const cached = localStorage.getItem("collabraCurrentUser");
+    if (!cached) return;
+
+    let user = {};
+    try {
+        user = JSON.parse(cached);
+    } catch (_) {
+        return;
+    }
+
+    if (!user || !user.email) return;
+
+    const fullNameInput = document.getElementById("settingsFullName");
+    const emailInput = document.getElementById("settingsEmail");
+    const bioInput = document.getElementById("researchBio");
+
+    if (fullNameInput) fullNameInput.value = user.full_name || "";
+    if (emailInput) emailInput.value = user.email || "";
+    if (bioInput && user.research_bio) bioInput.value = user.research_bio;
+}
 
 async function loadProfile() {
     const fullNameInput = document.getElementById("settingsFullName");
@@ -78,8 +102,8 @@ function setupDiscardSettings() {
 
     if (!discardButton || !settingsForm) return;
 
-    discardButton.addEventListener("click", () => {
-        settingsForm.reset();
+    discardButton.addEventListener("click", async () => {
+        await loadProfile();
 
         const avatarPreview = document.querySelector(".profile-photo-preview");
 

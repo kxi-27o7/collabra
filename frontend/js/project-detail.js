@@ -16,7 +16,7 @@ async function loadProjectDetails() {
 
     const tasksBtn = document.getElementById("projectDetailTasksBtn");
     const teamBtn = document.getElementById("projectDetailTeamBtn");
-    if (tasksBtn) tasksBtn.href = `files.html?tab=tasks?id=${projectId}`;
+    if (tasksBtn) tasksBtn.href = `files.html?tab=tasks&id=${projectId}`;
     if (teamBtn) teamBtn.href = `manage-team.html?id=${projectId}`;
 
     const overviewInviteBtn = document.getElementById("overviewInviteBtn");
@@ -133,7 +133,7 @@ async function loadProjectDetails() {
                     <div style="padding: 24px; text-align: center;">
                         <h2>Tasks</h2>
                         <p>No tasks created yet for this project.</p>
-                        <a href="files.html?tab=tasks?id=${projectId}" class="btn btn-primary" style="margin-top: 16px;">＋ Create New Task</a>
+                        <a href="files.html?tab=tasks&id=${projectId}" class="btn btn-primary" style="margin-top: 16px;">＋ Create New Task</a>
                     </div>
                 `;
             } else {
@@ -141,7 +141,7 @@ async function loadProjectDetails() {
                     <div style="padding: 24px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
                             <h2>Project Tasks (${totalTasks})</h2>
-                            <a href="files.html?tab=tasks?id=${projectId}" class="btn btn-primary">Go to Kanban Board ›</a>
+                            <a href="files.html?tab=tasks&id=${projectId}" class="btn btn-primary">Go to Kanban Board ›</a>
                         </div>
                         <div style="display: flex; flex-direction: column; gap: 12px;">
                 `;
@@ -275,7 +275,7 @@ async function loadProjectDetails() {
                         <div style="padding: 24px;">
                             <h2>Files</h2>
                             <p style="margin-top: 8px; color: #596273;">No files yet. Files are uploaded per task — go to a task to attach files.</p>
-                            <a href="files.html?tab=tasks?id=${projectId}" class="btn btn-soft" style="margin-top: 16px;">Go to Tasks</a>
+                            <a href="files.html?tab=tasks&id=${projectId}" class="btn btn-soft" style="margin-top: 16px;">Go to Tasks</a>
                         </div>
                     `;
                 } else {
