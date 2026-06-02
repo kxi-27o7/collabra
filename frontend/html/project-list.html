@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - Collabra</title>
 
+    <script src="../js/theme.js"></script>
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/app-layout.css">
     <link rel="stylesheet" href="../css/project-list.css">
@@ -23,21 +24,9 @@
                 <span>⌘</span>
                 Projects
             </a>
-            <a href="task-board.html">
-                <span>▤</span>
-                Tasks
-            </a>
-            <a href="manage-team.html">
-                <span>☷</span>
-                Team
-            </a>
             <a href="files.html">
                 <span>▱</span>
                 Files
-            </a>
-            <a href="reports-dashboard.html">
-                <span>▥</span>
-                Reports
             </a>
             <a href="profile-settings.html">
                 <span>⚙</span>
@@ -50,17 +39,16 @@
         <header class="app-topbar">
             <div class="search-box">
                 <span>⌕</span>
-                <input type="text" placeholder="Search research projects..." data-project-search>
+                <input type="text" placeholder="Search projects..." data-project-search>
             </div>
 
             <div class="topbar-actions">
-                <button type="button" class="icon-btn" aria-label="Notifications">
-                    ♧
+                <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">☀</span>
                 </button>
-
-                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
-                    ◎
-                </button>
+                <a href="profile-settings.html" class="topbar-avatar" id="topbarAvatar" aria-label="Profile settings">
+                    <span id="topbarAvatarInitials">◎</span>
+                </a>
             </div>
         </header>
 
@@ -69,15 +57,9 @@
                 <div class="page-heading project-heading">
                     <h1>Project Portfolio</h1>
                     <p>
-                        Manage active research initiatives, track peer-review cycles, and monitor
-                        grant milestone progression.
+                        Manage your projects, track tasks, and collaborate with your team.
                     </p>
                 </div>
-
-                <a href="create-project.html" class="btn btn-primary create-project-btn">
-                    <span>⊕</span>
-                    Create Project
-                </a>
             </div>
 
             <div class="project-toolbar">
@@ -88,16 +70,10 @@
                     <button type="button" data-filter="archived">Archived</button>
                 </div>
 
-                <div class="project-filter-actions">
-                    <button type="button">
-                        <span>≡</span>
-                        Category
-                    </button>
-                    <button type="button">
-                        <span>≡</span>
-                        Due Date
-                    </button>
-                </div>
+                <a href="create-project.html" class="btn btn-primary create-project-btn">
+                    <span>⊕</span>
+                    Create Project
+                </a>
             </div>
 
             <section class="project-list-grid">

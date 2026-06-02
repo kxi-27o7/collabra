@@ -1,24 +1,7 @@
 /* Project Detail Page */
 
 .project-detail-topbar {
-    justify-content: space-between;
-}
-
-.project-top-nav {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-}
-
-.project-top-nav a {
-    color: #3f4655;
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.project-top-nav a.active,
-.project-top-nav a:hover {
-    color: var(--primary);
+    justify-content: flex-end;
 }
 
 .detail-search-box {
@@ -123,7 +106,7 @@
 
 .detail-stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 26px;
 }
 
@@ -131,7 +114,6 @@
 .timeline-card,
 .research-team-card,
 .featured-files-card,
-.project-insight-card,
 .placeholder-panel {
     background: #ffffff;
     border-radius: 14px;
@@ -166,6 +148,10 @@
 
 .orange-text {
     color: #c86a00 !important;
+}
+
+.red-text {
+    color: #d93025 !important;
 }
 
 .detail-stat-card p {
@@ -405,44 +391,19 @@
     font-size: 12px;
 }
 
-.project-insight-card {
-    position: relative;
-    overflow: hidden;
-    padding: 28px;
-    background: var(--primary);
-    color: #ffffff;
-}
-
-.project-insight-card::after {
-    content: "";
-    position: absolute;
-    right: -40px;
-    bottom: -60px;
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.project-insight-card h3 {
-    color: rgba(255, 255, 255, 0.72);
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    font-size: 13px;
-    margin-bottom: 16px;
-}
-
-.project-insight-card p {
-    max-width: 240px;
-    font-size: 17px;
-    line-height: 1.55;
-}
-
-.project-insight-card a {
-    display: inline-block;
-    margin-top: 24px;
-    color: #ffffff;
+.link-btn {
+    background: transparent;
+    color: var(--primary);
     font-weight: 800;
+    font-size: 13px;
+    padding: 0;
+    min-height: unset;
+}
+
+.empty-note {
+    color: #596273;
+    font-size: 14px;
+    margin-top: 16px;
 }
 
 .placeholder-panel {
@@ -471,22 +432,18 @@
         justify-content: flex-start;
     }
 
-    .detail-right {
+    .detail-stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .project-insight-card {
-        grid-column: 1 / -1;
+    .detail-right {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 900px) {
     .project-detail-topbar {
         gap: 18px;
-    }
-
-    .project-top-nav {
-        justify-content: center;
     }
 
     .project-detail-topbar .topbar-actions {
@@ -551,8 +508,7 @@
     .detail-stat-card,
     .timeline-card,
     .research-team-card,
-    .featured-files-card,
-    .project-insight-card {
+    .featured-files-card {
         padding: 24px;
     }
 }

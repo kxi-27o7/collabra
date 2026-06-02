@@ -117,6 +117,42 @@
     font-size: 22px;
 }
 
+.theme-toggle-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background: #eef3fb;
+    color: var(--primary);
+    font-size: 18px;
+    display: grid;
+    place-items: center;
+    transition: background 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+    background: #dce6f8;
+}
+
+.topbar-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+    transition: opacity 0.15s ease;
+}
+
+.topbar-avatar:hover {
+    opacity: 0.85;
+}
+
 .notification-dot {
     position: absolute;
     top: 1px;

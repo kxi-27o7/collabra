@@ -825,3 +825,94 @@
   color: #ffffff;
   border-color: #d64545;
 }
+
+/* ── Dark Mode Overrides ─────────────────────────────────────────── */
+
+[data-theme="dark"] .settings-heading h1 { color: var(--text); }
+[data-theme="dark"] .settings-heading p { color: #b8c4d8; }
+
+/* Tab buttons */
+[data-theme="dark"] .settings-tab {
+    border-color: #252d42;
+    color: #b8c4d8;
+    background: transparent;
+}
+[data-theme="dark"] .settings-tab.active,
+[data-theme="dark"] .settings-tab:hover {
+    background: #1e2647;
+    border-color: var(--primary);
+    color: var(--text);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+[data-theme="dark"] .settings-tab span { color: var(--primary); }
+
+/* Cards */
+[data-theme="dark"] .settings-card {
+    background: #151b2e;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Profile photo card */
+[data-theme="dark"] .profile-photo-info h2 { color: var(--text); }
+[data-theme="dark"] .profile-photo-info p { color: #9ba8c0; }
+
+/* Remove avatar / light-outline button */
+[data-theme="dark"] .btn-light-outline {
+    background: #1a2035;
+    color: #b8c4d8;
+    border-color: #252d42;
+}
+[data-theme="dark"] .btn-light-outline:hover {
+    background: #252d42;
+}
+
+/* Verified badge */
+[data-theme="dark"] .verified-badge {
+    background: #1e2647;
+    color: #8b91f5;
+}
+
+/* Form labels */
+[data-theme="dark"] .settings-form-grid .form-group label { color: #9ba8c0; }
+
+/* Form inputs */
+[data-theme="dark"] .settings-form-grid input,
+[data-theme="dark"] .settings-form-grid textarea {
+    background: #1a2035;
+    border-color: #252d42;
+    color: var(--text);
+}
+[data-theme="dark"] .settings-form-grid input::placeholder,
+[data-theme="dark"] .settings-form-grid textarea::placeholder { color: #4e5a72; }
+[data-theme="dark"] .settings-form-grid input:focus,
+[data-theme="dark"] .settings-form-grid textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(107, 113, 240, 0.15);
+}
+
+/* Security rows */
+[data-theme="dark"] .security-row { background: #1a2035; }
+[data-theme="dark"] .security-row h3 { color: var(--text); }
+[data-theme="dark"] .security-row p { color: #9ba8c0; }
+[data-theme="dark"] .btn-danger-outline {
+    background: transparent;
+    color: #f08080;
+    border-color: #7a3535;
+}
+[data-theme="dark"] .btn-danger-outline:hover {
+    background: #7a3535;
+    color: #ffffff;
+    border-color: #7a3535;
+}
+
+/* Notification rows */
+[data-theme="dark"] .notification-setting-row strong { color: var(--text); }
+[data-theme="dark"] .notification-setting-row small { color: #9ba8c0; }
+[data-theme="dark"] .toggle-slider { background: #2a3350; }
+[data-theme="dark"] .toggle-slider::before { background: #8892a8; }
+[data-theme="dark"] .notification-setting-row input:checked + .toggle-slider { background: var(--primary); }
+[data-theme="dark"] .notification-setting-row input:checked + .toggle-slider::before { background: #ffffff; }
+
+/* Bottom actions */
+[data-theme="dark"] .discard-btn { color: #9ba8c0; }
+[data-theme="dark"] .discard-btn:hover { color: var(--primary); }

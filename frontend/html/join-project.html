@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Project</title>
 
+    <script src="../js/theme.js"></script>
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/join-project.css">
 </head>
@@ -19,8 +20,12 @@
 
 
         <div class="join-topbar-actions">
-            <button type="button" class="join-icon-btn" aria-label="Notifications">♧</button>
-            <button type="button" class="join-icon-btn" aria-label="Profile">◎</button>
+            <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="theme-icon">☀</span>
+            </button>
+            <a href="profile-settings.html" class="topbar-avatar" id="topbarAvatar" aria-label="Profile settings">
+                <span id="topbarAvatarInitials">◎</span>
+            </a>
         </div>
     </header>
 

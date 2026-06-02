@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Project - Collabra</title>
+    <script src="../js/theme.js"></script>
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/join-project.css">
     <link rel="stylesheet" href="../css/create-project.css">
 </head>
 <body class="create-project-body">
-<body class="join-body">
     <header class="join-topbar">
         <div class="page-header join-project-header">
-            <a href="dashboard.html" class="back-dashboard-btn">
-             ← Back
-            </a>
-
+            <a href="project-list.html" class="back-dashboard-btn">← Back</a>
         </div>
 
         <div class="join-topbar-actions">
-            <button type="button" class="join-icon-btn" aria-label="Notifications">♧</button>
-            <button type="button" class="join-icon-btn" aria-label="Profile">◎</button>
+            <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="theme-icon">☀</span>
+            </button>
+            <a href="profile-settings.html" class="topbar-avatar" id="topbarAvatar" aria-label="Profile settings">
+                <span id="topbarAvatarInitials">◎</span>
+            </a>
         </div>
     </header>
 

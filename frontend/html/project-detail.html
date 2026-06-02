@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Detail - Collabra</title>
 
+    <script src="../js/theme.js"></script>
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/app-layout.css">
     <link rel="stylesheet" href="../css/project-detail.css">
@@ -12,7 +13,6 @@
 <body class="app-body">
     <aside class="sidebar">
         <div class="sidebar-brand">Collabra</div>
-
 
         <nav class="sidebar-menu">
             <a href="dashboard.html">
@@ -23,21 +23,9 @@
                 <span>⌘</span>
                 Projects
             </a>
-            <a href="task-board.html">
-                <span>▤</span>
-                Tasks
-            </a>
-            <a href="manage-team.html">
-                <span>☷</span>
-                Team
-            </a>
             <a href="files.html">
                 <span>▱</span>
                 Files
-            </a>
-            <a href="reports-dashboard.html">
-                <span>▥</span>
-                Reports
             </a>
             <a href="profile-settings.html">
                 <span>⚙</span>
@@ -48,40 +36,30 @@
 
     <main class="app-main">
         <header class="app-topbar project-detail-topbar">
-            <nav class="project-top-nav">
-                <a href="project-list.html" class="active">Projects</a>
-                <a href="#">Library</a>
-                <a href="#">Archive</a>
-            </nav>
-
             <div class="topbar-actions">
                 <div class="search-box detail-search-box">
                     <span>⌕</span>
-                    <input type="text" placeholder="Search research..." data-detail-search>
+                    <input type="text" placeholder="Search project..." data-detail-search>
                 </div>
 
-                <button type="button" class="icon-btn" aria-label="Notifications">
-                    ♧
+                <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+                    <span class="theme-icon">☀</span>
                 </button>
-
-                <button type="button" class="icon-btn profile-icon-btn" aria-label="User profile">
-                    ◎
-                </button>
+                <a href="profile-settings.html" class="topbar-avatar" id="topbarAvatar" aria-label="Profile settings">
+                    <span id="topbarAvatarInitials">◎</span>
+                </a>
             </div>
         </header>
 
         <section class="dashboard-content project-detail-content">
             <section class="project-detail-hero">
                 <div>
-                    <h1 id="projectDetailName">Neural-Architecture Mapping: Cognitive Spatial Analysis</h1>
-                    <p id="projectDetailDesc">
-                        Investigating the intersection of structural design patterns and human cognitive
-                        response through non-invasive EEG monitoring and virtual environments.
-                    </p>
+                    <h1 id="projectDetailName">Loading project...</h1>
+                    <p id="projectDetailDesc"></p>
                 </div>
 
                 <div class="project-detail-actions">
-                    <a id="projectDetailTasksBtn" href="task-board.html" class="btn btn-soft">
+                    <a id="projectDetailTasksBtn" href="files.html?tab=tasks" class="btn btn-soft">
                         ☑ View Kanban Board
                     </a>
                     <a id="projectDetailTeamBtn" href="manage-team.html" class="btn btn-primary">
@@ -129,6 +107,15 @@
                                 <p>Total Tasks</p>
                                 <h2 id="detailTotalTasks">0</h2>
                             </article>
+
+                            <article class="detail-stat-card">
+                                <div class="detail-stat-top">
+                                    <span class="detail-stat-icon">◫</span>
+                                    <strong id="detailDeadlineLabel" class="orange-text">—</strong>
+                                </div>
+                                <p>Next Deadline</p>
+                                <h2 id="detailDeadline" style="font-size: 22px;">—</h2>
+                            </article>
                         </section>
 
                         <section class="timeline-card">
@@ -146,69 +133,22 @@
                     <aside class="detail-right">
                         <section class="research-team-card">
                             <div class="side-card-header">
-                                <h2>Research Team</h2>
-                                <a href="#">View All</a>
+                                <h2>Project Team</h2>
+                                <button type="button" class="link-btn" id="viewAllTeamBtn">View All</button>
                             </div>
 
-                            <div class="research-member-list">
-                                <article class="research-member">
-                                    <span class="research-avatar image-avatar">A</span>
-                                    <div>
-                                        <h3>Dr. Alistair Vance</h3>
-                                        <p>Principal Investigator</p>
-                                    </div>
-                                </article>
+                            <div class="research-member-list" id="memberListContainer"></div>
 
-                                <article class="research-member">
-                                    <span class="research-avatar image-avatar red">S</span>
-                                    <div>
-                                        <h3>Sarah Chen</h3>
-                                        <p>Lead Data Scientist</p>
-                                    </div>
-                                </article>
-
-                                <article class="research-member">
-                                    <span class="research-avatar initials-avatar">OM</span>
-                                    <div>
-                                        <h3>Oulian Mark</h3>
-                                        <p>UI Architect</p>
-                                    </div>
-                                </article>
-                            </div>
-
-                            <button type="button" class="invite-member-btn">
+                            <button type="button" class="invite-member-btn" id="overviewInviteBtn">
                                 ☷ Invite Member
                             </button>
                         </section>
 
                         <section class="featured-files-card">
                             <h2>Featured Files</h2>
-
-                            <div class="file-list">
-                                <article class="file-item">
-                                    <span class="file-icon red">▤</span>
-                                    <div>
-                                        <h3>Full_Protocol_v3.pdf</h3>
-                                        <p>2.4 MB • Updated yesterday</p>
-                                    </div>
-                                </article>
-
-                                <article class="file-item">
-                                    <span class="file-icon blue">▦</span>
-                                    <div>
-                                        <h3>Subject_Data_Raw.xlsx</h3>
-                                        <p>14.8 MB • Updated 3h ago</p>
-                                    </div>
-                                </article>
+                            <div class="file-list" id="featuredFilesList">
+                                <p class="empty-note">No files uploaded to project tasks yet.</p>
                             </div>
-                        </section>
-
-                        <section class="project-insight-card">
-                            <h3>Project Insight</h3>
-                            <p>
-                                Your current citation index for related papers is in the top 5% for this quarter.
-                            </p>
-                            <a href="#">View Analytics →</a>
                         </section>
                     </aside>
                 </div>
@@ -217,21 +157,21 @@
             <section class="detail-tab-panel" data-tab-panel="tasks">
                 <div class="placeholder-panel">
                     <h2>Tasks</h2>
-                    <p>Task list for this project will be displayed here.</p>
+                    <p>Loading tasks...</p>
                 </div>
             </section>
 
             <section class="detail-tab-panel" data-tab-panel="team">
                 <div class="placeholder-panel">
                     <h2>Team</h2>
-                    <p>Research team members and roles will be displayed here.</p>
+                    <p>Loading team...</p>
                 </div>
             </section>
 
             <section class="detail-tab-panel" data-tab-panel="files">
                 <div class="placeholder-panel">
                     <h2>Files</h2>
-                    <p>Project documents and datasets will be displayed here.</p>
+                    <p>Loading files...</p>
                 </div>
             </section>
 
@@ -245,7 +185,7 @@
             <section class="detail-tab-panel" data-tab-panel="reports">
                 <div class="placeholder-panel">
                     <h2>Reports</h2>
-                    <p>Project analytics and reports will be displayed here.</p>
+                    <p>Loading reports...</p>
                 </div>
             </section>
         </section>

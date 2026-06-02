@@ -27,24 +27,21 @@ function setupSettingsTabs() {
 
     if (!tabs.length || !panels.length) return;
 
-    tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-            const selectedTab = tab.dataset.settingsTab;
+    function activateTab(selectedTab) {
+        tabs.forEach((item) => item.classList.remove("active"));
+        const activeTab = document.querySelector(`[data-settings-tab="${selectedTab}"]`);
+        if (activeTab) activeTab.classList.add("active");
 
-            tabs.forEach((item) => item.classList.remove("active"));
-            tab.classList.add("active");
-
-            panels.forEach((panel) => {
-                const panelName = panel.dataset.settingsPanel;
-
-                if (selectedTab === "profile") {
-                    panel.style.display = "";
-                    return;
-                }
-
-                panel.style.display = panelName === selectedTab ? "" : "none";
-            });
+        panels.forEach((panel) => {
+            panel.style.display = panel.dataset.settingsPanel === selectedTab ? "" : "none";
         });
+    }
+
+    // Hide non-profile panels on load
+    activateTab("profile");
+
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", () => activateTab(tab.dataset.settingsTab));
     });
 }
 

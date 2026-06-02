@@ -1146,7 +1146,7 @@
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1.35fr 0.9fr;
+  grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
 
