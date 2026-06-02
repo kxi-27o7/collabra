@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import api_router
 
+import os
+import uvicorn
+
 
 def create_app() -> FastAPI:
     app = FastAPI(
@@ -12,7 +15,16 @@ def create_app() -> FastAPI:
 
     origins = [
         "http://localhost",
-        "http://localhost:8000", # Example React/Vue frontend
+        "http://localhost:3000",
+        "http://localhost:5500",  # Live Server
+        "http://localhost:8000",
+        "http://localhost:8080",
+        "http://127.0.0.1",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5500",
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:8080",
+        "https://collabra.onrender.com"
     ]
 
     app.add_middleware(
@@ -38,3 +50,9 @@ def create_app() -> FastAPI:
 
 
 app = create_app()
+
+if __name__ == "__main__":
+    # Render automatically injects a PORT environment variable.
+    # If it's not found (like when running locally), it defaults to 8000.
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=False)
