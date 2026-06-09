@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/update-task-progress.css">
+    <link rel="stylesheet" href="../css/comment-interface.css">
 </head>
 <body class="update-task-body">
     <header class="update-topbar">
@@ -145,6 +146,48 @@
             </section>
         </form>
 
+        <section class="task-discussion">
+            <header class="discussion-header">
+                <div class="discussion-title">
+                    <span>▱</span>
+                    <h2>Discussion</h2>
+                    <small data-comment-count></small>
+                </div>
+            </header>
+
+            <div class="comment-feed" data-comment-feed></div>
+
+            <div class="comment-composer">
+                <form data-comment-form>
+                    <div class="form-group">
+                        <label for="commentMessage" class="sr-only">Comment</label>
+                        <textarea
+                            id="commentMessage"
+                            name="comment_message"
+                            placeholder="Add a comment or update for the team..."
+                            required
+                        ></textarea>
+                        <small class="error-message"></small>
+                    </div>
+
+                    <div class="composer-toolbar">
+                        <div class="composer-tools">
+                            <button type="button" aria-label="Bold">B</button>
+                            <button type="button" aria-label="Italic">I</button>
+                            <button type="button" aria-label="Insert link">⌁</button>
+                            <button type="button" aria-label="Attach file">∥</button>
+                            <button type="button" aria-label="Mention">@</button>
+                        </div>
+
+                        <div class="composer-actions">
+                            <button type="button" class="save-draft-btn" data-save-draft>Save Draft</button>
+                            <button type="submit" class="send-comment-btn">Send ▷</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+
         <section class="update-footer-info">
             <div>
                 <span>Assigned Team</span>
@@ -165,7 +208,6 @@
                 <div class="linked-icons">
                     <button type="button" aria-label="Document">▤</button>
                     <button type="button" aria-label="Attachment">⌁</button>
-                    <a href="comment-interface.html" class="discussion-link discussion-link-dynamic" aria-label="Open discussion">⌯</a>
                 </div>
             </div>
         </section>

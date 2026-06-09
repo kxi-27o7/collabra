@@ -497,3 +497,13 @@
 .linked-icons a:hover {
     color: var(--primary);
 }
+
+/* Discussion Section */
+
+.task-discussion {
+    margin-top: 48px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(33, 43, 90, 0.04);
+    overflow: hidden;
+}
