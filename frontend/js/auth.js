@@ -38,7 +38,7 @@ function setupFormValidation() {
           const payload = {
             email: formData.email,
             password: formData.password,
-            full_name: formData.fullName || formData.name || "Collabra User"
+            full_name: formData.full_name || "Collabra User"
           };
           
           await fetchAPI("/auth/register", {
