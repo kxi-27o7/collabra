@@ -19,8 +19,7 @@ async function loadComments() {
         const comments = await fetchAPI(`/tasks/${taskId}/comments`);
         feed.innerHTML = ""; // clear dummy comments
         comments.forEach(comment => {
-            // we don't have full names from this endpoint easily without expanding it in backend, so fallback to "User"
-            addNewComment(feed, comment.content, "User", new Date(comment.created_at).toLocaleString());
+            addNewComment(feed, comment.content, comment.author_name || "User", new Date(comment.created_at).toLocaleString());
         });
     } catch (error) {
         console.error("Failed to load comments:", error);
@@ -73,12 +72,12 @@ function setupCommentForm() {
         }
 
         try {
-            await fetchAPI(`/tasks/${taskId}/comments`, {
+            const comment = await fetchAPI(`/tasks/${taskId}/comments`, {
                 method: "POST",
                 body: { content: commentText }
             });
 
-            addNewComment(feed, commentText, "You", "Just now");
+            addNewComment(feed, commentText, comment.author_name || "You", "Just now");
 
             textarea.value = "";
             localStorage.removeItem("commentDraft");
