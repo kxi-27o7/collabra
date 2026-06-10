@@ -16,8 +16,10 @@ async function loadProjectDetails() {
 
     const tasksBtn = document.getElementById("projectDetailTasksBtn");
     const teamBtn = document.getElementById("projectDetailTeamBtn");
+    const editDetailsBtn = document.getElementById("changeProjectDetailsBtn");
     if (tasksBtn) tasksBtn.href = `files.html?tab=tasks&id=${projectId}`;
     if (teamBtn) teamBtn.href = `manage-team.html?id=${projectId}`;
+    if (editDetailsBtn) editDetailsBtn.href = `edit-project.html?id=${projectId}`;
 
     const overviewInviteBtn = document.getElementById("overviewInviteBtn");
     if (overviewInviteBtn) {

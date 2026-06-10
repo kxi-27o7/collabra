@@ -22,6 +22,31 @@
     box-shadow: 0 4px 16px rgba(33, 43, 90, 0.14);
 }
 
+/* Back to landing page (floating, top-left) */
+.floating-back-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 999px;
+    background: #eef3fb;
+    color: var(--primary);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(33, 43, 90, 0.14);
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.floating-back-btn:hover { background: #dce6f8; }
+
+[data-theme="dark"] .floating-back-btn { background: #1e2647; color: #ffffff; }
+
 /* ── Auth Dark Mode ──────────────────────────────────────────────── */
 
 [data-theme="dark"] .auth-body {

@@ -6,6 +6,7 @@ from app.models import (
     Project, ProjectCreate, ProjectOut,
     ProjectMember, User, UserOut,
     Task, TaskCreate, TaskOut,
+    TaskComment, TaskAttachment,
     _generate_invite_code,
 )
 from app.db.session import get_session
@@ -110,6 +111,41 @@ def update_project(
     session.commit()
     session.refresh(project)
     return project
+
+
+@router.delete("/{project_id}", status_code=status.HTTP_200_OK)
+def delete_project(
+    project_id: int,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    """Permanently delete a project and all its associated data. Manager only."""
+    project = _get_project_or_404(project_id, session)
+    _require_manager(project, current_user)
+
+    tasks = session.exec(select(Task).where(Task.project_id == project_id)).all()
+    task_ids = [task.id for task in tasks]
+
+    if task_ids:
+        comments = session.exec(select(TaskComment).where(TaskComment.task_id.in_(task_ids))).all()
+        for comment in comments:
+            session.delete(comment)
+
+        attachments = session.exec(select(TaskAttachment).where(TaskAttachment.task_id.in_(task_ids))).all()
+        for attachment in attachments:
+            session.delete(attachment)
+
+        for task in tasks:
+            session.delete(task)
+
+    members = session.exec(select(ProjectMember).where(ProjectMember.project_id == project_id)).all()
+    for member in members:
+        session.delete(member)
+
+    session.flush()
+    session.delete(project)
+    session.commit()
+    return {"detail": "Project deleted successfully"}
 
 
 @router.put("/{project_id}/finish", response_model=ProjectOut)

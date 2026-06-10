@@ -377,6 +377,16 @@ button {
     border: 1px solid #dde4f3;
 }
 
+.btn-danger {
+    background: var(--danger);
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background: #b3261e;
+    transform: translateY(-1px);
+}
+
 .btn-sm {
     min-height: 36px;
     padding: 0 22px;
