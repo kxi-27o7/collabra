@@ -205,7 +205,8 @@ def add_comment(
     session.add(comment)
     session.commit()
     session.refresh(comment)
-    return comment
+
+    return TaskCommentOut(**comment.dict(), author_name=current_user.full_name or current_user.email)
 
 
 @router.get("/{task_id}/comments", response_model=List[TaskCommentOut])
@@ -216,7 +217,16 @@ def list_comments(
 ):
     task = _get_task_or_404(task_id, session)
     _require_project_member(task.project_id, current_user, session)
-    return session.exec(select(TaskComment).where(TaskComment.task_id == task_id)).all()
+
+    comments = session.exec(select(TaskComment).where(TaskComment.task_id == task_id)).all()
+    user_ids = {c.user_id for c in comments}
+    users = session.exec(select(User).where(User.id.in_(user_ids))).all() if user_ids else []
+    names_by_id = {u.id: (u.full_name or u.email) for u in users}
+
+    return [
+        TaskCommentOut(**c.dict(), author_name=names_by_id.get(c.user_id))
+        for c in comments
+    ]
 
 
 # ── Collaboration: File Attachments ──────────────────────────────────────────

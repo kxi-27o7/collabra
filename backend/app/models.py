@@ -111,6 +111,7 @@ class TaskCommentOut(TaskCommentBase):
     task_id: int
     user_id: int
     created_at: datetime
+    author_name: Optional[str] = None
 
 
 class TaskAttachmentBase(SQLModel):

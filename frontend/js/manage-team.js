@@ -90,7 +90,7 @@ function renderProjectMemberRows(project, members) {
             const initials = getInitials(name);
             const role = member.id === project.owner_id ? "PM" : "Member";
             return `
-                <article class="personnel-row" data-team-member>
+                <article class="personnel-row" data-team-member data-user-id="${member.id}">
                     <div class="member-info">
                         <span class="team-avatar dark">${initials}</span>
                         <div>
@@ -110,9 +110,11 @@ function renderProjectMemberRows(project, members) {
                         </div>
                     </div>
 
-                    <button type="button" class="delete-member-btn" aria-label="Delete member">
-                        ♲
+                    ${role === "PM" ? "" : `
+                    <button type="button" class="delete-member-btn" aria-label="Remove member">
+                        ✕
                     </button>
+                    `}
                 </article>
             `;
         }).join("");
@@ -131,18 +133,30 @@ function setupDeleteMember() {
 
     if (!table) return;
 
-    table.addEventListener("click", (event) => {
+    table.addEventListener("click", async (event) => {
         const deleteButton = event.target.closest(".delete-member-btn");
 
         if (!deleteButton) return;
 
         const row = deleteButton.closest("[data-team-member]");
         const memberName = row?.querySelector("h3")?.textContent || "this member";
+        const userId = row?.dataset.userId;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get("id");
+
+        if (!row || !userId || !projectId) return;
 
         const confirmed = confirm(`Remove ${memberName} from the team?`);
+        if (!confirmed) return;
 
-        if (confirmed && row) {
+        try {
+            await fetchAPI(`/projects/${projectId}/members/${userId}`, {
+                method: "DELETE"
+            });
             row.remove();
+        } catch (error) {
+            alert(`Failed to remove member: ${error.message}`);
         }
     });
 }
