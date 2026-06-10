@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Project Details - Collabra</title>
+    <script src="../js/theme.js"></script>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/join-project.css">
+    <link rel="stylesheet" href="../css/create-project.css">
+</head>
+<body class="create-project-body">
+    <header class="join-topbar">
+        <div class="page-header join-project-header">
+            <a href="project-list.html" class="back-dashboard-btn" data-cancel-link>← Back</a>
+        </div>
+
+        <div class="join-topbar-actions">
+            <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle dark mode">
+                <span class="theme-icon">☀</span>
+            </button>
+            <a href="profile-settings.html" class="topbar-avatar" id="topbarAvatar" aria-label="Profile settings">
+                <span id="topbarAvatarInitials">◎</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="create-project-main">
+        <section class="create-heading">
+            <h1>Change Project Details</h1>
+            <p>
+                Update your project's information below. Changes are saved when you click "Save Changes".
+            </p>
+        </section>
+
+        <form class="create-project-layout" action="#" method="POST" data-edit-project-form>
+            <div class="create-project-left">
+                <section class="create-card project-basic-card">
+                    <div class="form-group line-input-group">
+                        <label for="editProjectName">Project Name</label>
+                        <input
+                            type="text"
+                            id="editProjectName"
+                            name="project_name"
+                            placeholder="e.g. Neural Linguistic Mapping"
+                            required
+                        >
+                        <small class="error-message"></small>
+                    </div>
+
+                    <div class="form-group line-input-group">
+                        <label for="editProjectDescription">Project Description</label>
+                        <textarea
+                            id="editProjectDescription"
+                            name="project_description"
+                            placeholder="Provide a detailed summary of the project..."
+                            required
+                        ></textarea>
+                        <small class="error-message"></small>
+                    </div>
+                </section>
+
+                <div class="create-two-columns">
+                    <section class="create-card small-create-card">
+                        <div class="form-group">
+                            <label for="editProjectDeadline">▧ Project Deadline</label>
+                            <input
+                                type="date"
+                                id="editProjectDeadline"
+                                name="project_deadline"
+                            >
+                            <small class="error-message"></small>
+                        </div>
+                    </section>
+
+                    <div class="project-role-info">
+                        <div class="role-icon">★</div>
+                        <div>
+                            <h3>Your role in this project</h3>
+                            <p>You are the <strong>Project Manager</strong> for this project.</p>
+                        </div>
+                    </div>
+
+                    <section class="create-card small-create-card">
+                        <div class="form-group">
+                            <label>⚑ Project Status</label>
+
+                            <div class="status-picker" data-status-picker>
+                                <label>
+                                    <input type="radio" name="project_status" value="drafting">
+                                    <span>Drafting</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="project_status" value="active">
+                                    <span>Active</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="project_status" value="review">
+                                    <span>Review</span>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="project_status" value="finished">
+                                    <span>Finished</span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <section class="create-card team-select-card">
+                    <div class="form-group">
+                        <label for="editMemberSearch">☷ Invite Team Members</label>
+
+                        <div class="member-search-box">
+                            <span>⌕</span>
+                            <input
+                                type="text"
+                                id="editMemberSearch"
+                                data-member-search
+                                placeholder="Enter member email to invite"
+                            >
+                        </div>
+
+                        <div class="selected-members" data-selected-members>
+                            <button type="button" class="add-member-chip" data-add-member>
+                                + Add Member
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="create-form-actions">
+                    <a href="project-list.html" class="cancel-link" data-cancel-link>Cancel</a>
+                    <button type="submit" class="btn btn-primary create-submit-btn">
+                        Save Changes ↗
+                    </button>
+                </div>
+            </div>
+
+            <aside class="create-project-right">
+                <section class="danger-zone-box">
+                    <h2>⚠ Danger Zone</h2>
+                    <p>
+                        Deleting this project is permanent. All tasks, comments, files, and team
+                        memberships associated with it will be removed and cannot be recovered.
+                    </p>
+
+                    <button type="button" class="btn btn-danger btn-full" data-delete-project-btn>
+                        Delete Project
+                    </button>
+                </section>
+            </aside>
+        </form>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/project-role.js"></script>
+    <script src="../js/edit-project.js"></script>
+</body>
+</html>

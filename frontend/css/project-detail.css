@@ -53,10 +53,23 @@
 .detail-tabs {
     display: flex;
     align-items: center;
-    gap: 44px;
+    justify-content: space-between;
+    gap: 24px;
     border-bottom: 1px solid #dce4f4;
     margin-bottom: 38px;
+}
+
+.detail-tabs-list {
+    display: flex;
+    align-items: center;
+    gap: 44px;
     overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.detail-edit-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .detail-tabs button {
@@ -502,7 +515,16 @@
     }
 
     .detail-tabs {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .detail-tabs-list {
         gap: 28px;
+    }
+
+    .detail-edit-btn {
+        width: 100%;
     }
 
     .detail-stat-card,

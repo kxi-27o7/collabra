@@ -1,5 +1,5 @@
 from typing import Optional, List
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from sqlmodel import SQLModel, Field, Relationship
 import secrets
 import string
@@ -28,6 +28,7 @@ class ProjectBase(SQLModel):
     name: str
     description: Optional[str] = None
     status: str = Field(default="active")
+    deadline: Optional[date] = None
 
 
 def _generate_invite_code() -> str:
