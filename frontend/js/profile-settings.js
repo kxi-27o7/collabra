@@ -199,9 +199,8 @@ function setupLogout() {
 
     if (!confirmLogout) return;
 
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("collabra_access_token");
+    localStorage.removeItem("collabraCurrentUser");
 
     sessionStorage.clear();
 
